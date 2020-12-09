@@ -47,4 +47,5 @@ public class PlayerCollision : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, CollisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, CollisionRadius);
     }
+
 }

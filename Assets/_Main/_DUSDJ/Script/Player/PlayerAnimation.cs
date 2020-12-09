@@ -31,7 +31,6 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("wallSlide", controller.IsWallSlide);
         anim.SetBool("canMove", controller.CanMove);
         anim.SetBool("isDashing", controller.IsDashing);
-
     }
 
     public void SetHorizontalMovement(float x, float y, float yVel)
@@ -63,19 +62,34 @@ public class PlayerAnimation : MonoBehaviour
         // Look Right
         if (side == 1)
         {
-            transform.localScale = new Vector3(originScale.x * -1, originScale.y, originScale.z);
+            if (controller.isDefaultLookLeft)
+            {
+                transform.localScale = new Vector3(originScale.x * -1, originScale.y, originScale.z);
+            }
+            else
+            {
+                transform.localScale = originScale;
+            }
         }
         // Look Left
         else
         {
-            transform.localScale = originScale;
+            if (controller.isDefaultLookLeft)
+            {
+                transform.localScale = originScale;
+            }
+            else
+            {
+                transform.localScale = new Vector3(originScale.x * -1, originScale.y, originScale.z);
+            }
+            
         }
         
     }
 
     public bool IsLookLeft()
     {
-        if (controller.LeftIsTrue && transform.localScale.x > 0)
+        if (controller.isDefaultLookLeft && transform.localScale.x > 0)
         {
             return true;
         }

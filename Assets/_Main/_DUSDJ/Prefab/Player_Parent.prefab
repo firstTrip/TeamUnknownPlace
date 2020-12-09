@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8227953999411299619}
   m_Layer: 0
   m_Name: Player_Parent
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
   WallSlideSpeed: 0.35
   WallJumpLerp: 50
   DashSpeed: 20
+  isDefaultLookLeft: 1
   CanMove: 1
   WallGrab: 0
   WallJumped: 0

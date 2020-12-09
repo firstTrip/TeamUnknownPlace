@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [Space]
     [Header("Booleans")]
     [Tooltip("캐릭터가 기본 왼쪽을 보고 있다면 True")]
-    public bool LeftIsTrue = true;
+    public bool isDefaultLookLeft = true;
     public bool CanMove = true;
     public bool WallGrab;
     public bool WallJumped;
@@ -283,10 +283,18 @@ public class PlayerController : MonoBehaviour
         hasDashed = false;
         IsDashing = false;
 
-        PlayerSide = anim.transform.localScale.x <= 0 ? -1 : 1;
+        if (isDefaultLookLeft)
+        {
+            PlayerSide = anim.transform.localScale.x <= 0 ? -1 : 1;
+        }
+        else
+        {
+            PlayerSide = anim.transform.localScale.x <= 0 ? 1 : -1;
+        }
 
         //jumpParticle.Play();
     }
+
 
     #endregion
 
