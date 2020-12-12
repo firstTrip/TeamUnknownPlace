@@ -28,8 +28,24 @@ public class LightManager : MonoBehaviour
 
     #endregion
 
-    public delegate void LightCheckSoundDelegate(Vector3 source, int value);
+    public delegate void LightCheckSoundDelegate(Sound s);
     public LightCheckSoundDelegate LightCheckSound;
 
+
+    private void Awake()
+    {
+        #region SingleTone
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(this);
+        }
+
+        #endregion
+    }
 
 }

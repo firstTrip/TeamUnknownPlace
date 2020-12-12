@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     [Header("발소리 쿨다운")]public float WalkSoundCoolDown = 0.2f;
     private float WalkSoundCoolDownNow = 0f;
-
+    [Header("발소리 밸류")]public int WalkSoundValue = 2;
     #endregion
 
 
@@ -37,18 +37,13 @@ public class Player : MonoBehaviour
     {
         WalkSoundCoolDownCheck();
         InputManager();
-
-        if (rb.velocity.x == 0)
-        {
-            WalkSound();
-        }
         Move();
+
 
         if (Input.GetButtonUp("Horizontal"))
         {
             rb.velocity = new Vector2(rb.velocity.normalized.x * 0, rb.velocity.y);
         }
-
 
         if (coll.OnGround) 
             Jump();
@@ -66,36 +61,40 @@ public class Player : MonoBehaviour
 
     private void InputManager()
     {
-        walk = Input.GetKeyDown(KeyCode.LeftControl);
-        dash = Input.GetKeyDown(KeyCode.LeftShift);
+        walk = Input.GetKey(KeyCode.LeftControl);
+        dash = Input.GetKey(KeyCode.LeftShift);
+
     }
 
     private void Move()
     {
 
-        float h = Input.GetAxisRaw("Horizontal");
-
         if (!canMove)
             return;
 
+        float h = Input.GetAxisRaw("Horizontal");
         rb.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
 
         if (walk)
             moveForce = 0.5f;
-
-        if (dash)
+        else if (dash)
             moveForce = 3f;
+        else
+            moveForce = 1f;
 
-        if(!walk && !dash)
+        if (rb.velocity.x > moveForce)
         {
-            if (rb.velocity.x > moveForce)
-                rb.velocity = new Vector2(moveForce, rb.velocity.y);
-            else if (rb.velocity.x < moveForce * (-1))
-                rb.velocity = new Vector2(moveForce * (-1), rb.velocity.y);
+            rb.velocity = new Vector2(moveForce, rb.velocity.y);
+            WalkSound();
+        }
+        else if (rb.velocity.x < moveForce * (-1))
+        {
+            rb.velocity = new Vector2(moveForce * (-1), rb.velocity.y);
+            WalkSound();
         }
 
-        // 정지상태가 아닐때만 발동하게 해주세요.
-        
+
 
     }
 
@@ -111,10 +110,9 @@ public class Player : MonoBehaviour
     {
         #region WalkSound
         if (WalkSoundCoolDownNow <= 0)
-        {
-            AudioManager.Instance.PlayOneShot("Footstep");
+        {            
             EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
-            LightManager.Instance.LightCheckSound(transform.position, 2);
+            AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position);
 
             WalkSoundCoolDownNow = WalkSoundCoolDown;
         }
