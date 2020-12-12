@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     [Header("발소리 쿨다운")]public float WalkSoundCoolDown = 0.2f;
     private float WalkSoundCoolDownNow = 0f;
-
+    [Header("발소리 밸류")]public int WalkSoundValue = 2;
     #endregion
 
 
@@ -110,10 +110,9 @@ public class Player : MonoBehaviour
     {
         #region WalkSound
         if (WalkSoundCoolDownNow <= 0)
-        {
-            AudioManager.Instance.PlayOneShot("Footstep");
+        {            
             EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
-            //LightManager.Instance.LightCheckSound(transform.position, 2);
+            AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position);
 
             WalkSoundCoolDownNow = WalkSoundCoolDown;
         }

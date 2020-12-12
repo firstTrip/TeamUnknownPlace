@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource soundEffectAudioSource;
     #endregion
 
+
     #region Volume Setting Properties
 
     private float bgmVolume;
@@ -118,6 +119,21 @@ public class AudioManager : MonoBehaviour
 
         // soundEffectAudioSource 초기화
         soundEffectAudioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    public void PlaySound(string clipName, int value, Vector3 position)
+    {
+        if (!DataDic.ContainsKey(clipName))
+        {
+            Debug.LogError(string.Format("AudioManager-DataDic Has No key {0}", clipName));
+            return;
+        }
+
+        soundEffectAudioSource.PlayOneShot(DataDic[clipName]);
+
+        Sound s = new Sound(DataDic[clipName].length, value, position);
+
+        LightManager.Instance.LightCheckSound(s);
     }
 
     public void PlayOneShot(string clipName)

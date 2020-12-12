@@ -25,6 +25,17 @@ public class LightArea : MonoBehaviour
 
     private Transform target;
 
+
+    #region Sound 관련
+
+    public Sound NowSound;
+    private IEnumerator DurationCoroutine;
+
+    #endregion
+
+
+
+
     private void Awake()
     {
         instance = this;
@@ -47,19 +58,57 @@ public class LightArea : MonoBehaviour
         }
     }
 
-    public void LookBySound(Vector3 source, int value)
+    public void LookBySound(Sound s)
     {
         if (!IsEnter)
         {
             return;
         }
 
-        // 사운드 들은것을 Queue로 관리한다.
+        // 현재 집중하는 소리가 없으면 바로 새 사운드를 향한다.
+        if (NowSound == null)
+        {
+            NowSound = s;
+            LookBySound(s.Duration, s.Position);
+            return;
+        }
 
+        // 작은 소리는 무시한다.
+        if (s.Value < NowSound.Value)
+        {
+            return;
+        }
+
+        // 동등 이상의 소리일 때 : 새 사운드에 집중
+        NowSound = s;
+        LookBySound(s.Duration, s.Position);
+    }
+
+    public void LookBySound(float duration, Vector3 source)
+    {
+        if (!IsEnter)
+        {
+            return;
+        }
 
         MainLight.transform.DOKill();
         MainLight.transform.DOMove(source + offSet, 0.2f).SetEase(Ease.Linear);
+
+        SetDuration(duration);
     }
+
+    
+    private void SetDuration(float d)
+    {
+        if (DurationCoroutine != null)
+        {
+            StopCoroutine(DurationCoroutine);
+            DurationCoroutine = null;
+        }
+
+        DurationCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(d, () => { NowSound = null; });
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -70,32 +119,16 @@ public class LightArea : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Enter");
-
-            //MainLight.transform.position = LightPosition.position;
-
-            //target = collision.transform;
-
             IsEnter = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!IsEnter)
-        {
-            return;
-        }
-
         if (collision.CompareTag("Player"))
         {
             IsEnter = false;
         }
-    }
-
-    private void Move(Transform light, Transform target)
-    {
-
     }
 
     private void Look(Transform light, Transform target)
