@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     [SerializeField]private float JumpForce;
     [SerializeField] private float moveForce;
 
+
+    [Header("발소리 쿨다운")] public float WalkSoundCoolDown = 0.25f;
+    private float WalkSoundCoolDonwNow = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +24,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (WalkSoundCoolDonwNow > 0)
+        {
+            WalkSoundCoolDonwNow -= Time.deltaTime;
+        }
+
         Move();
         Jump();
     }
@@ -44,9 +53,24 @@ public class Player : MonoBehaviour
         rb.AddForce(Vector2.right * h, ForceMode2D.Impulse);
 
         if (rb.velocity.x > moveForce)
-            rb.velocity = new Vector2(moveForce, rb.velocity.y);
+            rb.velocity = new Vector2(moveForce, rb.velocity.y);        
         else if (rb.velocity.x < moveForce * (-1))
             rb.velocity = new Vector2(moveForce*(-1), rb.velocity.y);
+
+        WalkSound();
+    }
+
+    private void WalkSound()
+    {
+        #region WalkSound
+        if (WalkSoundCoolDonwNow <= 0)
+        {
+            AudioManager.Instance.PlayOneShot("Footstep");
+            EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
+            LightManager.Instance.LightCheckSound(transform.position, 2);
+            WalkSoundCoolDonwNow = WalkSoundCoolDown;
+        }
+        #endregion
     }
 
     private void Jump()
