@@ -73,6 +73,17 @@ public class Effect : MonoBehaviour
         Duration = BaseDuration;
         transform.position = position;
         transform.localScale = scale;
+
+        // 파티클일 경우 자식오브젝트 크기 변경
+        if(ps != null)
+        {
+            foreach (Transform child in transform)
+            {
+                child.localScale = scale;
+            }
+        }
+        
+
         Action();
     }
 
