@@ -5,37 +5,56 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private float movePower;
-    private Rigidbody2D rigid;
+    private Rigidbody2D rb;
 
-    private Vector3 moveMent;
+    private bool canMove;
+    [SerializeField]private float JumpForce;
+    [SerializeField] private float moveForce;
+
     // Start is called before the first frame update
     void Start()
     {
-        rigid = gameObject.GetComponent<Rigidbody2D>();
-        movePower = 3f;
+        init();
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+        Jump();
+    }
+
+    private void init()
+    {
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        canMove = true;
+
+        moveForce = 12f;
+        JumpForce = 10f;
     }
 
     private void Move()
     {
-        Vector3 moveVelocity = Vector3.zero;
 
-        if (Input.GetAxisRaw("Horizontal") < 0)
+        float h = Input.GetAxisRaw("Horizontal");
+
+        if (!canMove)
+            return;
+
+        rb.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        if (rb.velocity.x > moveForce)
+            rb.velocity = new Vector2(moveForce, rb.velocity.y);
+        else if (rb.velocity.x < moveForce * (-1))
+            rb.velocity = new Vector2(moveForce*(-1), rb.velocity.y);
+    }
+
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            moveVelocity = Vector3.left;
-
+            Debug.Log("asd");
+            rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
         }
-        else if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            moveVelocity = Vector3.right;
-        }
-
-        transform.position += moveVelocity * movePower * Time.deltaTime;
     }
 }
