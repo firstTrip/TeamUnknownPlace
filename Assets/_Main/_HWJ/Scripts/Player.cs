@@ -39,12 +39,11 @@ public class Player : MonoBehaviour
         InputManager();
         Move();
 
-        if (rb.velocity.x == 0)
+
+        if (Input.GetButtonUp("Horizontal"))
         {
-
+            rb.velocity = new Vector2(rb.velocity.normalized.x * 0, rb.velocity.y);
         }
-
-
 
         if (coll.OnGround) 
             Jump();
@@ -62,13 +61,9 @@ public class Player : MonoBehaviour
 
     private void InputManager()
     {
-        walk = Input.GetKeyDown(KeyCode.LeftControl);
-        dash = Input.GetKeyDown(KeyCode.LeftShift);
+        walk = Input.GetKey(KeyCode.LeftControl);
+        dash = Input.GetKey(KeyCode.LeftShift);
 
-        if (Input.GetButtonUp("Horizontal"))
-        {
-            rb.velocity = new Vector2(rb.velocity.normalized.x * 0, rb.velocity.y);
-        }
     }
 
     private void Move()
