@@ -36,9 +36,19 @@ public class Player : MonoBehaviour
     void Update()
     {
         WalkSoundCoolDownCheck();
-
         InputManager();
+
+        if (rb.velocity.x == 0)
+        {
+            WalkSound();
+        }
         Move();
+
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            rb.velocity = new Vector2(rb.velocity.normalized.x * 0, rb.velocity.y);
+        }
+
 
         if (coll.OnGround) 
             Jump();
@@ -85,7 +95,7 @@ public class Player : MonoBehaviour
         }
 
         // 정지상태가 아닐때만 발동하게 해주세요.
-        WalkSound();
+        
 
     }
 

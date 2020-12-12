@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8227953999411299616}
   - component: {fileID: 8227953999411299620}
+  - component: {fileID: 2628687045235852607}
   - component: {fileID: 8227953999411299619}
-  - component: {fileID: 4442036962032109749}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -58,6 +58,22 @@ MonoBehaviour:
   BottomOffset: {x: 0, y: 0.1}
   rightOffset: {x: 0.4, y: 0.5}
   leftOffset: {x: -0.4, y: 0.5}
+--- !u!114 &2628687045235852607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227953999411299617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2cd04c933c66e84b89750aa7fc0b03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpForce: 0
+  moveForce: 0
+  moveSpeed: 0
+  WalkSoundCoolDown: 0.2
 --- !u!50 &8227953999411299619
 Rigidbody2D:
   serializedVersion: 4
@@ -71,38 +87,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4442036962032109749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999411299617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4626dfbe2fbfc9041a09c51fd9ddd95f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  OnGround: 0
-  OnWall: 0
-  OnRightWall: 0
-  OnLeftWall: 0
-  WallSide: 0
-  CollisionRadius: 0.25
-  BottomOffset: {x: 0, y: 0}
-  rightOffset: {x: 0, y: 0}
-  leftOffset: {x: 0, y: 0}
 --- !u!1 &8227953999626485721
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +107,6 @@ GameObject:
   - component: {fileID: 8227953999626485727}
   - component: {fileID: 8227953999626485724}
   - component: {fileID: 8227953999626485722}
-  - component: {fileID: 7495111499330668353}
   - component: {fileID: 8227953999626485723}
   - component: {fileID: 8227953999626485726}
   - component: {fileID: 8227953999626485725}
@@ -226,18 +217,6 @@ MonoBehaviour:
   _animationName: Hero_walk01
   loop: 1
   timeScale: 1
---- !u!114 &7495111499330668353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999626485721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f15f0d19e9f2bd641a3782794a6c7534, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &8227953999626485723
 Animator:
   serializedVersion: 3
