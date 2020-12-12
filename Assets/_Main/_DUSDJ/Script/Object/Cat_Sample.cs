@@ -6,11 +6,11 @@ public class Cat_Sample : MonoBehaviour
 {
     // 주기적으로 소리를 발생시키는 클래스로 발전시킬 예정
 
-    public bool IsActive = false;
+    private bool IsActive = false;
 
-    public float ActionCoolDown = 3.0f;
-    public float ActionCoolDownNow = 0f;
-    public int SoundValue = 5;
+    [Header("소리발생 쿨다운")] public float ActionCoolDown = 3.0f;
+    private float ActionCoolDownNow = 0f;
+    [Header("소리 밸류")] public int SoundValue = 5;
 
     private void Awake()
     {

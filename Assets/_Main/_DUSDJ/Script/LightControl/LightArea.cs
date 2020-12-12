@@ -107,6 +107,7 @@ public class LightArea : MonoBehaviour
         }
 
         DurationCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(d, () => { NowSound = null; });
+        StartCoroutine(DurationCoroutine);
     }
 
 
