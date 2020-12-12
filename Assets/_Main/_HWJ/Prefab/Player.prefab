@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8227953999411299616}
   - component: {fileID: 8227953999411299620}
-  - component: {fileID: 8227953999411299621}
-  - component: {fileID: 8227953999411299618}
   - component: {fileID: 8227953999411299619}
+  - component: {fileID: 4442036962032109749}
   m_Layer: 0
-  m_Name: Player_Parent
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   OnGround: 0
   OnWall: 0
   OnRightWall: 0
@@ -59,45 +58,6 @@ MonoBehaviour:
   BottomOffset: {x: 0, y: 0.1}
   rightOffset: {x: 0.4, y: 0.5}
   leftOffset: {x: -0.4, y: 0.5}
---- !u!114 &8227953999411299621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999411299617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c65bdd659c1e1f744b42d973b05de1ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FallMultiplier: 2.5
-  LowJumpMultiplier: 2.5
---- !u!114 &8227953999411299618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999411299617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7635c90d59041384986693fd86ddbb94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  JumpForce: 8
-  GravityScale: 3
-  WallSlideSpeed: 0.35
-  WallJumpLerp: 50
-  DashSpeed: 20
-  isDefaultLookLeft: 1
-  CanMove: 1
-  WallGrab: 0
-  WallJumped: 0
-  IsWallSlide: 0
-  IsDashing: 0
-  PlayerSide: 1
 --- !u!50 &8227953999411299619
 Rigidbody2D:
   serializedVersion: 4
@@ -119,6 +79,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4442036962032109749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227953999411299617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4626dfbe2fbfc9041a09c51fd9ddd95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  OnGround: 0
+  OnWall: 0
+  OnRightWall: 0
+  OnLeftWall: 0
+  WallSide: 0
+  CollisionRadius: 0.25
+  BottomOffset: {x: 0, y: 0}
+  rightOffset: {x: 0, y: 0}
+  leftOffset: {x: 0, y: 0}
 --- !u!1 &8227953999626485721
 GameObject:
   m_ObjectHideFlags: 0
