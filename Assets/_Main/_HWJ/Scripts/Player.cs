@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class Player : MonoBehaviour
 {
@@ -12,11 +13,21 @@ public class Player : MonoBehaviour
     private bool dash;
 
     private PlayerCollision coll;
-
+    [SerializeField] private SkeletonAnimation skeletonAnimation = null;
+    [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
     [SerializeField]private float JumpForce;
     [SerializeField] private float moveForce;
     [SerializeField] private float moveSpeed;
+
+    private string currentAnimation;
+
+    private AnimState _AnimState;
+    private enum AnimState
+    {
+        idle , walk , run , slowWalk , jump
+    }
+
 
     #region WalkSound
 
@@ -77,24 +88,36 @@ public class Player : MonoBehaviour
 
 
         if (walk)
+        {
             moveForce = 0.5f;
+            _AnimState = AnimState.slowWalk;
+        }
+           
         else if (dash)
+        {
             moveForce = 3f;
+            _AnimState = AnimState.run;
+        }
         else
+        {
             moveForce = 1f;
+            _AnimState = AnimState.walk;
+        }
 
         if (rb.velocity.x > moveForce)
         {
             rb.velocity = new Vector2(moveForce, rb.velocity.y);
+            transform.localScale = new Vector2(-h * 1f, 1f);
             WalkSound();
         }
         else if (rb.velocity.x < moveForce * (-1))
         {
             rb.velocity = new Vector2(moveForce * (-1), rb.velocity.y);
+            transform.localScale = new Vector2(-h * 1f, 1f);
             WalkSound();
         }
 
-
+        SetCurrentAnimation(_AnimState);
 
     }
 
@@ -124,9 +147,60 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+
+            _AnimState = AnimState.jump;
+            SetCurrentAnimation(_AnimState);
             StartCoroutine(DisableMovement(1f));
+         
         }
     }
+    #region AsncAnimation
+    private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
+    {
+
+        if (animClip.name.Equals(currentAnimation))
+            return;
+
+        //해당 애님으로 변경
+        skeletonAnimation.state.SetAnimation(0, animClip, loop).TimeScale = timeScale;
+        currentAnimation = animClip.name;
+
+    }
+    #endregion
+
+    #region SetCurrentAnimation
+    private void SetCurrentAnimation(AnimState _state)
+    {
+
+        switch (_state)
+        {
+
+            case AnimState.idle:
+                AsncAnimation(AnimClip[(int)AnimState.idle], true, 0.5f);
+                break;
+
+            case AnimState.walk:
+                AsncAnimation(AnimClip[(int)AnimState.walk], true, 0.5f);
+                break;
+
+            case AnimState.run:
+                AsncAnimation(AnimClip[(int)AnimState.run], true, 0.5f);
+                break;
+
+            case AnimState.slowWalk:
+                AsncAnimation(AnimClip[(int)AnimState.slowWalk], true, 0.5f);
+                break;
+
+            case AnimState.jump:
+                AsncAnimation(AnimClip[(int)AnimState.jump], true, 0.5f);
+                break;
+
+        }
+
+
+    }
+    #endregion
+
 
     IEnumerator DisableMovement(float time)
     {
