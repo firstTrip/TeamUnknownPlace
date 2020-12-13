@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle , walk , run , slowWalk , jump , get
+        idle , walk , run , slowWalk , jump , get , overWall
     }
 
 
@@ -153,8 +153,29 @@ public class Player : MonoBehaviour
             _AnimState = AnimState.jump;
             SetCurrentAnimation(_AnimState);
             StartCoroutine(DisableMovement(1f));
-         
+
+            OverWall();
         }
+    }
+
+    private void OverWall()
+    {
+        if (coll.IsRightWall)
+        {
+         
+            Debug.Log("asd");
+            StartCoroutine(DisableMovement(1f));
+            _AnimState = AnimState.overWall;
+            SetCurrentAnimation(_AnimState);
+            StartCoroutine(AnimeDuraiton());
+            rb.AddForce(Vector2.up * -JumpForce, ForceMode2D.Impulse);
+
+            transform.Translate(new Vector2(1,1.5f));
+
+
+            return;
+        }
+        
     }
 
     private void GetItem()
@@ -177,6 +198,14 @@ public class Player : MonoBehaviour
         canMove = true;
     }
 
+
+    IEnumerator AnimeDuraiton()
+    {
+        
+        yield return new WaitForSeconds(skeletonAnimation.skeleton.Data.FindAnimation(currentAnimation).Duration);
+        Debug.Log(skeletonAnimation.skeleton.Data.FindAnimation(currentAnimation).Duration);
+        
+    }
 
     #region AsncAnimation
     private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
@@ -221,6 +250,10 @@ public class Player : MonoBehaviour
 
             case AnimState.get:
                 AsncAnimation(AnimClip[(int)AnimState.get], false, 1f);
+                break;
+
+            case AnimState.overWall:
+                AsncAnimation(AnimClip[(int)AnimState.overWall], false, 1f);
                 break;
 
         }

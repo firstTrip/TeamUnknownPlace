@@ -83,11 +83,16 @@ MonoBehaviour:
   OnWall: 0
   OnRightWall: 0
   OnLeftWall: 0
+  IsRightWall: 0
+  IsLeftWall: 0
   WallSide: 0
   CollisionRadius: 0.15
+  BoxSize: 0.5
   BottomOffset: {x: 0, y: 0.1}
   rightOffset: {x: 0.4, y: 0.5}
   leftOffset: {x: -0.4, y: 0.5}
+  leftWallOffset: {x: -0.5, y: 1}
+  rightWallOffset: {x: 0.5, y: 1}
 --- !u!114 &2628687045235852607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +155,7 @@ GameObject:
   - component: {fileID: 8227953999626485725}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
