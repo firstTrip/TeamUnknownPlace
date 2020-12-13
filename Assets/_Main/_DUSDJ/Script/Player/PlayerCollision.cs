@@ -20,7 +20,7 @@ public class PlayerCollision : MonoBehaviour
 
     [Header("Collision")]
 
-    public float CollisionRadius = 0.25f;
+    public float CollisionRadius = 0.5f;
     public Vector2 BottomOffset, rightOffset, leftOffset;
     private Color debugCollisionColor = Color.red;
 
