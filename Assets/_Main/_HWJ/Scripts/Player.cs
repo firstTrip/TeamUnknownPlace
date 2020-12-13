@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
-    [SerializeField]private float JumpForce;
+    [SerializeField] private float JumpForce;
     [SerializeField] private float moveForce;
     [SerializeField] private float moveSpeed;
 

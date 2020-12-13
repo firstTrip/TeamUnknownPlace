@@ -121,19 +121,21 @@ public class AudioManager : MonoBehaviour
         soundEffectAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void PlaySound(string clipName, int value, Vector3 position)
+    public Sound PlaySound(string clipName, int value, Vector3 position)
     {
         if (!DataDic.ContainsKey(clipName))
         {
             Debug.LogError(string.Format("AudioManager-DataDic Has No key {0}", clipName));
-            return;
+            return null;
         }
 
         soundEffectAudioSource.PlayOneShot(DataDic[clipName]);
 
         Sound s = new Sound(DataDic[clipName].length, value, position);
 
-        LightManager.Instance.LightCheckSound(s);
+        LightManager.Instance.LookBySound(s);
+
+        return s;
     }
 
     public void PlayOneShot(string clipName)

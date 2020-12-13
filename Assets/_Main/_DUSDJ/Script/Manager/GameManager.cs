@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,25 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Camera (Cinemachine)
+
+    [HideInInspector] public CinemachineVirtualCamera Cinemachine;
+    [HideInInspector] public CinemachineConfiner Confiner;
+
+    #endregion
+
+    #region Game States
+
+    public EnumGameState NowState;
+
+    #endregion
+
+    #region Scenario
+
+    public Scenario NowScenario;
+
+    #endregion
+
     private void Awake()
     {
         #region SingleTone
@@ -43,7 +63,25 @@ public class GameManager : MonoBehaviour
 
         #endregion
 
+        // 모든 Init의 뿌리 깊은 나무
+        Init();
+    }
+
+    public void Init()
+    {
+        // 카메라 캐싱
+        Cinemachine = FindObjectOfType<CinemachineVirtualCamera>();
+        Confiner = Cinemachine.GetComponent<CinemachineConfiner>();
+
         AudioManager.Instance.Init();
         EffectManager.Instance.Init();
+        LightManager.Instance.Init();
+
+        NowState = EnumGameState.Ready;
+    }
+
+    public void ChangeState(EnumGameState state)
+    {
+        NowState = state;
     }
 }
