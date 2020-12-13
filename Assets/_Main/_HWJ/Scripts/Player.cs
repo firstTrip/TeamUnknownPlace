@@ -11,21 +11,22 @@ public class Player : MonoBehaviour
     private bool canMove;
     private bool walk;
     private bool dash;
+    private bool get;
 
     private PlayerCollision coll;
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
-    [SerializeField] private float JumpForce;
-    [SerializeField] private float moveForce;
+    [SerializeField]private float JumpForce;
     [SerializeField] private float moveSpeed;
+    private float moveForce;
 
     private string currentAnimation;
 
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle , walk , run , slowWalk , jump
+        idle , walk , run , slowWalk , jump , get , overWall
     }
 
 
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour
         WalkSoundCoolDownCheck();
         InputManager();
         Move();
-
+        GetItem();
 
         if (Input.GetButtonUp("Horizontal"))
         {
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
     {
         walk = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
+        get = Input.GetKeyDown(KeyCode.Z);
 
     }
 
@@ -89,30 +91,30 @@ public class Player : MonoBehaviour
 
         if (walk)
         {
-            moveForce = 0.5f;
+            moveSpeed = 0.5f;
             _AnimState = AnimState.slowWalk;
         }
            
         else if (dash)
         {
-            moveForce = 3f;
+            moveSpeed = 3f;
             _AnimState = AnimState.run;
         }
         else
         {
-            moveForce = 1f;
+            moveSpeed = 1f;
             _AnimState = AnimState.walk;
         }
 
         if (rb.velocity.x > moveForce)
         {
-            rb.velocity = new Vector2(moveForce, rb.velocity.y);
+            rb.velocity = new Vector2(moveForce * moveSpeed , rb.velocity.y);
             transform.localScale = new Vector2(-h * 1f, 1f);
             WalkSound();
         }
         else if (rb.velocity.x < moveForce * (-1))
         {
-            rb.velocity = new Vector2(moveForce * (-1), rb.velocity.y);
+            rb.velocity = new Vector2(moveForce * (-1) * moveSpeed , rb.velocity.y);
             transform.localScale = new Vector2(-h * 1f, 1f);
             WalkSound();
         }
@@ -151,9 +153,60 @@ public class Player : MonoBehaviour
             _AnimState = AnimState.jump;
             SetCurrentAnimation(_AnimState);
             StartCoroutine(DisableMovement(1f));
-         
+
+            OverWall();
         }
     }
+
+    private void OverWall()
+    {
+        if (coll.IsRightWall)
+        {
+         
+            Debug.Log("asd");
+            StartCoroutine(DisableMovement(1f));
+            _AnimState = AnimState.overWall;
+            SetCurrentAnimation(_AnimState);
+            StartCoroutine(AnimeDuraiton());
+            rb.AddForce(Vector2.up * -JumpForce, ForceMode2D.Impulse);
+
+            transform.Translate(new Vector2(1,1.5f));
+
+
+            return;
+        }
+        
+    }
+
+    private void GetItem()
+    {
+        if(get && coll.OnLeftWall || get && coll.OnRightWall)
+        {
+            Debug.Log("getItem");
+            Debug.Log(coll.gameObject.name);
+            StartCoroutine(DisableMovement(1f));
+            _AnimState = AnimState.get;
+            SetCurrentAnimation(_AnimState);
+
+        }
+    }
+
+    IEnumerator DisableMovement(float time)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(time);
+        canMove = true;
+    }
+
+
+    IEnumerator AnimeDuraiton()
+    {
+        
+        yield return new WaitForSeconds(skeletonAnimation.skeleton.Data.FindAnimation(currentAnimation).Duration);
+        Debug.Log(skeletonAnimation.skeleton.Data.FindAnimation(currentAnimation).Duration);
+        
+    }
+
     #region AsncAnimation
     private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
     {
@@ -192,7 +245,15 @@ public class Player : MonoBehaviour
                 break;
 
             case AnimState.jump:
-                AsncAnimation(AnimClip[(int)AnimState.jump], true, 0.5f);
+                AsncAnimation(AnimClip[(int)AnimState.jump], false, 0.5f);
+                break;
+
+            case AnimState.get:
+                AsncAnimation(AnimClip[(int)AnimState.get], false, 1f);
+                break;
+
+            case AnimState.overWall:
+                AsncAnimation(AnimClip[(int)AnimState.overWall], false, 1f);
                 break;
 
         }
@@ -202,11 +263,5 @@ public class Player : MonoBehaviour
     #endregion
 
 
-    IEnumerator DisableMovement(float time)
-    {
-        canMove = false;
-        yield return new WaitForSeconds(time);
-        canMove = true;
-    }
 
 }

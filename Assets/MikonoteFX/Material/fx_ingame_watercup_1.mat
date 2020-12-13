@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: fx_ingame_watercup_1
+  m_Shader: {fileID: -6465566751694194690, guid: 3ed7ffe36e8538c45b3f6157714f92ef,
+    type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_319EB736:
+        m_Texture: {fileID: 2800000, guid: e2d90122b82dddb4da884b03959d24b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_4B953BA4:
+        m_Texture: {fileID: 2800000, guid: 2f4e7e8f0b9ef41478d5e5385cb1c09c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_F28D1AE3:
+        m_Texture: {fileID: 2800000, guid: 969ff6bcf092c9449848727788e8798d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_13FC657F_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 969ff6bcf092c9449848727788e8798d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_11906193_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b1c3bc253985b59448c51bdb9dfd3db8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2BEA78F1_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b1c3bc253985b59448c51bdb9dfd3db8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_B1186FC6_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b3382f1503652d841ba97604960c2caf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_82F50B0D: 1.52
+    - Vector1_88782A4D: 1.34
+    - Vector1_96248FF4: -0.3
+    - Vector1_A943F4D3: 1.54
+    - Vector1_E74705E8: -0.1
+    - Vector1_ED64F9FD: -0.98
+    m_Colors:
+    - Color_190EBA98: {r: 1, g: 1, b: 1, a: 0}
+    - Color_6578A6CD: {r: 0.12459949, g: 0.754717, b: 0.7057078, a: 1}
+    - Color_D32EB433: {r: 0.17621931, g: 0.42179862, b: 0.6792453, a: 0.6039216}
