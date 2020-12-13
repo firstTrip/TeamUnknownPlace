@@ -95,6 +95,10 @@ public class LightManager : MonoBehaviour
         NowLightArea.IsEnter = true;
         MainLight.transform.position = NowLightArea.LightPosition.position;        
         offSet = MainLight.transform.position - LightEndPosition.transform.position;
+
+        // 일단은 플레이어를 비춘다?
+        MainLight.transform.DOKill();
+        MainLight.transform.DOMove(GameManager.Instance.PlayerChara.transform.position + offSet, 0f);
     }
 
 

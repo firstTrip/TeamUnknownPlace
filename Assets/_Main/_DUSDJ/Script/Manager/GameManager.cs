@@ -36,6 +36,12 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Player
+
+    [HideInInspector] public Player PlayerChara;
+
+    #endregion
+
     #region Game States
 
     public EnumGameState NowState;
@@ -72,6 +78,10 @@ public class GameManager : MonoBehaviour
         // 카메라 캐싱
         Cinemachine = FindObjectOfType<CinemachineVirtualCamera>();
         Confiner = Cinemachine.GetComponent<CinemachineConfiner>();
+
+        // Player 찾기 & 시네머신 Follow 적용
+        PlayerChara = FindObjectOfType<Player>();
+        Cinemachine.Follow = PlayerChara.transform;
 
         AudioManager.Instance.Init();
         EffectManager.Instance.Init();
