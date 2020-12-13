@@ -11,15 +11,22 @@ public class Player : MonoBehaviour
     private bool canMove;
     private bool walk;
     private bool dash;
-    private bool get;
+    private bool get; // Z 누른 경우
+    private bool use; // x 누른 경우
+    private bool isWall;
+
 
     private PlayerCollision coll;
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
     [SerializeField]private float JumpForce;
+    [SerializeField] private float OverWallJumpForce;
     [SerializeField] private float moveSpeed;
+
+    [SerializeField] private Transform handsPos = null;
     private float moveForce;
+    private float h;
 
     private string currentAnimation;
 
@@ -50,15 +57,31 @@ public class Player : MonoBehaviour
         WalkSoundCoolDownCheck();
         InputManager();
         Move();
+
+
         GetItem();
+        UseItem();
 
         if (Input.GetButtonUp("Horizontal"))
         {
             rb.velocity = new Vector2(rb.velocity.normalized.x * 0, rb.velocity.y);
         }
 
-        if (coll.OnGround) 
+        if (coll.OnGround)
+        {
+            isWall = true;
             Jump();
+
+        }
+
+        if (!coll.OnGround && coll.OnWall)
+             SeizeWall();
+
+        if (!isWall && Input.GetButtonUp("Horizontal"))
+        {
+            OverWall();
+        }
+
     }
 
     private void init()
@@ -66,6 +89,7 @@ public class Player : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         coll = GetComponent<PlayerCollision>();
         canMove = true;
+        isWall = true;
         moveSpeed = 1f;
         moveForce = 1.5f;
         JumpForce = 8f;
@@ -76,7 +100,8 @@ public class Player : MonoBehaviour
         walk = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
         get = Input.GetKeyDown(KeyCode.Z);
-
+        use = Input.GetKeyDown(KeyCode.X);
+        h = Input.GetAxisRaw("Horizontal");
     }
 
     private void Move()
@@ -85,7 +110,7 @@ public class Player : MonoBehaviour
         if (!canMove)
             return;
 
-        float h = Input.GetAxisRaw("Horizontal");
+ 
         rb.AddForce(Vector2.right * h, ForceMode2D.Impulse);
 
 
@@ -152,43 +177,73 @@ public class Player : MonoBehaviour
 
             _AnimState = AnimState.jump;
             SetCurrentAnimation(_AnimState);
-            StartCoroutine(DisableMovement(1f));
+            //StartCoroutine(DisableMovement(1f));
 
-            OverWall();
         }
+    }
+
+    private void SeizeWall()
+    {
+
+        Debug.Log("asd");
+        StartCoroutine(DisableMovement(0.5f));
+        _AnimState = AnimState.overWall;
+        SetCurrentAnimation(_AnimState);
+        isWall = false;
+
+        rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
+        //StartCoroutine(FreezeRotaison(0.5f));
+        
+
     }
 
     private void OverWall()
     {
-        if (coll.IsRightWall)
+        if(!coll.IsRightWall || !coll.IsLeftWall)
         {
-         
-            Debug.Log("asd");
-            StartCoroutine(DisableMovement(1f));
-            _AnimState = AnimState.overWall;
-            SetCurrentAnimation(_AnimState);
-            StartCoroutine(AnimeDuraiton());
-            rb.AddForce(Vector2.up * -JumpForce, ForceMode2D.Impulse);
+            isWall = true;
 
-            transform.Translate(new Vector2(1,1.5f));
-
-
-            return;
+            transform.Translate(new Vector2(1, 1.5f));
+          
         }
-        
+
     }
 
     private void GetItem()
     {
-        if(get && coll.OnLeftWall || get && coll.OnRightWall)
+        if(get && coll.OnWall)
         {
             Debug.Log("getItem");
-            Debug.Log(coll.gameObject.name);
+
             StartCoroutine(DisableMovement(1f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
 
         }
+    }
+
+    private void UseItem()
+    {
+
+        if (handsPos.GetChildCount() ==1)
+        {
+            if (use)
+            {
+                Destroy(handsPos.GetChild(0).gameObject);
+            }
+
+            if (get)
+            {
+                Destroy(handsPos.GetChild(0).gameObject);
+            }
+        }
+        else return;
+       
+    }
+
+    public bool GetItemGet()
+    {
+        return get;
     }
 
     IEnumerator DisableMovement(float time)
@@ -198,6 +253,12 @@ public class Player : MonoBehaviour
         canMove = true;
     }
 
+    IEnumerator FreezeRotaison(float time)
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        yield return new WaitForSeconds(time);
+        rb.constraints = RigidbodyConstraints2D.None;
+    }
 
     IEnumerator AnimeDuraiton()
     {
