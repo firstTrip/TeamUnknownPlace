@@ -5225,6 +5225,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestPlayer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8227953999626485724, guid: 3b5089f3034449c48942857065e04e34,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d13964ecdb5c3a41baaf40279af5aa1, type: 2}
+    - target: {fileID: 8227953999626485724, guid: 3b5089f3034449c48942857065e04e34,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8227953999626485727, guid: 3b5089f3034449c48942857065e04e34,
         type: 3}
       propertyPath: m_Mesh
