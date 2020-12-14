@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
 
     private void GetItem()
     {
-        if(get && coll.OnWall)
+        if (get)
         {
             Debug.Log("getItem");
 
