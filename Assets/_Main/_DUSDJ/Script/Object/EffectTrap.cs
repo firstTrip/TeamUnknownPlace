@@ -14,7 +14,7 @@ public class EffectTrap : MonoBehaviour, ICallback
         [Header("사운드웨이브 크기")] public float SoundWaveScale;
         [Header("소리 밸류")] public int SoundValue;
 
-        [Header("발생 타이밍&위치")] public StructSoundPoint[] SoundPoint;
+        [Header("추가발생 타이밍&위치")] public StructSoundPoint[] SoundPoint;
     }
 
     [System.Serializable]
