@@ -73,6 +73,21 @@ public class GameManager : MonoBehaviour
         Init();
     }
 
+
+    #region Temp UI
+    public GameObject TempUI;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TempUI.SetActive(!TempUI.activeSelf);
+        }
+    }
+
+
+    #endregion
+
+
     public void Init()
     {
         // 카메라 캐싱
