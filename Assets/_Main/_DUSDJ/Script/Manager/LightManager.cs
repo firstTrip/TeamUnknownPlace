@@ -93,12 +93,17 @@ public class LightManager : MonoBehaviour
         // 새 LA 작동
         NowLightArea = la;
         NowLightArea.IsEnter = true;
-        MainLight.transform.position = NowLightArea.LightPosition.position;        
+
+
+        if (NowLightArea.LightPosition != null)
+        {
+            MainLight.transform.position = NowLightArea.LightPosition.position;
+        }
         offSet = MainLight.transform.position - LightEndPosition.transform.position;
 
         // 일단은 플레이어를 비춘다?
         MainLight.transform.DOKill();
-        MainLight.transform.DOMove(GameManager.Instance.PlayerChara.transform.position + offSet, 0f);
+        MainLight.transform.DOMove(GameManager.Instance.PlayerChara.transform.position + offSet, 0.2f);
     }
 
 
@@ -136,7 +141,7 @@ public class LightManager : MonoBehaviour
     public void LookBySound(float duration, Vector3 source)
     {
         MainLight.transform.DOKill();
-        MainLight.transform.DOMove(source + offSet, 0.2f).SetEase(Ease.Linear);
+        MainLight.transform.DOMove(source + offSet, 2.0f).SetEase(Ease.InQuad);
 
         SetDuration(duration);
     }

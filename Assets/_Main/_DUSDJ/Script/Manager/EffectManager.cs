@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Cinemachine;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,13 +40,6 @@ public class EffectManager : MonoBehaviour
     #endregion
 
 
-    #region Camera
-
-    public Camera MainCamera;
-    public Vector3 CameraOriginPosition;
-
-    #endregion
-
     private void Awake()
     {
         #region SingleTone
@@ -64,10 +58,7 @@ public class EffectManager : MonoBehaviour
 
     public void Init()
     {
-        /* Camera */
-       MainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-       CameraOriginPosition = MainCamera.transform.position;
-
+        
         /* Data Init */
         List = new Dictionary<string, List<Effect>>();
         DataDic = new Dictionary<string, Effect>();
@@ -182,6 +173,35 @@ public class EffectManager : MonoBehaviour
 
     #endregion
 
+
+    #region Camera Effect
+
+    private IEnumerator CameraZoomCoroutine;
+
+    public void ZoomTarget(Transform target, float orthoValue, float duration = -1)
+    {
+        Transform originFollow = GameManager.Instance.Cinemachine.Follow;
+        float originOrthographicSize = GameManager.Instance.Cinemachine.m_Lens.OrthographicSize;
+
+        GameManager.Instance.Cinemachine.Follow = target;
+        GameManager.Instance.Cinemachine.m_Lens.OrthographicSize = orthoValue;
+
+        
+        if (duration > 0)
+        {            
+            if(CameraZoomCoroutine != null)
+            {
+                StopCoroutine(CameraZoomCoroutine);                
+            }
+
+            CameraZoomCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(duration, () => {
+                ZoomTarget(originFollow, originOrthographicSize);
+            });
+            StartCoroutine(CameraZoomCoroutine);
+        }
+    }
+
+    #endregion
 
 
 }
