@@ -94,9 +94,9 @@ public class GameManager : MonoBehaviour
         Cinemachine = FindObjectOfType<CinemachineVirtualCamera>();
         Confiner = Cinemachine.GetComponent<CinemachineConfiner>();
 
-        // Player 찾기 & 시네머신 Follow 적용
+        // Player 찾기
         PlayerChara = FindObjectOfType<Player>();
-        //Cinemachine.Follow = PlayerChara.transform;
+        
 
         AudioManager.Instance.Init();
         EffectManager.Instance.Init();

@@ -33,6 +33,7 @@ public class Scenario : MonoBehaviour
         CinemachineCollider?.gameObject.SetActive(value);
         TimeLine?.gameObject.SetActive(value);
         WallCollider?.SetActive(value);
+        
         foreach (var item in LightAreaArray)
         {
             item.gameObject.SetActive(value);
@@ -71,6 +72,9 @@ public class Scenario : MonoBehaviour
     {
         // 시네머신 콜라이더 설정
         GameManager.Instance.Confiner.m_BoundingShape2D = CinemachineCollider;
+
+        // 시네머신 Follow 적용
+        GameManager.Instance.Cinemachine.Follow = GameManager.Instance.PlayerChara.transform;
 
         // GameState Action
         GameManager.Instance.ChangeState(EnumGameState.Action);
