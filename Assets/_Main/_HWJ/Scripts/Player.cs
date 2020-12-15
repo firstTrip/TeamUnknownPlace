@@ -20,28 +20,31 @@ public class Player : MonoBehaviour
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
-    [SerializeField]private float JumpForce;
+    [Tooltip("덮어씌울 중력배율")] public float GravityScale;
+    [SerializeField] private float JumpForce;
+    [SerializeField] private float RopeUpForce;
     [SerializeField] private float OverWallJumpForce;
     [SerializeField] private float moveSpeed;
-
+   
     [SerializeField] private Transform handsPos = null;
     private float moveForce;
     private float h;
+    private float v;
 
     private string currentAnimation;
 
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle , walk , run , slowWalk , jump , get , overWall
+        idle, walk, run, slowWalk, jump, get, overWall, clime
     }
 
 
     #region WalkSound
 
-    [Header("발소리 쿨다운")]public float WalkSoundCoolDown = 0.2f;
+    [Header("발소리 쿨다운")] public float WalkSoundCoolDown = 0.2f;
     private float WalkSoundCoolDownNow = 0f;
-    [Header("발소리 밸류")]public int WalkSoundValue = 2;
+    [Header("발소리 밸류")] public int WalkSoundValue = 2;
     #endregion
 
 
@@ -54,34 +57,37 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.localScale = new Vector3(1, 1, 1);
         WalkSoundCoolDownCheck();
         InputManager();
+
         Move();
 
-
-        GetItem();
-        UseItem();
-
-        if (Input.GetButtonUp("Horizontal"))
-        {
-            rb.velocity = new Vector2(rb.velocity.normalized.x * 0, rb.velocity.y);
-        }
+        if (coll.OnLope && !coll.OnGround)
+            RopeAction();
+        else
+            rb.gravityScale = GravityScale;
 
         if (coll.OnGround)
         {
+            GetItem();
+
             isWall = true;
             Jump();
 
         }
 
+        UseItem();
+
+
         if (!coll.OnGround && coll.OnWall)
-             SeizeWall();
+            SeizeWall();
 
         if (!isWall && Input.GetButtonUp("Horizontal"))
         {
             OverWall();
         }
-
+    
     }
 
     private void init()
@@ -93,6 +99,9 @@ public class Player : MonoBehaviour
         moveSpeed = 1f;
         moveForce = 1.5f;
         JumpForce = 8f;
+
+        _AnimState = AnimState.idle;
+        SetCurrentAnimation(_AnimState);
     }
 
     private void InputManager()
@@ -102,15 +111,17 @@ public class Player : MonoBehaviour
         get = Input.GetKeyDown(KeyCode.Z);
         use = Input.GetKeyDown(KeyCode.X);
         h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
     }
 
     private void Move()
     {
 
+
+
         if (!canMove)
             return;
 
- 
         rb.AddForce(Vector2.right * h, ForceMode2D.Impulse);
 
 
@@ -119,7 +130,7 @@ public class Player : MonoBehaviour
             moveSpeed = 0.5f;
             _AnimState = AnimState.slowWalk;
         }
-           
+
         else if (dash)
         {
             moveSpeed = 3f;
@@ -133,21 +144,58 @@ public class Player : MonoBehaviour
 
         if (rb.velocity.x > moveForce)
         {
-            rb.velocity = new Vector2(moveForce * moveSpeed , rb.velocity.y);
+            rb.velocity = new Vector2(moveForce * moveSpeed, rb.velocity.y);
             transform.localScale = new Vector2(-h * 1f, 1f);
             WalkSound();
         }
         else if (rb.velocity.x < moveForce * (-1))
         {
-            rb.velocity = new Vector2(moveForce * (-1) * moveSpeed , rb.velocity.y);
+            rb.velocity = new Vector2(moveForce * (-1) * moveSpeed, rb.velocity.y);
             transform.localScale = new Vector2(-h * 1f, 1f);
             WalkSound();
         }
 
-        SetCurrentAnimation(_AnimState);
 
+        if (rb.velocity.x == 0)
+        {
+            _AnimState = AnimState.idle;
+            SetCurrentAnimation(_AnimState);
+        }
+
+        SetCurrentAnimation(_AnimState);
+        h = 0f;
     }
 
+    #region RopeAction
+    private void RopeAction()
+    {
+
+        Debug.Log("rope");
+        rb.AddForce(Vector2.up * v * 0.1f, ForceMode2D.Impulse);
+
+        rb.gravityScale = 0f;
+        StartCoroutine(AnimeDuraiton());
+
+        if (rb.velocity.x > moveForce)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * moveForce * RopeUpForce);
+            transform.localScale = new Vector2(-h * 1f, 1f);
+            _AnimState = AnimState.clime;
+            SetCurrentAnimation(_AnimState);
+
+            //WalkSound();
+        }
+        else if (rb.velocity.x < moveForce * (-1))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, moveForce * (-1) * RopeUpForce);
+            transform.localScale = new Vector2(-h * 1f, 1f);
+            _AnimState = AnimState.clime;
+            SetCurrentAnimation(_AnimState);
+
+            //WalkSound();
+        }
+    }
+    #endregion
     private void WalkSoundCoolDownCheck()
     {
         if (WalkSoundCoolDownNow > 0)
@@ -160,7 +208,7 @@ public class Player : MonoBehaviour
     {
         #region WalkSound
         if (WalkSoundCoolDownNow <= 0)
-        {            
+        {
             EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
             AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position);
 
@@ -193,18 +241,18 @@ public class Player : MonoBehaviour
 
         rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
         //StartCoroutine(FreezeRotaison(0.5f));
-        
+
 
     }
 
     private void OverWall()
     {
-        if(!coll.IsRightWall || !coll.IsLeftWall)
+        if (!coll.IsRightWall || !coll.IsLeftWall)
         {
             isWall = true;
 
             transform.Translate(new Vector2(1, 1.5f));
-          
+
         }
 
     }
@@ -218,6 +266,7 @@ public class Player : MonoBehaviour
             StartCoroutine(DisableMovement(1f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
+            //StartCoroutine(AnimeDuraiton());
 
         }
     }
@@ -225,7 +274,7 @@ public class Player : MonoBehaviour
     private void UseItem()
     {
 
-        if (handsPos.GetChildCount() ==1)
+        if (handsPos.GetChildCount() == 1)
         {
             if (use)
             {
@@ -238,7 +287,7 @@ public class Player : MonoBehaviour
             }
         }
         else return;
-       
+
     }
 
     public bool GetItemGet()
@@ -253,19 +302,11 @@ public class Player : MonoBehaviour
         canMove = true;
     }
 
-    IEnumerator FreezeRotaison(float time)
-    {
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        yield return new WaitForSeconds(time);
-        rb.constraints = RigidbodyConstraints2D.None;
-    }
-
     IEnumerator AnimeDuraiton()
     {
-        
+        canMove = false;
         yield return new WaitForSeconds(skeletonAnimation.skeleton.Data.FindAnimation(currentAnimation).Duration);
-        Debug.Log(skeletonAnimation.skeleton.Data.FindAnimation(currentAnimation).Duration);
-        
+        canMove = true;
     }
 
     #region AsncAnimation
@@ -310,19 +351,20 @@ public class Player : MonoBehaviour
                 break;
 
             case AnimState.get:
-                AsncAnimation(AnimClip[(int)AnimState.get], false, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.get], false, 0.5f);
                 break;
 
             case AnimState.overWall:
-                AsncAnimation(AnimClip[(int)AnimState.overWall], false, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.overWall], false, 0.5f);
                 break;
 
+            case AnimState.clime:
+                AsncAnimation(AnimClip[(int)AnimState.clime], true, 0.5f);
+                break;
         }
 
 
     }
     #endregion
-
-
 
 }

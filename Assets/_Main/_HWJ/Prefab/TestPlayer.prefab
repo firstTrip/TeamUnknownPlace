@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216936566142803773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.73, y: 2.67, z: 0}
+  m_LocalPosition: {x: -0.93, y: 0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8227953999626485720}
@@ -79,8 +79,15 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  LopeLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnGround: 0
   OnWall: 0
+  OnLope: 0
   OnRightWall: 0
   OnLeftWall: 0
   IsRightWall: 0
@@ -114,7 +121,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6b49f571e0d4c4446ac0554d40d38799, type: 2}
   - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
   - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
+  GravityScale: 1
   JumpForce: 0
+  RopeUpForce: 0.25
   OverWallJumpForce: 0
   moveSpeed: 0
   handsPos: {fileID: 1857097933707203980}
@@ -172,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 8227953999626485721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.075, y: 0.075, z: 1}
+  m_LocalScale: {x: 0.045, y: 0.045, z: 1}
   m_Children:
   - {fileID: 1857097933707203980}
   m_Father: {fileID: 8227953999411299616}
@@ -225,7 +234,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1004935637
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 2
 --- !u!114 &8227953999626485722
 MonoBehaviour:

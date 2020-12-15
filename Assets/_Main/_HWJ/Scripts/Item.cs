@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+
+    public bool isGet;
     // Start is called before the first frame update
     void Start()
     {
-        
+        isGet = false;
     }
 
     // Update is called once per frame
@@ -18,15 +20,24 @@ public class Item : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (!isGet)
         {
-            Debug.Log(other.GetComponentInParent<Player>().GetItemGet());
-            if (other.GetComponentInParent<Player>().GetItemGet())
+            if (other.gameObject.CompareTag("Player"))
             {
-                gameObject.transform.SetParent(other.transform.GetChild(0));
+                Debug.Log(other.GetComponentInParent<Player>().GetItemGet());
+                if (other.GetComponentInParent<Player>().GetItemGet())
+                {
+                    isGet = true;
+                    gameObject.transform.SetParent(other.transform.GetChild(0));
+
+                }
+
             }
 
         }
+        else return;
+
+        
     }
   
 }
