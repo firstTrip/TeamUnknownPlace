@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
 
 
         if (!coll.OnGround && coll.OnWall)
-            SeizeWall();
+            //SeizeWall();
 
         if (!isWall && Input.GetButtonUp("Horizontal"))
         {
@@ -155,12 +155,12 @@ public class Player : MonoBehaviour
             WalkSound();
         }
 
-
-        if (rb.velocity.x == 0)
+        if(rb.velocity.x < 0.0001 || rb.velocity.x > -0.0001)
         {
             _AnimState = AnimState.idle;
             SetCurrentAnimation(_AnimState);
         }
+
 
         SetCurrentAnimation(_AnimState);
         h = 0f;

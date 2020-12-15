@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class ThrowItem : Item
 {
-
-    public bool isGet;
-    public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
-        isGet = false;
-        rb = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -20,8 +16,11 @@ public class Item : MonoBehaviour
         
     }
 
-    public virtual void UseItem()
+    public override void UseItem()
     {
+        rb.velocity = gameObject.transform.right * 10f;
+        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+        isGet = false;
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -42,7 +41,6 @@ public class Item : MonoBehaviour
         }
         else return;
 
-        
+
     }
-  
 }

@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class HideItem : Item
 {
+    private SpriteRenderer spriteRenderer;
 
-    public bool isGet;
-    public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
-        isGet = false;
-        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -20,8 +18,13 @@ public class Item : MonoBehaviour
         
     }
 
-    public virtual void UseItem()
+    public override void UseItem()
     {
+        spriteRenderer.sortingLayerName = "Middleground_AP";
+        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+        this.gameObject.transform.position = transform.position;
+        isGet = false;
+
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -42,7 +45,7 @@ public class Item : MonoBehaviour
         }
         else return;
 
-        
+
     }
-  
+
 }
