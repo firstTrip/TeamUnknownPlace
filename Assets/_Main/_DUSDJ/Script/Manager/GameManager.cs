@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         // Player 찾기 & 시네머신 Follow 적용
         PlayerChara = FindObjectOfType<Player>();
-        Cinemachine.Follow = PlayerChara.transform;
+        //Cinemachine.Follow = PlayerChara.transform;
 
         AudioManager.Instance.Init();
         EffectManager.Instance.Init();

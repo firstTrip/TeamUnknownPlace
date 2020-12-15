@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Vegetation Material
+  m_Name: Vegetation Material_Low
   m_Shader: {fileID: -6465566751694194690, guid: c216bfff1b44b034a9a7ff4c422aa44d,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
@@ -38,10 +38,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _WindInfluenceMask: 0.7
+    - _WindInfluenceMask: 0.5
     - _WindScale: 0.5
     - _WindSpeed: 0.5
-    - _WindStrength: 0.5
+    - _WindStrength: 0.3
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

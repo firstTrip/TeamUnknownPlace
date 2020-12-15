@@ -44,7 +44,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _FogColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
-    - _FogColor2: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
-    - _FogSpeed: {r: 0.03, g: 0, b: 0, a: 0}
+    - _FogColor2: {r: 0, g: 0, b: 0, a: 1}
+    - _FogSpeed: {r: 0.05, g: 0, b: 0, a: 0}
     - _FogSpeed2: {r: 0.05, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
