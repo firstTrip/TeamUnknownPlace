@@ -81,10 +81,10 @@ MonoBehaviour:
     m_Bits: 256
   ropeLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 2048
   itemLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
   OnGround: 0
   OnWall: 0
   OnLope: 0
@@ -135,7 +135,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
   - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
   - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
-  gameManager: {fileID: 0}
   WalkSoundCoolDown: 0.2
   WalkSoundValue: 2
 --- !u!50 &8227953999411299619
@@ -176,7 +175,7 @@ GameObject:
   - component: {fileID: 8227953999626485725}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

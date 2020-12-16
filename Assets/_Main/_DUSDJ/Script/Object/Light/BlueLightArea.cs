@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BlueLightArea : MonoBehaviour
 {
-    public bool IsActivated = false;
+    public bool IsActivated = false;    
+    public bool IsPassed = false;
 
     private CollisionTrigger BlueLightTrigger;
     private Transform BlueLightPoint;
@@ -22,21 +23,30 @@ public class BlueLightArea : MonoBehaviour
 
     public void ChildTriggerEnter()
     {
+        if (IsPassed)
+        {
+            return;
+        }
+
         LightManager.Instance.SetBlueLight(BlueLightPoint.position);
         col.enabled = true;
     }
 
     public void ChildTriggerExit()
     {
-        if (!IsActivated)
+        if (IsPassed)
         {
             return;
         }
 
-        LightManager.Instance.CloseBlueLight();
+        if (IsActivated)
+        {
+            LightManager.Instance.CloseBlueLight();
 
-        col.enabled = false;
-        IsActivated = false;
+            col.enabled = false;
+            IsPassed = true;
+            Debug.Log(string.Format("col.enabled : {0}", col.enabled));
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

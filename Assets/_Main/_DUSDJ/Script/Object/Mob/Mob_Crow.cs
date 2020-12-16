@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mob_Crow : MonoBehaviour, ICallback
+public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 {
     [System.Serializable]
     public struct StructSoundData
@@ -27,6 +27,7 @@ public class Mob_Crow : MonoBehaviour, ICallback
 
     [Space]
 
+    [SerializeField]
     private float hp;
     public float HP
     {
@@ -79,7 +80,6 @@ public class Mob_Crow : MonoBehaviour, ICallback
 
     public void Action()
     {
-        LightManager.Instance.CloseBlueLight();
         LightManager.Instance.MainLight.IsHunting = true;
 
         EffectManager.Instance.SetPool(EffectKey, transform.position, EffectScale);
@@ -96,12 +96,18 @@ public class Mob_Crow : MonoBehaviour, ICallback
         };
 
 
-        IEnumerator delayCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, act);
+        IEnumerator delayCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.25f, act);
         StartCoroutine(delayCoroutine);   
     }
 
     public void Dead()
     {
+        // 일단 하드코딩
+        Debug.Log("Crow Dead");
+        EffectManager.Instance.SetPool("Dead", transform.position);
+
+        EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);
+
         transform.DOKill();
 
         gameObject.SetActive(false);
@@ -109,7 +115,7 @@ public class Mob_Crow : MonoBehaviour, ICallback
 
     public void Damage(float value)
     {
-        hp -= value;
+        HP -= value;
     }
 
 

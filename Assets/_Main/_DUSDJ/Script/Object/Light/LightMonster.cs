@@ -14,6 +14,13 @@ public class LightMonster : MonoBehaviour
     private Player player;
     private bool IsActive = false;
 
+    public List<IDamagable> DamageList;
+
+    private void Awake()
+    {
+        DamageList = new List<IDamagable>();
+    }
+
     public void Init()
     {
         player = GameManager.Instance.PlayerChara;
@@ -32,6 +39,9 @@ public class LightMonster : MonoBehaviour
 
         DebugManager.Instance.SetText(DebugManager.Instance.IsHuntingBox, IsHunting.ToString());
 
+        // Damage
+        DamageAll();
+
         if (IsHunting)
         {
             Hunt();            
@@ -42,6 +52,15 @@ public class LightMonster : MonoBehaviour
         }
     }
 
+    public void DamageAll()
+    {
+        for (int i = 0; i < DamageList.Count; i++)
+        {
+            float distance = Vector2.Distance(transform.position, DamageList[i].GetGameObject().transform.position);
+            Debug.Log(string.Format("Damage Distance : {0}", distance));
+            DamageList[i].Damage(distance);
+        }
+    }
 
 
     public void SetTarget(Transform target)
@@ -108,15 +127,41 @@ public class LightMonster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 활동정지시 (순서 아직 고려중)
         if(IsActive == false)
         {
             return;
         }
 
+        // 파랑빛 충돌시 바운스
         if(collision.gameObject.layer == LayerMask.NameToLayer("BlueLight"))
         {
             Bounce(collision.transform.position, 2.0f);
             return;
+        }
+
+        // 캐릭터 충돌시 천천히 침식
+        if(collision.CompareTag("Player") || collision.CompareTag("Mob"))
+        {
+            IDamagable id = collision.GetComponent<IDamagable>();
+            if (!DamageList.Contains(id))
+            {
+                Debug.Log("DamageList + " + id.GetGameObject().name);
+                DamageList.Add(id);
+            }            
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // 캐릭터 아웃시 침식해제
+        if (collision.CompareTag("Player") || collision.CompareTag("Mob"))
+        {
+            IDamagable id = collision.GetComponent<IDamagable>();
+            if (DamageList.Contains(id))
+            {
+                DamageList.Remove(id);
+            }
         }
     }
 }
