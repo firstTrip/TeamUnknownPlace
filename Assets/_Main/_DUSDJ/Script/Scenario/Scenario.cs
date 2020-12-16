@@ -32,7 +32,11 @@ public class Scenario : MonoBehaviour
     {
         CinemachineCollider?.gameObject.SetActive(value);
         TimeLine?.gameObject.SetActive(value);
-        WallCollider?.SetActive(value);
+        
+        if (value)
+        {
+            WallCollider?.SetActive(value);
+        }
         
         foreach (var item in LightAreaArray)
         {
