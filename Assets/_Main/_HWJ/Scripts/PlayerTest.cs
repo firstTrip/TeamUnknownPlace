@@ -86,9 +86,10 @@ public class PlayerTest : MonoBehaviour
     #region InputManager
     private void InputManager()
     {
+        /*
         if (GameManager.Instance.NowState == EnumGameState.Ready)
             return;
-
+        */
         walk = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
         get = Input.GetKeyDown(KeyCode.Z);
