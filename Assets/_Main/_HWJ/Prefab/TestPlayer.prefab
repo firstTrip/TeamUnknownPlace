@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 8227953999411299616}
   - component: {fileID: 8227953999411299620}
   - component: {fileID: 6019986782889936064}
-  - component: {fileID: 2628687045235852607}
   - component: {fileID: 8227953999411299619}
   m_Layer: 0
   m_Name: TestPlayer
@@ -80,15 +79,16 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  LopeLayer:
+  ropeLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   itemLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   OnGround: 0
   OnWall: 0
   OnLope: 0
+  OnItem: 0
   OnRightWall: 0
   OnLeftWall: 0
   IsRightWall: 0
@@ -114,57 +114,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 0
-  JumpForce: 0
-  GravityScale: 0
+  JumpForce: 5
+  GravityScale: 1
   WallSlideSpeed: 5
   WallJumpLerp: 10
   DashSpeed: 20
-  moveSpeed: 0
-  isDefaultLookLeft: 1
-  CanMove: 1
-  WallGrab: 0
-  WallJumped: 0
-  IsWallSlide: 0
-  IsDashing: 0
-  PlayerSide: 1
-  skeletonAnimation: {fileID: 8227953999626485722}
-  AnimClip:
-  - {fileID: 11400000, guid: 6d9dba32bdfc1a24d933195d09ca7bbb, type: 2}
-  - {fileID: 11400000, guid: 4ba906c6a7c6de74eb1cffacfa4369b5, type: 2}
-  - {fileID: 11400000, guid: 1a9d11bb9a7448d48928bae235a1f2f9, type: 2}
-  - {fileID: 11400000, guid: 3200a9b19b778c44d99bc90fa6c66f13, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &2628687045235852607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999411299617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2cd04c933c66e84b89750aa7fc0b03d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 8227953999626485722}
-  AnimClip:
-  - {fileID: 11400000, guid: 6d9dba32bdfc1a24d933195d09ca7bbb, type: 2}
-  - {fileID: 11400000, guid: 4ba906c6a7c6de74eb1cffacfa4369b5, type: 2}
-  - {fileID: 11400000, guid: 1a9d11bb9a7448d48928bae235a1f2f9, type: 2}
-  - {fileID: 11400000, guid: 3200a9b19b778c44d99bc90fa6c66f13, type: 2}
-  - {fileID: 11400000, guid: 6b49f571e0d4c4446ac0554d40d38799, type: 2}
-  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
-  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
-  GravityScale: 1
-  JumpForce: 0
-  RopeUpForce: 0.25
-  OverWallJumpForce: 0
-  moveSpeed: 0
+  RopeUpForce: 1
   handsPos: {fileID: 1857097933707203980}
-  WalkSoundCoolDown: 0.55
+  isDefaultLookLeft: 1
+  WallJumped: 0
+  PlayerSide: 1
+  item: {fileID: 0}
+  skeletonAnimation: {fileID: 8227953999626485722}
+  AnimClip:
+  - {fileID: 11400000, guid: 6d9dba32bdfc1a24d933195d09ca7bbb, type: 2}
+  - {fileID: 11400000, guid: 4ba906c6a7c6de74eb1cffacfa4369b5, type: 2}
+  - {fileID: 11400000, guid: 1a9d11bb9a7448d48928bae235a1f2f9, type: 2}
+  - {fileID: 11400000, guid: 3200a9b19b778c44d99bc90fa6c66f13, type: 2}
+  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
+  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
+  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
+  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
+  gameManager: {fileID: 0}
+  WalkSoundCoolDown: 0.2
   WalkSoundValue: 2
 --- !u!50 &8227953999411299619
 Rigidbody2D:

@@ -145,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGet: 0
   rb: {fileID: 0}
+  type: 1

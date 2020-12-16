@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class HideItem : Item
 {
-    private SpriteRenderer spriteRenderer;
 
+
+    private SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     // Update is called once per frame
@@ -20,10 +22,20 @@ public class HideItem : Item
 
     public override void UseItem()
     {
-        spriteRenderer.sortingLayerName = "Middleground_AP";
-        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-        this.gameObject.transform.position = transform.position;
-        isGet = false;
+        if(itemType == ItemType.Carriable)
+        {
+            spriteRenderer.sortingLayerName = "Middleground_AP";
+            this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+            this.gameObject.transform.position = transform.position;
+            isGet = false;
+
+        }else if(itemType == ItemType.UnCarriable)
+        {
+            spriteRenderer.sortingLayerName = "Middleground_AP";
+            this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+            this.gameObject.transform.position = transform.position;
+        }
+
 
     }
 

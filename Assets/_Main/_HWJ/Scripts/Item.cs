@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-
+    public enum ItemType { ThrowItem, Carriable, UnCarriable };
+    public ItemType itemType;
     public bool isGet;
     public Rigidbody2D rb;
     // Start is called before the first frame update
