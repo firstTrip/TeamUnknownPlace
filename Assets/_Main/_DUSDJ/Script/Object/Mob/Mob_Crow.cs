@@ -18,7 +18,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     }
 
     [Header("Sound Data")] public StructSoundData SoundData;
-
+    private Vector3 soundWaveScale;
     [Space]
 
     [Header("Effect Data")] public string EffectKey;
@@ -51,6 +51,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
         }
     }
 
+    private bool IsAlive = false;
     private Animator anim;
 
 
@@ -76,6 +77,9 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     public void Init()
     {
         anim = GetComponent<Animator>();
+
+        soundWaveScale = new Vector3(SoundData.SoundWaveScale, SoundData.SoundWaveScale, 1.0f);
+        IsAlive = true;
     }
 
     public void Action()
@@ -104,27 +108,40 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     {
         // 일단 하드코딩
         Debug.Log("Crow Dead");
+        IsAlive = false;
+
         EffectManager.Instance.SetPool("Dead", transform.position);
-
-        EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);
-
         transform.DOKill();
+        StopAllCoroutines();
 
-        gameObject.SetActive(false);
+        AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position);
+        EffectManager.Instance.SetPool("SoundWave", transform.position, soundWaveScale);
+
+        IEnumerator coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {
+            EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);
+            gameObject.SetActive(false);
+        });
+
+        StartCoroutine(coroutine);   
     }
 
     public void Damage(float value)
     {
+        if (!IsAlive)
+        {
+            return;
+        }
+
         HP -= value;
     }
 
+    
 
     IEnumerator SoundCoroutine()
     {
         float t = SoundData.ActionCoolDown;
 
-        Vector3 soundWaveScale = new Vector3(SoundData.SoundWaveScale, SoundData.SoundWaveScale, 1.0f);
-
+       
         while (true)
         {
             if (t >= SoundData.ActionCoolDown)

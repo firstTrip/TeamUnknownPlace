@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
 
     #region Values
@@ -356,6 +356,19 @@ public class Player : MonoBehaviour
         }
 
 
+    }
+
+    #endregion
+
+    #region IDamagable
+    public void Damage(float value)
+    {
+        return;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
     #endregion
 
