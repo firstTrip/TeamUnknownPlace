@@ -152,12 +152,15 @@ public class PlayerTest : MonoBehaviour
         }
 
         rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
-        WalkSound();
 
         if(rb.velocity.x == 0)
         {
             _AnimState = AnimState.idle;
+            FlipAnim();
+            SetCurrentAnimation(_AnimState);
+            return;
         }
+        WalkSound();
 
         FlipAnim();
         SetCurrentAnimation(_AnimState);

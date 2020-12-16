@@ -29,11 +29,6 @@ public class HideItem : Item
             this.gameObject.transform.position = transform.position;
             isGet = false;
 
-        }else if(itemType == ItemType.UnCarriable)
-        {
-            spriteRenderer.sortingLayerName = "Middleground_AP";
-            this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-            this.gameObject.transform.position = transform.position;
         }
 
 
@@ -41,13 +36,21 @@ public class HideItem : Item
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(isGet);
         if (!isGet)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                if (other.GetComponentInParent<PlayerTest>().GetItemStatus())
+
+                if (other.GetComponentInParent<Player>().GetItemStatus())
                 {
+                    if (itemType == ItemType.UnCarriable)
+                    {
+                        spriteRenderer.sortingLayerName = "Middleground_AP";
+                        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+                        //this.gameObject.transform.position = transform.position;
+                        isGet = true;
+                        return;
+                    }
                     isGet = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));
 

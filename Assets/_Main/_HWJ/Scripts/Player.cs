@@ -152,12 +152,15 @@ public class Player : MonoBehaviour
         }
 
         rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
-        WalkSound();
 
         if (rb.velocity.x == 0)
         {
             _AnimState = AnimState.idle;
+            FlipAnim();
+            SetCurrentAnimation(_AnimState);
+            return;
         }
+        WalkSound();
 
         FlipAnim();
         SetCurrentAnimation(_AnimState);
@@ -187,23 +190,12 @@ public class Player : MonoBehaviour
     {
         if (get && coll.OnItem)
         {
-            Debug.Log("asdqwe");
             StartCoroutine(DisableMovement(1f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
+            Debug.Log(handsPos.childCount);
         }
 
-        if (handsPos.GetChildCount() != 0)
-        {
-            item = handsPos.GetChild(0).gameObject;
-            if (item.GetComponent<Item>().itemType.ToString() == "UnCarriable")
-            {
-                item.GetComponent<Item>().UseItem();
-            }
-
-
-            //handsPos.GetChild(0).gameObject.SetActive(false);
-        }
     }
     private void UseItem()
     {
@@ -215,8 +207,8 @@ public class Player : MonoBehaviour
             {
                 item.GetComponent<Item>().UseItem();
                 item = null;
-                //item.GetComponent<Item>().rb.velocity = handsPos.transform.right * 5f;
-                //item.SetActive(false);
+                item.GetComponent<Item>().rb.velocity = handsPos.transform.right * 5f;
+                item.SetActive(false);
             }
             else if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {

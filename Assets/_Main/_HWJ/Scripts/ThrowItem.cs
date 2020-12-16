@@ -20,20 +20,19 @@ public class ThrowItem : Item
     public override void UseItem()
     {
 
-        rb.velocity = gameObject.transform.right * 10f;
-        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+        //rb.velocity = gameObject.transform.right * 10f;
+        //this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         isGet = false;
 
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(isGet);
         if (!isGet)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                if (other.GetComponentInParent<PlayerTest>().GetItemStatus())
+                if (other.GetComponentInParent<Player>().GetItemStatus())
                 {
                     isGet = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));
