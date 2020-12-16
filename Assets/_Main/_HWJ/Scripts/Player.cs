@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
 
     #region Values
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     //private Animator anim { get; set; }
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
-    [SerializeField] private GameManager gameManager;
+    
 
     #endregion
 
@@ -86,10 +86,10 @@ public class Player : MonoBehaviour
     #region InputManager
     private void InputManager()
     {
-        /*
+        
         if (GameManager.Instance.NowState == EnumGameState.Ready)
             return;
-        */
+        
         walk = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
         get = Input.GetKeyDown(KeyCode.Z);
@@ -160,6 +160,8 @@ public class Player : MonoBehaviour
             SetCurrentAnimation(_AnimState);
             return;
         }
+        WalkSound();
+
         WalkSound();
 
         FlipAnim();
@@ -263,9 +265,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    #region WalkSound
     private void WalkSound()
     {
-        #region WalkSound
+        
         if (WalkSoundCoolDownNow <= 0)
         {
             EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
@@ -273,8 +276,10 @@ public class Player : MonoBehaviour
 
             WalkSoundCoolDownNow = WalkSoundCoolDown;
         }
-        #endregion
+        
     }
+    #endregion
+
     #endregion
 
     #region FlipAnim
@@ -341,6 +346,19 @@ public class Player : MonoBehaviour
         }
 
 
+    }
+
+    #endregion
+
+    #region IDamagable
+    public void Damage(float value)
+    {
+        return;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
     #endregion
 

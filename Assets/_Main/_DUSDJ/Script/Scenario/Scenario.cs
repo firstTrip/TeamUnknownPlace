@@ -32,7 +32,11 @@ public class Scenario : MonoBehaviour
     {
         CinemachineCollider?.gameObject.SetActive(value);
         TimeLine?.gameObject.SetActive(value);
-        WallCollider?.SetActive(value);
+        
+        if (value)
+        {
+            WallCollider?.SetActive(value);
+        }
         
         foreach (var item in LightAreaArray)
         {
@@ -90,6 +94,8 @@ public class Scenario : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(string.Format("{0} : Enter On Scenario", collision.gameObject.name));
+
         if (collision.CompareTag("Player"))
         {
             if (isEnter)

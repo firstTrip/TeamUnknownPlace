@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Mob
   layers:
   - Default
   - TransparentFX
@@ -14,10 +15,10 @@ TagManager:
   - 
   - 
   - Floor
-  - Rope
+  - BlueLight
   - DontRenderOnWater
-  - item
-  - 
+  - Rope
+  - Item
   - 
   - 
   - 

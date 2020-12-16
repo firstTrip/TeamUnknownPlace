@@ -32,9 +32,67 @@ public class LightManager : MonoBehaviour
     #endregion
 
 
+    #region Blue Light
+    public Light2D BlueLight;
+    public float OriginIntensity = 1;
+    public float InnerRadius = 12;
+    public float OuterRadius = 18;
+
+    IEnumerator BlueLightCoroutine;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            CloseBlueLight();
+        }
+    }
+
+    public void SetBlueLight(Vector3 pos)
+    {
+        if (BlueLightCoroutine != null)
+        {
+            StopCoroutine(BlueLightCoroutine);
+        }
+
+        BlueLight.transform.position = pos;
+
+        BlueLight.gameObject.SetActive(true);
+    }
+
+    public void CloseBlueLight()
+    {
+        if(BlueLightCoroutine != null)
+        {
+            StopCoroutine(BlueLightCoroutine);
+        }
+        BlueLightCoroutine = CloseBlueLightCoroutine();
+        StartCoroutine(BlueLightCoroutine);
+    }
+
+    IEnumerator CloseBlueLightCoroutine()
+    {
+        float t = 0;
+
+        while(t < 2.0f)
+        {
+            t += Time.deltaTime;
+
+            BlueLight.intensity = Mathf.Lerp(OriginIntensity, 0, t / 2.0f);
+            BlueLight.pointLightInnerRadius = Mathf.Lerp(InnerRadius, 0, t / 2.0f);
+            BlueLight.pointLightOuterRadius = Mathf.Lerp(OuterRadius, 0, t / 2.0f);
+
+            yield return null;
+        }
+
+        BlueLight.gameObject.SetActive(false);
+    }
+
+    #endregion
+
     #region Main Light (빛이 1개라는 전제)
 
-    [HideInInspector] public Light2D MainLight;
+    [HideInInspector] public LightMonster MainLight;
     private Transform LightEndPosition;
     private Vector3 offSet;
 
@@ -68,7 +126,11 @@ public class LightManager : MonoBehaviour
 
     public void Init()
     {
-        MainLight = GameObject.Find("MainLight").GetComponent<Light2D>();
+        MainLight = GameObject.Find("MainLight").GetComponent<LightMonster>();
+        MainLight.Init();
+
+        BlueLight = GameObject.Find("BlueLight").GetComponent<Light2D>();
+
         LightEndPosition = MainLight.transform.Find("LightEnd");
         offSet = MainLight.transform.position - LightEndPosition.transform.position;
     }
@@ -97,13 +159,13 @@ public class LightManager : MonoBehaviour
 
         if (NowLightArea.LightPosition != null)
         {
-            MainLight.transform.position = NowLightArea.LightPosition.position;
+            //MainLight.transform.position = NowLightArea.LightPosition.position;
         }
         offSet = MainLight.transform.position - LightEndPosition.transform.position;
 
         // 일단은 플레이어를 비춘다?
-        MainLight.transform.DOKill();
-        MainLight.transform.DOMove(GameManager.Instance.PlayerChara.transform.position + offSet, 0.2f);
+        //MainLight.transform.DOKill();
+        //MainLight.transform.DOMove(GameManager.Instance.PlayerChara.transform.position + offSet, 0.2f);
     }
 
 
@@ -140,8 +202,8 @@ public class LightManager : MonoBehaviour
 
     public void LookBySound(float duration, Vector3 source)
     {
-        MainLight.transform.DOKill();
-        MainLight.transform.DOMove(source + offSet, 2.0f).SetEase(Ease.InQuad);
+        //MainLight.transform.DOKill();
+        //MainLight.transform.DOMove(source + offSet, 2.0f).SetEase(Ease.InQuad);
 
         SetDuration(duration);
     }

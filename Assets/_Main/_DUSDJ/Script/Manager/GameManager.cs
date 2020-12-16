@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
         EffectManager.Instance.Init();
         LightManager.Instance.Init();
 
+        
+
         NowState = EnumGameState.Ready;
     }
 
