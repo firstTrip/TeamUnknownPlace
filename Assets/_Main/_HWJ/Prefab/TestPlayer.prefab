@@ -80,7 +80,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  LopeLayer:
+  ropeLayer:
     serializedVersion: 2
     m_Bits: 0
   itemLayer:
@@ -89,6 +89,7 @@ MonoBehaviour:
   OnGround: 0
   OnWall: 0
   OnLope: 0
+  OnItem: 0
   OnRightWall: 0
   OnLeftWall: 0
   IsRightWall: 0
@@ -119,14 +120,15 @@ MonoBehaviour:
   WallSlideSpeed: 5
   WallJumpLerp: 10
   DashSpeed: 20
-  moveSpeed: 0
+  RopeUpForce: 0
+  handsPos: {fileID: 0}
   isDefaultLookLeft: 1
-  CanMove: 1
   WallGrab: 0
   WallJumped: 0
   IsWallSlide: 0
   IsDashing: 0
   PlayerSide: 1
+  item: {fileID: 0}
   skeletonAnimation: {fileID: 8227953999626485722}
   AnimClip:
   - {fileID: 11400000, guid: 6d9dba32bdfc1a24d933195d09ca7bbb, type: 2}
@@ -137,6 +139,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  WalkSoundCoolDown: 0.2
+  WalkSoundValue: 2
 --- !u!114 &2628687045235852607
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,10 +25,7 @@ public class PlayerTest : MonoBehaviour
     [Header("Booleans")]
     [Tooltip("캐릭터가 기본 왼쪽을 보고 있다면 True")]
     public bool isDefaultLookLeft = true;
-    public bool WallGrab;
     public bool WallJumped;
-    public bool IsWallSlide;
-    public bool IsDashing;
 
     public int PlayerSide = 1;
     [Space]
@@ -56,16 +53,13 @@ public class PlayerTest : MonoBehaviour
         idle, walk, run, slowWalk, jump, get, overWall, clime
     }
     #endregion
-
     #region Components
-    private BetterJump betterJump;
     private PlayerCollision coll;
     private Rigidbody2D rb { get; set; }
     //private Animator anim { get; set; }
-    private PlayerAnimation anim;
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
-
+    [SerializeField] private GameManager gameManager;
 
     #endregion
 
@@ -81,13 +75,20 @@ public class PlayerTest : MonoBehaviour
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
 
+        canMove = true;
+
         _AnimState = AnimState.idle;
         SetCurrentAnimation(_AnimState);
+
+   
     }
 
     #region InputManager
     private void InputManager()
     {
+        if (GameManager.Instance.NowState == EnumGameState.Ready)
+            return;
+
         walk = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
         get = Input.GetKeyDown(KeyCode.Z);
@@ -108,17 +109,20 @@ public class PlayerTest : MonoBehaviour
         InputManager();
 
         Vector2 dir = new Vector2(x, y);
+        if(!coll.OnLope)
+            Walk(dir);
 
-        Walk(dir);
-        Jump();
 
-        if(coll.OnGround)
+        if (coll.OnGround || coll.OnLope)
+            Jump();
+
+        if (coll.OnGround)
             GetItem();
 
         UseItem();
 
         if (coll.OnLope && !coll.OnGround)
-            RopeAction(dir);
+            RopeAction();
         else
             rb.gravityScale = GravityScale;
     }
@@ -127,9 +131,6 @@ public class PlayerTest : MonoBehaviour
     private void Walk(Vector2 dir)
     {
         if (!canMove)
-            return;
-
-        if (WallGrab)
             return;
 
         if (walk)
@@ -149,16 +150,9 @@ public class PlayerTest : MonoBehaviour
             _AnimState = AnimState.walk;
         }
 
-        if (!WallJumped)
-        {
-            rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
-            WalkSound();
-        }
-        else
-        {
-            rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * MoveSpeed, rb.velocity.y)), WallJumpLerp * Time.deltaTime);
-            WalkSound();
-        }
+        rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
+        WalkSound();
+
         if(rb.velocity.x == 0)
         {
             _AnimState = AnimState.idle;
@@ -187,7 +181,7 @@ public class PlayerTest : MonoBehaviour
     }
     #endregion
 
-
+    
     private void GetItem()
     {
         if (get && coll.OnItem)
@@ -201,6 +195,12 @@ public class PlayerTest : MonoBehaviour
         if(handsPos.GetChildCount() !=0)
         {
             item = handsPos.GetChild(0).gameObject;
+            if (item.GetComponent<Item>().itemType.ToString() == "UnCarriable")
+            {
+                item.GetComponent<Item>().UseItem();
+            }
+
+
             //handsPos.GetChild(0).gameObject.SetActive(false);
         }
     }
@@ -209,19 +209,24 @@ public class PlayerTest : MonoBehaviour
 
         if (item != null)
         {
-            if (use)
-            {
-
-                item.GetComponent<Item>().UseItem();
-                item = null;
-                //item.SetActive(false);
-            }
-
+        
             if (get)
             {
+                item.GetComponent<Item>().UseItem();
+                item = null;
                 //item.GetComponent<Item>().rb.velocity = handsPos.transform.right * 5f;
                 //item.SetActive(false);
             }
+            else if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
+            {
+                if (walk)
+                {
+                    item.GetComponent<Item>().UseItem();
+                    item.transform.position += new Vector3(0, 1, 0);
+
+                }
+            }
+
         }
         else return;
 
@@ -232,7 +237,7 @@ public class PlayerTest : MonoBehaviour
     }
 
     #region RopeAction
-    private void RopeAction(Vector2 dir)
+    private void RopeAction()
     {
 
         Debug.Log("rope");
@@ -287,7 +292,8 @@ public class PlayerTest : MonoBehaviour
     }
     #endregion
 
-    #region AsncAnimation
+    #region 
+
     private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
     {
 

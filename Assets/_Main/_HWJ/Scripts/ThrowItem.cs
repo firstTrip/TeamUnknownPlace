@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ThrowItem : Item
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +19,11 @@ public class ThrowItem : Item
 
     public override void UseItem()
     {
+
         rb.velocity = gameObject.transform.right * 10f;
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         isGet = false;
+
     }
 
     private void OnTriggerStay2D(Collider2D other)
