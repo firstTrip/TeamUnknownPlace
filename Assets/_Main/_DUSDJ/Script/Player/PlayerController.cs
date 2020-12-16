@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
         if (coll.OnGround && !isGroundTouch)
         {
-            GroundTouch();
+            //GroundTouch();
             isGroundTouch = true;
         }
 
