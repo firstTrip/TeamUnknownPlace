@@ -177,29 +177,43 @@ public class EffectManager : MonoBehaviour
     #region Camera Effect
 
     private IEnumerator CameraZoomCoroutine;
+    private IEnumerator ZoomDelayCoroutine;
+    private float ZoomTime = 0.5f;
+
+    public void TargetCamera()
+    {
+
+    }
 
     public void ZoomTarget(Transform target, float orthoValue, float duration = -1)
     {
+        if (ZoomDelayCoroutine != null)
+        {
+            StopCoroutine(ZoomDelayCoroutine);
+        }
+
         Transform originFollow = GameManager.Instance.Cinemachine.Follow;
         float originOrthographicSize = GameManager.Instance.Cinemachine.m_Lens.OrthographicSize;
 
         GameManager.Instance.Cinemachine.Follow = target;
         GameManager.Instance.Cinemachine.m_Lens.OrthographicSize = orthoValue;
 
-        
-        if (duration > 0)
-        {            
-            if(CameraZoomCoroutine != null)
-            {
-                StopCoroutine(CameraZoomCoroutine);                
-            }
+        // 시네머신 Cinemachine 카메라로 적용
+        GameManager.Instance.Cinemachine.gameObject.SetActive(true);
+        GameManager.Instance.PlayerCamera.gameObject.SetActive(false);
 
-            CameraZoomCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(duration, () => {
-                ZoomTarget(originFollow, originOrthographicSize);
+        if (duration > 0)
+        {   
+            ZoomDelayCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(duration, () => {
+                // 시네머신 Cinemachine 카메라로 적용
+                GameManager.Instance.PlayerCamera.gameObject.SetActive(true);
+                GameManager.Instance.Cinemachine.gameObject.SetActive(false);
+                
             });
-            StartCoroutine(CameraZoomCoroutine);
+            StartCoroutine(ZoomDelayCoroutine);
         }
     }
+
 
     #endregion
 

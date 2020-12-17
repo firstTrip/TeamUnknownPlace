@@ -84,19 +84,21 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 
     public void Action()
     {
+        // 사냥시작
         LightManager.Instance.MainLight.IsHunting = true;
 
+        // 까마귀
         EffectManager.Instance.SetPool(EffectKey, transform.position, EffectScale);
+
+        // 까마귀 줌 & 플레이어 조작 정지
+        EffectManager.Instance.ZoomTarget(transform, 3.0f);
+        GameManager.Instance.NowState = EnumGameState.Ready;
 
         Action act = () => {
             anim.SetBool("Action", true);
 
-            transform.DOMoveX(-12f, 6f);
-            StartCoroutine(SoundCoroutine());
-
-            EffectManager.Instance.ZoomTarget(transform, 3.0f);
-
-            // 캐릭터 정지까지 넣으면 좋을듯
+            transform.DOMoveX(-12f, 12f);
+            StartCoroutine(SoundCoroutine());            
         };
 
 
@@ -110,6 +112,9 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
         Debug.Log("Crow Dead");
         IsAlive = false;
 
+        // 자막
+        UIManager.Instance.SetNotice("붉은 빛은 큰 소리를 내는 까마귀를 따라갔다.", 4.0f);
+
         EffectManager.Instance.SetPool("Dead", transform.position);
         transform.DOKill();
         StopAllCoroutines();
@@ -117,8 +122,10 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
         AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position);
         EffectManager.Instance.SetPool("SoundWave", transform.position, soundWaveScale);
 
-        IEnumerator coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {
-            EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);
+        IEnumerator coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {            
+            // 조작 재개 & 플레이어 카메라
+            GameManager.Instance.NowState = EnumGameState.Action;
+            EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);       
             gameObject.SetActive(false);
         });
 

@@ -32,7 +32,9 @@ public class GameManager : MonoBehaviour
     #region Camera (Cinemachine)
 
     [HideInInspector] public CinemachineVirtualCamera Cinemachine;
+    [HideInInspector] public CinemachineVirtualCamera PlayerCamera;
     [HideInInspector] public CinemachineConfiner Confiner;
+    
 
     #endregion
 
@@ -91,12 +93,15 @@ public class GameManager : MonoBehaviour
     public void Init()
     {
         // 카메라 캐싱
-        Cinemachine = FindObjectOfType<CinemachineVirtualCamera>();
+        Cinemachine = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+        PlayerCamera = GameObject.Find("CM vcam2").GetComponent<CinemachineVirtualCamera>();
+
+        //Cinemachine = FindObjectOfType<CinemachineVirtualCamera>();
         Confiner = Cinemachine.GetComponent<CinemachineConfiner>();
 
         // Player 찾기
         PlayerChara = FindObjectOfType<Player>();
-        
+        PlayerCamera.Follow = PlayerChara.transform;
 
         AudioManager.Instance.Init();
         EffectManager.Instance.Init();
