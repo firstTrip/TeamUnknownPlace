@@ -9,21 +9,27 @@ public class Item : MonoBehaviour
     public bool isGet;
     public bool isUse;
     public Rigidbody2D rb;
+
+    public float CollisionRadius = 0.15f;
+    public LayerMask groundLayer;
+    public bool OnGround;
+    public Vector2 BottomOffset;
     // Start is called before the first frame update
     void Start()
     {
         isGet = false;
+        isUse = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public virtual void UseItem()
     {
+
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -46,5 +52,9 @@ public class Item : MonoBehaviour
 
         
     }
-  
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere((Vector2)transform.position + BottomOffset, CollisionRadius);
+    }
 }

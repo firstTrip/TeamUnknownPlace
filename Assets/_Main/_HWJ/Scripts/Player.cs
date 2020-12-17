@@ -27,6 +27,8 @@ public class Player : MonoBehaviour, IDamagable
     private bool get; // Z 누른 경우
     private bool use;
     private bool isWall;
+    public bool isInvincibility; //  true 일시 대미지 x 
+
 
     float x;
     float y;
@@ -75,6 +77,7 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(isInvincibility);
         WalkSoundCoolDownCheck();
         InputManager();
 
@@ -83,11 +86,24 @@ public class Player : MonoBehaviour, IDamagable
         if (!coll.OnLope)
             Walk(dir);
             
-
-
         if (coll.OnGround || coll.OnLope)
-            Jump();
+            Jump(dir);
+        /*
+        #region 숨을시 무적 판정 
+        if (coll.OnHideItem)
+        {
+            Debug.Log("Invincibility");
+            isInvincibility = true;
 
+        }
+        else
+        {
+            Debug.Log("UnInvincibility");
+            isInvincibility = false;
+
+        }
+        #endregion
+        */
         if (coll.OnGround)
             GetItem();
 
@@ -96,10 +112,12 @@ public class Player : MonoBehaviour, IDamagable
 
         UseItem();
 
+        #region 로프 사용시 중력값 조정
         if (coll.OnLope && !coll.OnGround)
             RopeAction();
         else
             rb.gravityScale = GravityScale;
+        #endregion
     }
 
     #region InputManager
@@ -107,7 +125,10 @@ public class Player : MonoBehaviour, IDamagable
     {
 
         if (GameManager.Instance.NowState == EnumGameState.Ready)
+        {
+            rb.velocity = Vector2.zero;
             return;
+        }
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
@@ -167,18 +188,17 @@ public class Player : MonoBehaviour, IDamagable
     #endregion
 
     #region Jump
-    private void Jump()
+    private void Jump(Vector2 dir)
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(DisableMovement(0.5f));
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            rb.velocity += Vector2.up * JumpForce;
+            StartCoroutine(DisableMovement(1f));
 
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.velocity += dir * JumpForce;
+           
             _AnimState = AnimState.jump;
             SetCurrentAnimation(_AnimState);
-            //StartCoroutine(DisableMovement(1f));
-
         }
     }
     #endregion
@@ -186,15 +206,17 @@ public class Player : MonoBehaviour, IDamagable
 
     private void GetItem()
     {
-        if (get && coll.OnItem)
+        if (get && coll.OnItem || get && coll.OnHideItem)
         {
+            Debug.Log("in GetItem");
 
             if(item != null)
             {
                 Debug.Log("HasItem");
                 return;
             }
-            StartCoroutine(DisableMovement(1f));
+
+            StartCoroutine(DisableMovement(0.5f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
             Debug.Log(handsPos.childCount);
@@ -209,8 +231,24 @@ public class Player : MonoBehaviour, IDamagable
             if (get)
             {
                 if(item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
-                item.GetComponent<Item>().UseItem();
+                     item.GetComponent<Item>().UseItem();
+
+                handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
                 item = null;
+                Debug.Log(item);
+            }
+
+            if (use)
+            {
+                if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
+                {
+                    item.GetComponent<Item>().UseItem();
+                    item = null;
+
+                }
+
+                // handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+
             }
         }
         else return;
@@ -221,6 +259,8 @@ public class Player : MonoBehaviour, IDamagable
     {
         return get;
     }
+
+    // 숨기는 x 
     public bool GetItemUse()
     {
         return use;

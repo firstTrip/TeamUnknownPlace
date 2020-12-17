@@ -5,17 +5,35 @@ using UnityEngine;
 public class ThrowItem : Item
 {
 
+    private bool isActive;
     // Start is called before the first frame update
     void Start()
     {
-        
+        isActive = true;
+        OnGround = false;
+    }
+    private void Update()
+    {
+        OnGround = Physics2D.OverlapCircle((Vector2)transform.position + BottomOffset, CollisionRadius, groundLayer);
+
+        if (OnGround)
+        {
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
+            //gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+            isGet = false;
+        }else
+        {
+            rb.gravityScale = 1;
+            this.gameObject.transform.position = Vector2.zero;
+        }
     }
 
     public override void UseItem()
     {
+        StartCoroutine(DisableMovement(0.5f));
         rb.velocity = gameObject.transform.right * 10f;
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        //isGet = false;
+        rb.gravityScale = 1;
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -34,16 +52,18 @@ public class ThrowItem : Item
         }
         else return;
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("asdqwezxc");
-           gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-            rb.bodyType = RigidbodyType2D.Kinematic;
-            
+            if (isActive && !isGet)
+            {
+            }
         }
     }
+    IEnumerator DisableMovement(float time)
+    {
+        isActive = false;
+        yield return new WaitForSeconds(time);
+        isActive = true;
+    }
+
 }
