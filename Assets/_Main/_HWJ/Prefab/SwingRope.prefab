@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3596792917246391089}
   - component: {fileID: 3596792917246391091}
   - component: {fileID: 3596792917246391090}
-  m_Layer: 9
+  - component: {fileID: 5265012107556581706}
+  m_Layer: 11
   m_Name: Segment_29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -155,6 +156,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -264.12512
     m_UpperAngle: 95.874886
+--- !u!114 &5265012107556581706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917246391092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792917463422043
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +181,8 @@ GameObject:
   - component: {fileID: 3596792917463422040}
   - component: {fileID: 3596792917463422042}
   - component: {fileID: 3596792917463422041}
-  m_Layer: 9
+  - component: {fileID: 2004434104299842208}
+  m_Layer: 11
   m_Name: Segment_23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +221,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -310,6 +324,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &2004434104299842208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917463422043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792917663859849
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +349,8 @@ GameObject:
   - component: {fileID: 3596792917663860086}
   - component: {fileID: 3596792917663859848}
   - component: {fileID: 3596792917663860087}
-  m_Layer: 9
+  - component: {fileID: 5501175912412532962}
+  m_Layer: 11
   m_Name: Segment_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +389,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -465,6 +492,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -305.67276
     m_UpperAngle: 54.327232
+--- !u!114 &5501175912412532962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917663859849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792917776097443
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +517,8 @@ GameObject:
   - component: {fileID: 3596792917776097440}
   - component: {fileID: 3596792917776097442}
   - component: {fileID: 3596792917776097441}
-  m_Layer: 9
+  - component: {fileID: 2031051958590943833}
+  m_Layer: 11
   m_Name: Segment_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +557,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -620,6 +660,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &2031051958590943833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917776097443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792917881964214
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +685,8 @@ GameObject:
   - component: {fileID: 3596792917881964211}
   - component: {fileID: 3596792917881964213}
   - component: {fileID: 3596792917881964212}
-  m_Layer: 9
+  - component: {fileID: 8799568611225265657}
+  m_Layer: 11
   m_Name: Segment_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,7 +725,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -775,6 +828,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &8799568611225265657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917881964214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792917922093052
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +853,8 @@ GameObject:
   - component: {fileID: 3596792917922093049}
   - component: {fileID: 3596792917922093051}
   - component: {fileID: 3596792917922093050}
-  m_Layer: 9
+  - component: {fileID: 8438185703269596281}
+  m_Layer: 11
   m_Name: Segment_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -827,7 +893,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -930,6 +996,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &8438185703269596281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917922093052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792917960180946
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +1021,8 @@ GameObject:
   - component: {fileID: 3596792917960180959}
   - component: {fileID: 3596792917960180945}
   - component: {fileID: 3596792917960180944}
-  m_Layer: 9
+  - component: {fileID: 8622267163804191845}
+  m_Layer: 11
   m_Name: Segment_19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +1061,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1085,6 +1164,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &8622267163804191845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792917960180946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918023580038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,7 +1189,8 @@ GameObject:
   - component: {fileID: 3596792918023580035}
   - component: {fileID: 3596792918023580037}
   - component: {fileID: 3596792918023580036}
-  m_Layer: 9
+  - component: {fileID: 7593688784499559764}
+  m_Layer: 11
   m_Name: Segment_18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1137,7 +1229,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1240,6 +1332,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &7593688784499559764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918023580038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918172823287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1357,8 @@ GameObject:
   - component: {fileID: 3596792918172823284}
   - component: {fileID: 3596792918172823286}
   - component: {fileID: 3596792918172823285}
-  m_Layer: 9
+  - component: {fileID: 6823464674712773912}
+  m_Layer: 11
   m_Name: Segment_22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1292,7 +1397,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1395,6 +1500,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &6823464674712773912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918172823287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918277889644
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,7 +1525,8 @@ GameObject:
   - component: {fileID: 3596792918277889641}
   - component: {fileID: 3596792918277889643}
   - component: {fileID: 3596792918277889642}
-  m_Layer: 9
+  - component: {fileID: 6010778185865943248}
+  m_Layer: 11
   m_Name: Segment_26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1447,7 +1565,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1550,6 +1668,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &6010778185865943248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918277889644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918376362062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,7 +1693,8 @@ GameObject:
   - component: {fileID: 3596792918376362059}
   - component: {fileID: 3596792918376362061}
   - component: {fileID: 3596792918376362060}
-  m_Layer: 9
+  - component: {fileID: 1055518404277394522}
+  m_Layer: 11
   m_Name: Segment_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1602,7 +1733,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1705,6 +1836,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &1055518404277394522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918376362062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918392522752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1719,7 +1862,8 @@ GameObject:
   - component: {fileID: 3596792918392522764}
   - component: {fileID: 3596792918392522765}
   - component: {fileID: 3596792918392522766}
-  m_Layer: 9
+  - component: {fileID: 1276222501689818566}
+  m_Layer: 11
   m_Name: Segment_32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1758,7 +1902,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1885,6 +2029,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &1276222501689818566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918392522752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918408343692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,7 +2054,8 @@ GameObject:
   - component: {fileID: 3596792918408343689}
   - component: {fileID: 3596792918408343691}
   - component: {fileID: 3596792918408343690}
-  m_Layer: 9
+  - component: {fileID: 3670556211787607801}
+  m_Layer: 11
   m_Name: Segment_25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1937,7 +2094,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2040,6 +2197,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &3670556211787607801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918408343692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918416149529
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,7 +2222,8 @@ GameObject:
   - component: {fileID: 3596792918416149510}
   - component: {fileID: 3596792918416149528}
   - component: {fileID: 3596792918416149511}
-  m_Layer: 9
+  - component: {fileID: 4965962664569173555}
+  m_Layer: 11
   m_Name: Segment_17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2092,7 +2262,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2195,6 +2365,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &4965962664569173555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918416149529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918471679130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,7 +2390,8 @@ GameObject:
   - component: {fileID: 3596792918471679111}
   - component: {fileID: 3596792918471679129}
   - component: {fileID: 3596792918471679128}
-  m_Layer: 9
+  - component: {fileID: 8761516109520946800}
+  m_Layer: 11
   m_Name: Segment_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2247,7 +2430,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2350,6 +2533,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &8761516109520946800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918471679130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918494974802
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,7 +2558,8 @@ GameObject:
   - component: {fileID: 3596792918494974815}
   - component: {fileID: 3596792918494974801}
   - component: {fileID: 3596792918494974800}
-  m_Layer: 9
+  - component: {fileID: 2283294573627511480}
+  m_Layer: 11
   m_Name: Segment_30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2402,7 +2598,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2505,6 +2701,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &2283294573627511480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918494974802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918496685569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,7 +2726,8 @@ GameObject:
   - component: {fileID: 3596792918496685582}
   - component: {fileID: 3596792918496685568}
   - component: {fileID: 3596792918496685583}
-  m_Layer: 9
+  - component: {fileID: 2113845312172189623}
+  m_Layer: 11
   m_Name: Segment_21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2557,7 +2766,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2660,6 +2869,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -59.535835
     m_UpperAngle: 300.46417
+--- !u!114 &2113845312172189623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918496685569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918499130596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,7 +2894,8 @@ GameObject:
   - component: {fileID: 3596792918499130593}
   - component: {fileID: 3596792918499130595}
   - component: {fileID: 3596792918499130594}
-  m_Layer: 9
+  - component: {fileID: 6431385143507576282}
+  m_Layer: 11
   m_Name: Segment_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2712,7 +2934,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2815,6 +3037,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &6431385143507576282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918499130596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918621531613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,7 +3062,8 @@ GameObject:
   - component: {fileID: 3596792918621531610}
   - component: {fileID: 3596792918621531612}
   - component: {fileID: 3596792918621531611}
-  m_Layer: 9
+  - component: {fileID: 913229470534781522}
+  m_Layer: 11
   m_Name: Segment_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2867,7 +3102,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2970,6 +3205,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &913229470534781522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918621531613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918724093319
 GameObject:
   m_ObjectHideFlags: 0
@@ -2983,7 +3230,8 @@ GameObject:
   - component: {fileID: 3596792918724093316}
   - component: {fileID: 3596792918724093318}
   - component: {fileID: 3596792918724093317}
-  m_Layer: 9
+  - component: {fileID: 8179824186198275364}
+  m_Layer: 11
   m_Name: Segment_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3022,7 +3270,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3125,6 +3373,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &8179824186198275364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918724093319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918772459924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,7 +3398,8 @@ GameObject:
   - component: {fileID: 3596792918772459921}
   - component: {fileID: 3596792918772459923}
   - component: {fileID: 3596792918772459922}
-  m_Layer: 9
+  - component: {fileID: 6435708188908236419}
+  m_Layer: 11
   m_Name: Segment_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3177,7 +3438,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3280,6 +3541,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &6435708188908236419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918772459924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918789295451
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,7 +3566,8 @@ GameObject:
   - component: {fileID: 3596792918789295448}
   - component: {fileID: 3596792918789295450}
   - component: {fileID: 3596792918789295449}
-  m_Layer: 9
+  - component: {fileID: 3228330893734701766}
+  m_Layer: 11
   m_Name: Segment_28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3332,7 +3606,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3435,6 +3709,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &3228330893734701766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918789295451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918827664276
 GameObject:
   m_ObjectHideFlags: 0
@@ -3448,7 +3734,8 @@ GameObject:
   - component: {fileID: 3596792918827664273}
   - component: {fileID: 3596792918827664275}
   - component: {fileID: 3596792918827664274}
-  m_Layer: 9
+  - component: {fileID: 8885985304488178316}
+  m_Layer: 11
   m_Name: Segment_31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3487,7 +3774,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3590,6 +3877,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -236.68834
     m_UpperAngle: 123.31166
+--- !u!114 &8885985304488178316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918827664276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918828937668
 GameObject:
   m_ObjectHideFlags: 0
@@ -3603,7 +3902,8 @@ GameObject:
   - component: {fileID: 3596792918828937665}
   - component: {fileID: 3596792918828937667}
   - component: {fileID: 3596792918828937666}
-  m_Layer: 9
+  - component: {fileID: 8555131308763516419}
+  m_Layer: 11
   m_Name: Segment_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3642,7 +3942,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3745,6 +4045,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &8555131308763516419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918828937668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918863194415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3758,7 +4070,8 @@ GameObject:
   - component: {fileID: 3596792918863194412}
   - component: {fileID: 3596792918863194414}
   - component: {fileID: 3596792918863194413}
-  m_Layer: 9
+  - component: {fileID: 1954259893261390447}
+  m_Layer: 11
   m_Name: Segment_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3797,7 +4110,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3900,6 +4213,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &1954259893261390447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918863194415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918870167882
 GameObject:
   m_ObjectHideFlags: 0
@@ -3913,7 +4238,8 @@ GameObject:
   - component: {fileID: 3596792918870167863}
   - component: {fileID: 3596792918870167881}
   - component: {fileID: 3596792918870167880}
-  m_Layer: 9
+  - component: {fileID: 5840685741909698434}
+  m_Layer: 11
   m_Name: Segment_27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3952,7 +4278,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4055,6 +4381,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -206.55948
     m_UpperAngle: 153.44052
+--- !u!114 &5840685741909698434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918870167882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918906398381
 GameObject:
   m_ObjectHideFlags: 0
@@ -4068,7 +4406,8 @@ GameObject:
   - component: {fileID: 3596792918906398378}
   - component: {fileID: 3596792918906398380}
   - component: {fileID: 3596792918906398379}
-  m_Layer: 9
+  - component: {fileID: 2492859927101934553}
+  m_Layer: 11
   m_Name: Segment_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4107,7 +4446,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4210,6 +4549,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &2492859927101934553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918906398381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792918929855451
 GameObject:
   m_ObjectHideFlags: 0
@@ -4223,7 +4574,8 @@ GameObject:
   - component: {fileID: 3596792918929855448}
   - component: {fileID: 3596792918929855450}
   - component: {fileID: 3596792918929855449}
-  m_Layer: 9
+  - component: {fileID: 6502100385723298703}
+  m_Layer: 11
   m_Name: Segment_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4262,7 +4614,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4365,6 +4717,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &6502100385723298703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792918929855451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792919037631464
 GameObject:
   m_ObjectHideFlags: 0
@@ -4378,7 +4742,8 @@ GameObject:
   - component: {fileID: 3596792919037631445}
   - component: {fileID: 3596792919037631447}
   - component: {fileID: 3596792919037631446}
-  m_Layer: 9
+  - component: {fileID: 390900377198981450}
+  m_Layer: 11
   m_Name: Segment_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4417,7 +4782,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4520,6 +4885,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &390900377198981450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792919037631464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792919051951285
 GameObject:
   m_ObjectHideFlags: 0
@@ -4533,7 +4910,8 @@ GameObject:
   - component: {fileID: 3596792919051951282}
   - component: {fileID: 3596792919051951284}
   - component: {fileID: 3596792919051951283}
-  m_Layer: 9
+  - component: {fileID: 6009359922056108331}
+  m_Layer: 11
   m_Name: Segment_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4572,7 +4950,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4675,6 +5053,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &6009359922056108331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792919051951285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792919092106654
 GameObject:
   m_ObjectHideFlags: 0
@@ -4688,7 +5078,8 @@ GameObject:
   - component: {fileID: 3596792919092106651}
   - component: {fileID: 3596792919092106653}
   - component: {fileID: 3596792919092106652}
-  m_Layer: 9
+  - component: {fileID: 5409893112091308511}
+  m_Layer: 11
   m_Name: Segment_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4727,7 +5118,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4830,6 +5221,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &5409893112091308511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792919092106654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792919155870577
 GameObject:
   m_ObjectHideFlags: 0
@@ -4842,7 +5245,8 @@ GameObject:
   - component: {fileID: 3596792919155870590}
   - component: {fileID: 3596792919155870591}
   - component: {fileID: 3596792919155870576}
-  m_Layer: 9
+  - component: {fileID: 1470130792712779316}
+  m_Layer: 11
   m_Name: Segment_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4881,7 +5285,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4960,6 +5364,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1470130792712779316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792919155870577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792919180769510
 GameObject:
   m_ObjectHideFlags: 0
@@ -4973,7 +5389,8 @@ GameObject:
   - component: {fileID: 3596792919180769507}
   - component: {fileID: 3596792919180769509}
   - component: {fileID: 3596792919180769508}
-  m_Layer: 9
+  - component: {fileID: 5194230948339536039}
+  m_Layer: 11
   m_Name: Segment_16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5012,7 +5429,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5115,6 +5532,18 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -180
     m_UpperAngle: 180
+--- !u!114 &5194230948339536039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596792919180769510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3596792919284421768
 GameObject:
   m_ObjectHideFlags: 0
@@ -5125,7 +5554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3596792919284422006}
   - component: {fileID: 3596792919284422007}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: SwingRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5214,6 +5643,18 @@ MonoBehaviour:
   - {x: 9.656334, y: -0.5226251, z: 0}
   - {x: 9.299194, y: -1.741402, z: 0}
   EnablePhysics: 1
+--- !u!114 &8273231320116707145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995026464434990820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3596792919250378070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5234,7 +5675,7 @@ PrefabInstance:
     - target: {fileID: 7122720798505808818, guid: 0ad28bfb7e53ac3458b8a79e04831498,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7122720798505808819, guid: 0ad28bfb7e53ac3458b8a79e04831498,
         type: 3}
@@ -5301,6 +5742,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 7122720798505808822, guid: 0ad28bfb7e53ac3458b8a79e04831498,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8036493833593416624, guid: 0ad28bfb7e53ac3458b8a79e04831498,
         type: 3}
       propertyPath: m_IsTrigger
@@ -5308,6 +5754,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad28bfb7e53ac3458b8a79e04831498, type: 3}
+--- !u!1 &5995026464434990820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7122720798505808818, guid: 0ad28bfb7e53ac3458b8a79e04831498,
+    type: 3}
+  m_PrefabInstance: {fileID: 3596792919250378070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5995026464434990821 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7122720798505808819, guid: 0ad28bfb7e53ac3458b8a79e04831498,

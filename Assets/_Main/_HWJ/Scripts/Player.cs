@@ -8,37 +8,24 @@ public class Player : MonoBehaviour, IDamagable
 
     #region Values
 
-
     [Header("Stats")]
     [Tooltip("이동속도")] public float MoveSpeed;
     [Tooltip("점프력")] public float JumpForce;
     [Tooltip("덮어씌울 중력배율")] public float GravityScale;
-
-    [Tooltip("벽 미끄러지는 속도")] public float WallSlideSpeed = 5;
-    [Tooltip("삼각점프 보간")] public float WallJumpLerp = 10;
-    [Tooltip("대시 스피드")] public float DashSpeed = 20;
     [Tooltip("로프 이동 속도")] public float RopeUpForce;
+    [Space]
 
     public Transform handsPos = null;
-
-    [Space]
-    [Header("Booleans")]
-    [Tooltip("캐릭터가 기본 왼쪽을 보고 있다면 True")]
-    public bool isDefaultLookLeft = true;
-    public bool WallJumped;
-
-    public int PlayerSide = 1;
+  
     [Space]
     public GameObject item;
-
-    private bool isGroundTouch;
-    private bool hasDashed;
+    [Space]
 
     private bool canMove;
-    private bool walk;
+    private bool sit;
     private bool dash;
     private bool get; // Z 누른 경우
-    private bool use; // x 누른 경우
+    private bool use;
     private bool isWall;
 
     float x;
@@ -53,6 +40,7 @@ public class Player : MonoBehaviour, IDamagable
         idle, walk, run, slowWalk, jump, get, overWall, clime
     }
     #endregion
+
     #region Components
     private PlayerCollision coll;
     private Rigidbody2D rb { get; set; }
@@ -80,28 +68,9 @@ public class Player : MonoBehaviour, IDamagable
         _AnimState = AnimState.idle;
         SetCurrentAnimation(_AnimState);
 
-
     }
 
-    #region InputManager
-    private void InputManager()
-    {
-        
-        if (GameManager.Instance.NowState == EnumGameState.Ready)
-            return;
-        
-        walk = Input.GetKey(KeyCode.LeftControl);
-        dash = Input.GetKey(KeyCode.LeftShift);
-        get = Input.GetKeyDown(KeyCode.Z);
-        use = Input.GetKeyDown(KeyCode.X);
-
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-
-        xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
-    }
-    #endregion
+   
 
     // Update is called once per frame
     void Update()
@@ -110,8 +79,10 @@ public class Player : MonoBehaviour, IDamagable
         InputManager();
 
         Vector2 dir = new Vector2(x, y);
+
         if (!coll.OnLope)
             Walk(dir);
+            
 
 
         if (coll.OnGround || coll.OnLope)
@@ -119,6 +90,9 @@ public class Player : MonoBehaviour, IDamagable
 
         if (coll.OnGround)
             GetItem();
+
+        if (handsPos.transform.childCount !=0)
+                item = handsPos.transform.GetChild(0).gameObject;
 
         UseItem();
 
@@ -128,16 +102,40 @@ public class Player : MonoBehaviour, IDamagable
             rb.gravityScale = GravityScale;
     }
 
+    #region InputManager
+    private void InputManager()
+    {
+
+        if (GameManager.Instance.NowState == EnumGameState.Ready)
+            return;
+
+        sit = Input.GetKey(KeyCode.LeftControl);
+        dash = Input.GetKey(KeyCode.LeftShift);
+        get = Input.GetKeyDown(KeyCode.Z);
+        use = Input.GetKeyDown(KeyCode.X); // 숨기 
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
+
+        xRaw = Input.GetAxisRaw("Horizontal");
+        yRaw = Input.GetAxisRaw("Vertical");
+    }
+    #endregion
+
     #region Walk
     private void Walk(Vector2 dir)
     {
         if (!canMove)
             return;
 
-        if (walk)
+        if (sit)
         {
-            MoveSpeed = 0.5f;
+            MoveSpeed = 0.0f;
+            if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
+            {
+                MoveSpeed = 0.5f;
+            }
             _AnimState = AnimState.slowWalk;
+
         }
 
         else if (dash)
@@ -160,10 +158,8 @@ public class Player : MonoBehaviour, IDamagable
             SetCurrentAnimation(_AnimState);
             return;
         }
-        WalkSound();
 
         WalkSound();
-
         FlipAnim();
         SetCurrentAnimation(_AnimState);
     }
@@ -192,43 +188,42 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (get && coll.OnItem)
         {
+
+            if(item != null)
+            {
+                Debug.Log("HasItem");
+                return;
+            }
             StartCoroutine(DisableMovement(1f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
             Debug.Log(handsPos.childCount);
+
         }
 
     }
     private void UseItem()
     {
-
         if (item != null)
         {
-
             if (get)
             {
+                if(item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
                 item.GetComponent<Item>().UseItem();
                 item = null;
-                item.GetComponent<Item>().rb.velocity = handsPos.transform.right * 5f;
-                item.SetActive(false);
             }
-            else if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
-            {
-                if (walk)
-                {
-                    item.GetComponent<Item>().UseItem();
-                    item.transform.position += new Vector3(0, 1, 0);
-
-                }
-            }
-
         }
         else return;
 
     }
+
     public bool GetItemStatus()
     {
         return get;
+    }
+    public bool GetItemUse()
+    {
+        return use;
     }
 
     #region RopeAction

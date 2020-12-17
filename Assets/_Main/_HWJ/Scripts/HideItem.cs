@@ -14,17 +14,11 @@ public class HideItem : Item
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void UseItem()
     {
         if(itemType == ItemType.Carriable)
         {
-            spriteRenderer.sortingLayerName = "Middleground_AP";
+            spriteRenderer.sortingLayerName = "Middleground_BP";
             this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
             this.gameObject.transform.position = transform.position;
             isGet = false;
@@ -36,22 +30,23 @@ public class HideItem : Item
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!isGet)
+        if (!isUse)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-
-                if (other.GetComponentInParent<Player>().GetItemStatus())
+                if (other.GetComponentInParent<Player>().GetItemUse())
                 {
                     if (itemType == ItemType.UnCarriable)
                     {
+
+                        Debug.Log("isUse");
                         spriteRenderer.sortingLayerName = "Middleground_AP";
                         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
                         //this.gameObject.transform.position = transform.position;
-                        isGet = true;
+                        isUse = true;
                         return;
                     }
-                    isGet = true;
+                    isUse = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));
 
                 }
