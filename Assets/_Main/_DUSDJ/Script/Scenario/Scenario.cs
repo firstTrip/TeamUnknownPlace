@@ -9,8 +9,6 @@ public class Scenario : MonoBehaviour
 {
     
     private PlayableDirector TimeLine; // 타임라인 있는지?
-    private Collider2D CinemachineCollider; // 시네머신 영역
-    private GameObject WallCollider; // 못 돌아가게 막을 벽
 
     // 체크
     private bool isEnter = false;
@@ -19,22 +17,14 @@ public class Scenario : MonoBehaviour
 
     private void Awake()
     {
-        CinemachineCollider = transform.Find("CinemachineCollider").GetComponent<Collider2D>();
         TimeLine = transform.GetComponentInChildren<PlayableDirector>();        
-        WallCollider = transform.Find("WallCollider").gameObject;
         
         ObjectsSetActive(false);
     }
 
     public void ObjectsSetActive(bool value)
     {
-        CinemachineCollider?.gameObject.SetActive(value);
-        TimeLine?.gameObject.SetActive(value);
-        
-        if (value)
-        {
-            WallCollider?.SetActive(value);
-        }
+       TimeLine?.gameObject.SetActive(value);
     }
 
     public void ScenarioSequence()
@@ -67,9 +57,6 @@ public class Scenario : MonoBehaviour
     /// </summary>
     public void AfterTimeLine()
     {
-        // 시네머신 콜라이더 설정
-        GameManager.Instance.Confiner.m_BoundingShape2D = CinemachineCollider;
-
         // 시네머신 Player 카메라로 적용
         GameManager.Instance.PlayerCamera.gameObject.SetActive(true);
         GameManager.Instance.Cinemachine.gameObject.SetActive(false);

@@ -122,11 +122,16 @@ public class LightManager : MonoBehaviour
     }
 
 
-    #region Hear Sound
+    #region HearSound, DeadCheck
 
     public void HearSound(Sound s)
     {
         MainLight.NowSound = s;
+    }
+
+    public void DeadCheck(GameObject from)
+    {
+        MainLight.DeadCheck(from);
     }
 
     #endregion

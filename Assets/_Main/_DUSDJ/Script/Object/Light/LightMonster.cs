@@ -33,39 +33,42 @@ public class LightMonster : MonoBehaviour
         }
         set
         {
-            // 1. 현재 집중하는 소리가 없으면 바로 새 사운드를 추적한다. -> 추적 변경, 속도 초기화
+            bool reset;
+            // 새 소리의 출처가 이전 타겟과 같음 -> 속도 유지
+            if (previousTarget != null
+                    && value.SoundFrom != null
+                    && value.SoundFrom.Equals(previousTarget))
+            {
+                reset = false;
+            }
+            // 없거나 다름 -> 속도 초기화
+            else
+            {
+                reset = true;
+            }
+
+            // 1. 현재 집중하는 소리가 없음.
             if (nowSound == null)
             {
-                SetSound(value, true);                
+                SetSound(value, reset);
                 return;
             }
 
             // 2. 집중하는 소리 있음
-            // 2-1. 더 큰 소리를 들었을 때 -> 추적 변경, 속도 초기화
+            // 2-1. 더 큰 소리를 들었을 때 -> 추적 변경
             if (nowSound.Value < value.Value)
             {
-                SetSound(value, true);
+                SetSound(value, reset);
                 return;
             }
 
             // 2-2. 동등한 소리
             if (nowSound.Value == value.Value)
             {
-                // 2-2-0. 동등소리, 현 추적 출처가 불명
-                // 2-2-1. 동등소리, 다른 출처 or 출처 불명 -> 추적 변경, 속도 초기화
-                if (previousTarget == null ||
-                    value.SoundFrom == null ||
-                    previousTarget.Equals(value.SoundFrom) == false)
-                {
-                    SetSound(value, true);
-                    return;
-                }
-                // 2-2-2. 동등소리, 같은 출처 -> 추적 유지, 속도 유지
-                else
-                {
-                    SetSound(value, false);
-                    return;
-                }
+                // 2-2-0. 동등소리, 현 추적 출처가 불명 -> 추적 변경, 속도 변경                
+                // 2-2-1. 동등소리, 다른 출처 -> 추적 변경 : value는 같음
+                // 2-2-2. 동등소리, 같은 출처 -> 추적 유지 : value는 같음
+                SetSound(value, reset);
             }
 
             // 그 외의 경우 -> 무시
@@ -177,7 +180,7 @@ public class LightMonster : MonoBehaviour
         DebugManager.Instance.SetText(DebugManager.Instance.TracingTimeText, tracingTime.ToString());
     }
 
-    #region Hunt, Damage
+    #region Hunt, Damage, DeadCheck
 
     [Header("목적지 보정")]public float ArrivalCheckValue = 0.03f;
     [Header("교착시간 한계")]public float StayLimit = 20f;
@@ -230,6 +233,16 @@ public class LightMonster : MonoBehaviour
             }
             Debug.Log(string.Format("Damage : {0}", dmg));
             DamageList[i].Damage(dmg);
+        }
+    }
+
+    public void DeadCheck(GameObject from)
+    {
+        if(NowSound.SoundFrom != null
+            && NowSound.SoundFrom.Equals(from))
+        {
+            nowSound = null;
+            previousTarget = null;
         }
     }
 

@@ -15,7 +15,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     [Header("이펙트 끝나는 시간")] public float EffectDuration;
     [Header("이펙트 크기")] public Vector3 EffectScale = Vector3.one;
 
-    
+
 
     [Space]
 
@@ -93,7 +93,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
         Action act = () => {
             anim.SetBool("Action", true);
 
-            transform.DOMoveX(-12f, 8f);
+            transform.DOMoveX(-12f, 6f);
             StartCoroutine(SoundCoroutine());            
         };
 
@@ -103,6 +103,9 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 
     public void Dead()
     {
+        // NowSound 제거해주기
+        LightManager.Instance.DeadCheck(gameObject);
+
         // 일단 하드코딩
         IsAlive = false;
 
