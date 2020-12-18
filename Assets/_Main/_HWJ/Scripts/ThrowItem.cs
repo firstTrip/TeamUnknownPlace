@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThrowItem : Item
 {
 
+    private GameObject GO;
     private bool isActive;
     // Start is called before the first frame update
     void Start()
@@ -14,26 +15,46 @@ public class ThrowItem : Item
     }
     private void Update()
     {
+        if (GO != null)
+        {
+            gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.position;
+
+        }
+
         OnGround = Physics2D.OverlapCircle((Vector2)transform.position + BottomOffset, CollisionRadius, groundLayer);
+
 
         if (OnGround)
         {
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
-            //gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-            isGet = false;
+            gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+            /*
+            if (!isActive)
+            {
+                GameObject Go = Instantiate(this.gameObject, gameObject.transform.position, Quaternion.identity);
+                Destroy(this.gameObject);
+            }
+            */
         }else
         {
-            rb.gravityScale = 1;
-            this.gameObject.transform.position = Vector2.zero;
+            if (!isActive)
+            {
+                Debug.Log("in isActive");
+                rb.gravityScale = 1;
+
+            }
+          
         }
     }
 
     public override void UseItem()
     {
-        StartCoroutine(DisableMovement(0.5f));
-        rb.velocity = gameObject.transform.right * 10f;
-        rb.gravityScale = 1;
+        GO = null;
+        isActive = false;
+        StartCoroutine(DisableMovement(2f));
+        rb.velocity = Vector2.right * 8f;
+
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -44,26 +65,24 @@ public class ThrowItem : Item
             {
                 if (other.GetComponentInParent<Player>().GetItemStatus())
                 {
+                    GO = other.gameObject;
                     isGet = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));
+
+                    isActive = true;
                 }
             }
 
         }
         else return;
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (isActive && !isGet)
-            {
-            }
-        }
     }
+
     IEnumerator DisableMovement(float time)
     {
-        isActive = false;
+        isGet = true;
         yield return new WaitForSeconds(time);
-        isActive = true;
+        isGet = false;
     }
 
 }

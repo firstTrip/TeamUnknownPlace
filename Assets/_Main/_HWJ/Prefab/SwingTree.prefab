@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8345106897562939955}
   - component: {fileID: 8345106897562939954}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SwingTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 8345106897721907865}
   - component: {fileID: 8345106897721907867}
   - component: {fileID: 8345106897721907864}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 8345106898049515046}
   - component: {fileID: 8345106898049515048}
   - component: {fileID: 8345106898049515049}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 8345106898144297267}
   - component: {fileID: 8345106898144297269}
   - component: {fileID: 8345106898144297266}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

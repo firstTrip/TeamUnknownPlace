@@ -110,11 +110,11 @@ public class PlayerTest : MonoBehaviour
         InputManager();
 
         Vector2 dir = new Vector2(x, y);
-        if(!coll.OnLope)
+        if(!coll.OnRope)
             Walk(dir);
 
 
-        if (coll.OnGround || coll.OnLope)
+        if (coll.OnGround || coll.OnRope)
             Jump();
 
         if (coll.OnGround)
@@ -122,7 +122,7 @@ public class PlayerTest : MonoBehaviour
 
         UseItem();
 
-        if (coll.OnLope && !coll.OnGround)
+        if (coll.OnRope && !coll.OnGround)
             RopeAction();
         else
             rb.gravityScale = GravityScale;

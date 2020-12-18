@@ -24,8 +24,9 @@ public class Player : MonoBehaviour, IDamagable
     private bool canMove;
     private bool sit;
     private bool dash;
-    private bool get; // Z 누른 경우
+    public bool get; // Z 누른 경우
     private bool use;
+    private bool useStair;
     private bool isWall;
     public bool isInvincibility; //  true 일시 대미지 x 
 
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour, IDamagable
     //private Animator anim { get; set; }
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
-    
+    Vector2 dir;
 
     #endregion
 
@@ -77,33 +78,34 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(coll.OnRightWall);
         WalkSoundCoolDownCheck();
         InputManager();
 
-        Vector2 dir = new Vector2(x, y);
+        dir = new Vector2(x, y);
 
-        if (!coll.OnLope)
+        if (!coll.OnRope)
             Walk(dir);
             
-        if (coll.OnGround || coll.OnLope)
+        if (coll.OnGround)
             Jump(dir);
 
-        if (coll.OnRightWall)
+        if (coll.OnRightWall && dir.y > 0 )
+        {
             StairUp();
+        }
+        else
+            useStair = false;
 
         if (coll.OnGround)
             GetItem();
 
 
-        if (handsPos.transform.childCount !=0)
-                item = handsPos.transform.GetChild(0).gameObject;
-
         UseItem();
 
         #region 로프 사용시 중력값 조정
-        if (coll.OnLope && !coll.OnGround)
+        if (coll.OnRope && !coll.OnGround)
             RopeAction();
+
         else
             rb.gravityScale = GravityScale;
         #endregion
@@ -115,13 +117,15 @@ public class Player : MonoBehaviour, IDamagable
 
         if (GameManager.Instance.NowState == EnumGameState.Ready)
         {
+            x = 0;
+            y = 0;
             rb.velocity = Vector2.zero;
             return;
         }
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
-        get = Input.GetKeyDown(KeyCode.Z);
+        get = Input.GetKeyUp(KeyCode.Z);
         use = Input.GetKeyDown(KeyCode.X); // 숨기 
 
         x = Input.GetAxis("Horizontal");
@@ -190,7 +194,8 @@ public class Player : MonoBehaviour, IDamagable
 
             if(rb.velocity == Vector2.zero || dir.y == 0)
             {
-                rb.velocity += Vector2.up * JumpForce;
+                rb.velocity = new Vector2(rb.velocity.x, JumpForce);
+
                 _AnimState = AnimState.jump;
                 SetCurrentAnimation(_AnimState);
             }
@@ -201,7 +206,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private void StairUp()
     {
-
+        useStair = true;
         _AnimState = AnimState.stairUP;
         SetCurrentAnimation(_AnimState);
     }
@@ -217,12 +222,14 @@ public class Player : MonoBehaviour, IDamagable
                 return;
             }
 
+            if (handsPos.transform.childCount != 0)
+                item = handsPos.transform.GetChild(0).gameObject;
+
             StartCoroutine(DisableMovement(0.5f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
-            Debug.Log(handsPos.childCount);
-
         }
+
 
     }
     private void UseItem()
@@ -230,37 +237,49 @@ public class Player : MonoBehaviour, IDamagable
         if (item != null)
         {
             if (get)
-            {
-                if(item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
-                     item.GetComponent<Item>().UseItem();
+            { 
+                if (item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
+                {
+                    Debug.Log("asdqwezxc");
+                    item.GetComponent<Item>().UseItem();
 
-                _AnimState = AnimState.Throw;
-                SetCurrentAnimation(_AnimState);
-                handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-                item = null;
-                Debug.Log(item);
+                    StartCoroutine(DisableMovement(0.5f));
+                    _AnimState = AnimState.Throw;
+                    SetCurrentAnimation(_AnimState);
+
+                    item = null;
+                }
             }
 
-            if (use)
+         
+        }
+        if (use)
+        {
+            if (handsPos.transform.childCount != 0)
+                item = handsPos.transform.GetChild(0).gameObject;
+
+            if (item != null)
             {
                 if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
                 {
+
                     item.GetComponent<Item>().UseItem();
                     item = null;
-
                 }
 
-                // handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-
             }
-        }
-        else return;
 
+        }
     }
 
     public bool GetItemStatus()
     {
         return get;
+    }
+
+    public bool GetUseStair()
+    {
+        return useStair;
     }
 
     // 숨기는 x 
@@ -277,9 +296,8 @@ public class Player : MonoBehaviour, IDamagable
         rb.AddForce(Vector2.up * yRaw * 0.1f, ForceMode2D.Impulse);
         Debug.Log(yRaw);
         rb.gravityScale = 0f;
-
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * RopeUpForce);
-
+        Jump(dir);
         _AnimState = AnimState.clime;
         SetCurrentAnimation(_AnimState);
         FlipAnim();
@@ -374,7 +392,7 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.Throw:
-                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 1.5f);
+                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 2f);
                 break;
 
             case AnimState.clime:

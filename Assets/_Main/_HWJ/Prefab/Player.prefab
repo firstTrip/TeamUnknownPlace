@@ -93,7 +93,7 @@ MonoBehaviour:
     m_Bits: 32768
   OnGround: 0
   OnWall: 0
-  OnLope: 0
+  OnRope: 0
   OnItem: 0
   OnHideItem: 0
   OnRightWall: 0
