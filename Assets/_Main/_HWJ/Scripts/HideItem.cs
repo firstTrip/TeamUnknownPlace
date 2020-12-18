@@ -59,6 +59,7 @@ public class HideItem : Item
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponentInParent<Player>().isInvincibility = false;
+            spriteRenderer.sortingLayerName = "Middleground_BP";
             isUse = false;
 
         }
