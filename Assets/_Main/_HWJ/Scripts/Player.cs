@@ -54,11 +54,19 @@ public class Player : MonoBehaviour, IDamagable
 
     #endregion
 
-    #region WalkSound
+    #region Crouch, Walk, Run Sound
+    [Header("앉은걸음 쿨다운")] public float CrouchSoundCoolDown = 0.4f;
+    private float CrouchSoundCoolDownNow = 0f;
+    [Header("앉은걸음 밸류")] public int CrouchSoundValue = 10;
 
-    [Header("발소리 쿨다운")] public float WalkSoundCoolDown = 0.2f;
+    [Header("발걸음 쿨다운")] public float WalkSoundCoolDown = 0.4f;
     private float WalkSoundCoolDownNow = 0f;
-    [Header("발소리 밸류")] public int WalkSoundValue = 2;
+    [Header("발걸음 밸류")] public int WalkSoundValue = 20;
+
+    [Header("뜀걸음 쿨다운")] public float RunSoundCoolDown = 0.2f;
+    private float RunSoundCoolDownNow = 0f;
+    [Header("뜀걸음 밸류")] public int RunSoundValue = 40;
+
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -176,7 +184,12 @@ public class Player : MonoBehaviour, IDamagable
             return;
         }
 
-        WalkSound();
+        /* 아래 3줄을 각각
+         * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
+        // MovementSound(EnumMovement.Crouch); // 앉은걸음
+        // MovementSound(EnumMovement.Walk); // 걷기
+        // MovementSound(EnumMovement.Run); // 달리기
+        
         FlipAnim();
         SetCurrentAnimation(_AnimState);
     }
@@ -319,21 +332,54 @@ public class Player : MonoBehaviour, IDamagable
         {
             WalkSoundCoolDownNow -= Time.deltaTime;
         }
+
+        if (CrouchSoundCoolDownNow > 0)
+        {
+            CrouchSoundCoolDownNow -= Time.deltaTime;
+        }
+
+        if (RunSoundCoolDownNow > 0)
+        {
+            RunSoundCoolDownNow -= Time.deltaTime;
+        }
     }
 
-    #region WalkSound
-    private void WalkSound()
+    private void MovementSound(EnumMovement m)
     {
-        
-        if (WalkSoundCoolDownNow <= 0)
+        switch (m)
         {
-            AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position);
+            case EnumMovement.Crouch:
+                if (CrouchSoundCoolDownNow <= 0)
+                {
+                    AudioManager.Instance.PlaySound("Footstep", CrouchSoundValue, transform.position, gameObject);
+                    CrouchSoundCoolDownNow = CrouchSoundCoolDown;
+                }
 
-            WalkSoundCoolDownNow = WalkSoundCoolDown;
+                break;
+
+
+            case EnumMovement.Walk:
+                if (WalkSoundCoolDownNow <= 0)
+                {
+                    AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position, gameObject);
+                    WalkSoundCoolDownNow = WalkSoundCoolDown;
+                }
+
+                break;
+
+
+            case EnumMovement.Run:
+                if (RunSoundCoolDownNow <= 0)
+                {
+                    AudioManager.Instance.PlaySound("Footstep", RunSoundValue, transform.position, gameObject);
+                    RunSoundCoolDownNow = RunSoundCoolDown;
+                }
+
+                break;
         }
         
     }
-    #endregion
+
 
     #endregion
 
