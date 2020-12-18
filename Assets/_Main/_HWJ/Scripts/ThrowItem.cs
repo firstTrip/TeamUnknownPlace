@@ -57,7 +57,7 @@ public class ThrowItem : Item
         GO = null;
         isActive = false;
         StartCoroutine(DisableMovement(2f));
-        rb.velocity = Vector2.right * 8f * x;
+        rb.velocity = Vector2.right * 10f * x;
         Debug.Log(x);
 
     }

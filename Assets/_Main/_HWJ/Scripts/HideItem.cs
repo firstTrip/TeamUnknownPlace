@@ -46,7 +46,7 @@ public class HideItem : Item
                     }
 
                     other.GetComponentInParent<Player>().isInvincibility = true;
-                    gameObject.transform.SetParent(other.transform.GetChild(0));
+                    gameObject.transform.SetParent(other.transform.GetChild(0).GetChild(0));
                 }
             }
         }

@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3226019085833992088}
-  m_LocalRotation: {x: -0, y: -0, z: 0.8374551, w: 0.5465062}
-  m_LocalPosition: {x: -5.5400085, y: 5.1399994, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.5400085, y: 12.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8227953999626485720}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 113.745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8227953999411299617
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,25 +119,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 0
-  JumpForce: 5
+  JumpForce: 7
   GravityScale: 1
   RopeUpForce: 1
   handsPos: {fileID: 858498154200576312}
   item: {fileID: 0}
   get: 0
+  callWakeUpFlag: 0
   isInvincibility: 0
+  xRaw: 0
+  deadState: 0
   skeletonAnimation: {fileID: 8227953999626485722}
   AnimClip:
   - {fileID: 11400000, guid: ea6c946888a529e4196310738d232772, type: 2}
   - {fileID: 11400000, guid: dea123701cfd6be49aa8a747cf494821, type: 2}
   - {fileID: 11400000, guid: 6728b3fcce6324f4395012b87bdc8eca, type: 2}
   - {fileID: 11400000, guid: 28bdbdcdd6483474bb77165a13b457fe, type: 2}
-  - {fileID: 11400000, guid: 0308fe830d88ebc48bfecba7e65217cd, type: 2}
+  - {fileID: 11400000, guid: 306fe1d1add239d4cb1276603f0f62fa, type: 2}
   - {fileID: 11400000, guid: 79f7cd2c3d08963448799c76b3404386, type: 2}
   - {fileID: 11400000, guid: cfa489cb6c3563541b5fff807051b9cd, type: 2}
   - {fileID: 11400000, guid: 1ca6fdb533c8413458e127067b4aaf0a, type: 2}
   - {fileID: 11400000, guid: 1331b6287cae038448d9e17e54077f32, type: 2}
   - {fileID: 11400000, guid: d1def829d9a5cfa4ab1707ce70b0a876, type: 2}
+  - {fileID: 11400000, guid: dba3cf3e03eb64e4db8cc5257c394fd7, type: 2}
+  - {fileID: 11400000, guid: 72ab0260ae64b4c49b554600b6ce060d, type: 2}
   CrouchSoundCoolDown: 0.4
   CrouchSoundValue: 10
   WalkSoundCoolDown: 0.4
@@ -254,9 +259,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 48b000aa3b1cc0145b69d5a7cbc62ea8, type: 2}
-  - {fileID: 2100000, guid: 77f079317de08dd4d9177fba910861e6, type: 2}
-  - {fileID: 2100000, guid: 48b000aa3b1cc0145b69d5a7cbc62ea8, type: 2}
+  - {fileID: 2100000, guid: 220f299fd1a06ec4681adea6ec8c1a5a, type: 2}
+  - {fileID: 2100000, guid: 5353d847cfed7e7498c96929de81bd43, type: 2}
+  - {fileID: 2100000, guid: 220f299fd1a06ec4681adea6ec8c1a5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -289,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 177cda0326edc13468653fa2b243a5dc, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a09a4901007552d449c6a04261bc873a, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0

@@ -41,8 +41,16 @@ public class Player : MonoBehaviour, IDamagable
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp
+        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp ,NomalDead ,WaterDead
     }
+
+    public enum DeadState
+    {
+        Nomal , Water
+    }
+
+    public DeadState deadState;
+
     #endregion
 
     #region Components
@@ -163,7 +171,7 @@ public class Player : MonoBehaviour, IDamagable
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
                 MoveSpeed = 0.5f;
-                //MovementSound(EnumMovement.Crouch);
+                MovementSound(EnumMovement.Crouch);
                 //_AnimState = AnimState.walk;
 
             }
@@ -175,12 +183,13 @@ public class Player : MonoBehaviour, IDamagable
         {
             MoveSpeed = 5f;
             _AnimState = AnimState.run;
-            //MovementSound(EnumMovement.Run);
+            MovementSound(EnumMovement.Run);
         }
         else
         {
             MoveSpeed = 3f;
             _AnimState = AnimState.walk;
+            MovementSound(EnumMovement.Walk);
         }
 
         rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
@@ -319,6 +328,33 @@ public class Player : MonoBehaviour, IDamagable
             StartCoroutine(DisableMovement(1f));
         }
     
+    }
+
+    public void CallDead(DeadState deadState )
+    {
+            
+        switch (deadState)
+        {
+            case DeadState.Nomal:
+
+                rb.velocity = Vector2.zero;
+                x = 0;
+                y = 0;
+                _AnimState = AnimState.NomalDead;
+                SetCurrentAnimation(_AnimState);
+
+                break;
+
+            case DeadState.Water:
+
+                rb.velocity = Vector2.zero;
+                x = 0;
+                y = 0;
+                _AnimState = AnimState.WaterDead;
+                SetCurrentAnimation(_AnimState);
+
+                break;
+        }
     }
 
     #region RopeAction
@@ -474,6 +510,14 @@ public class Player : MonoBehaviour, IDamagable
 
             case AnimState.wakeUp:
                 AsncAnimation(AnimClip[(int)AnimState.wakeUp], true, 1f);
+                break;
+
+            case AnimState.NomalDead:
+                AsncAnimation(AnimClip[(int)AnimState.NomalDead], true, 1f);
+                break;
+
+            case AnimState.WaterDead:
+                AsncAnimation(AnimClip[(int)AnimState.WaterDead], true, 1f);
                 break;
         }
 
