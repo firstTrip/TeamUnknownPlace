@@ -26,6 +26,7 @@ public class Player : MonoBehaviour, IDamagable
     private bool dash;
     private bool get; // Z 누른 경우
     private bool use;
+    private bool useStair;
     private bool isWall;
     public bool isInvincibility; //  true 일시 대미지 x 
 
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour, IDamagable
     //private Animator anim { get; set; }
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
-    
+    Vector2 dir;
 
     #endregion
 
@@ -77,20 +78,26 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(coll.OnRightWall);
+        Debug.Log(coll.OnRope);
+        Debug.Log(useStair);
         WalkSoundCoolDownCheck();
         InputManager();
 
-        Vector2 dir = new Vector2(x, y);
+        dir = new Vector2(x, y);
 
-        if (!coll.OnLope)
+        if (!coll.OnRope)
             Walk(dir);
             
-        if (coll.OnGround || coll.OnLope)
+        if (coll.OnGround)
             Jump(dir);
 
-        if (coll.OnRightWall)
+        if (coll.OnRightWall && dir.y != 0)
+        {
             StairUp();
+        }
+        else
+            useStair = false;
+
 
         if (coll.OnGround)
             GetItem();
@@ -102,8 +109,9 @@ public class Player : MonoBehaviour, IDamagable
         UseItem();
 
         #region 로프 사용시 중력값 조정
-        if (coll.OnLope && !coll.OnGround)
+        if (coll.OnRope && !coll.OnGround)
             RopeAction();
+
         else
             rb.gravityScale = GravityScale;
         #endregion
@@ -201,7 +209,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private void StairUp()
     {
-
+        useStair = true;
         _AnimState = AnimState.stairUP;
         SetCurrentAnimation(_AnimState);
     }
@@ -263,6 +271,11 @@ public class Player : MonoBehaviour, IDamagable
         return get;
     }
 
+    public bool GetUseStair()
+    {
+        return useStair;
+    }
+
     // 숨기는 x 
     public bool GetItemUse()
     {
@@ -277,9 +290,8 @@ public class Player : MonoBehaviour, IDamagable
         rb.AddForce(Vector2.up * yRaw * 0.1f, ForceMode2D.Impulse);
         Debug.Log(yRaw);
         rb.gravityScale = 0f;
-
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * RopeUpForce);
-
+        Jump(dir);
         _AnimState = AnimState.clime;
         SetCurrentAnimation(_AnimState);
         FlipAnim();

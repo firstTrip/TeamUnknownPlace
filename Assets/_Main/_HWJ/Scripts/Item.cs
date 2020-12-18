@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     public bool isGet;
     public bool isUse;
     public Rigidbody2D rb;
-
+    //public Collider2D collider2D;
     public float CollisionRadius = 0.15f;
     public LayerMask groundLayer;
     public bool OnGround;
@@ -20,6 +20,7 @@ public class Item : MonoBehaviour
         isGet = false;
         isUse = false;
         rb = GetComponent<Rigidbody2D>();
+        //collider2D = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -49,7 +50,6 @@ public class Item : MonoBehaviour
 
         }
         else return;
-
         
     }
     void OnDrawGizmos()
