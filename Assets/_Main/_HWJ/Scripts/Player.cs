@@ -167,6 +167,7 @@ public class Player : MonoBehaviour, IDamagable
 
         if (sit)
         {
+            LightManager.Instance.DeadCheck(gameObject);
             MoveSpeed = 0.0f;
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
@@ -189,7 +190,6 @@ public class Player : MonoBehaviour, IDamagable
         {
             MoveSpeed = 3f;
             _AnimState = AnimState.walk;
-            MovementSound(EnumMovement.Walk);
         }
 
         rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
@@ -201,6 +201,9 @@ public class Player : MonoBehaviour, IDamagable
             SetCurrentAnimation(_AnimState);
             return;
         }
+
+       if(!dash &&!sit )
+        MovementSound(EnumMovement.Walk);
 
         /* 아래 3줄을 각각
          * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
