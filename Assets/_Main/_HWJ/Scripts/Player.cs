@@ -28,7 +28,6 @@ public class Player : MonoBehaviour, IDamagable
     private bool use;
     private bool useStair;
     private bool isWall;
-    public bool callWakeUpFlag;
     public bool isInvincibility; //  true 일시 대미지 x 
 
 
@@ -95,12 +94,8 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-
-        Debug.Log(isInvincibility);
         WalkSoundCoolDownCheck();
         InputManager();
-
-        CallWakeUp();
 
         dir = new Vector2(x, y);
 
@@ -139,6 +134,8 @@ public class Player : MonoBehaviour, IDamagable
 
         if (GameManager.Instance.NowState == EnumGameState.Ready)
         {
+            canMove = false;
+
             x = 0;
             y = 0;
             rb.velocity = Vector2.zero;
@@ -323,23 +320,21 @@ public class Player : MonoBehaviour, IDamagable
 
     public void CallWakeUp()
     {
-        if (callWakeUpFlag)
-        {
-            StartCoroutine(DisableMovement(1f));
-            _AnimState = AnimState.wakeUp;
-            SetCurrentAnimation(_AnimState);
-            
-        }
+        Debug.LogWarning("CallWakeUp");
+        StartCoroutine(DisableMovement(8.5f));
+        _AnimState = AnimState.wakeUp;
+        SetCurrentAnimation(_AnimState);
+        
     }
     
     public void CallDown()
     {
-        StartCoroutine(DisableMovement(1f));
+        Debug.LogWarning("CallDown");
         _AnimState = AnimState.Down;
         SetCurrentAnimation(_AnimState);
     }
 
-    public void CallDead(DeadState deadState )
+    public void CallDead(DeadState deadState)
     {
             
         switch (deadState)
@@ -518,11 +513,11 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.wakeUp:
-                AsncAnimation(AnimClip[(int)AnimState.wakeUp], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.wakeUp], false, 1f);
                 break;
 
             case AnimState.NomalDead:
-                AsncAnimation(AnimClip[(int)AnimState.NomalDead], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.NomalDead], false, 1f);
                 break;
 
             case AnimState.WaterDead:
