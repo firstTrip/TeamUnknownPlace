@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Mob
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Rope
   - Item
   - 
-  - 
-  - 
+  - HideItem
+  - stair
   - 
   - 
   - 
