@@ -7,6 +7,7 @@ public class ThrowItem : Item
 
     private GameObject GO;
     private bool isActive;
+    private float x;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,9 @@ public class ThrowItem : Item
     {
         if (GO != null)
         {
-            gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.position;
+            
+            gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.GetChild(0).position;
+            x = GO.GetComponent<Player>().xRaw;
 
         }
 
@@ -29,6 +32,7 @@ public class ThrowItem : Item
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
             gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+
             /*
             if (!isActive)
             {
@@ -53,7 +57,8 @@ public class ThrowItem : Item
         GO = null;
         isActive = false;
         StartCoroutine(DisableMovement(2f));
-        rb.velocity = Vector2.right * 8f;
+        rb.velocity = Vector2.right * 8f * x;
+        Debug.Log(x);
 
     }
 
@@ -67,12 +72,14 @@ public class ThrowItem : Item
                 {
                     GO = other.gameObject;
                     isGet = true;
-                    gameObject.transform.SetParent(other.transform.GetChild(0));
-
+                    gameObject.transform.SetParent(other.transform.GetChild(0).transform.GetChild(0).transform);
+                    Debug.Log(other.transform.GetChild(0).transform.GetChild(0).transform);
+                    
                     isActive = true;
                 }
+                
             }
-
+            
         }
         else return;
 
