@@ -156,7 +156,7 @@ public class Player : MonoBehaviour, IDamagable
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
                 MoveSpeed = 0.5f;
-                MovementSound(EnumMovement.Crouch);
+                //MovementSound(EnumMovement.Crouch);
                 //_AnimState = AnimState.walk;
 
             }
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             MoveSpeed = 5f;
             _AnimState = AnimState.run;
-            MovementSound(EnumMovement.Run);
+            //MovementSound(EnumMovement.Run);
         }
         else
         {
@@ -186,7 +186,7 @@ public class Player : MonoBehaviour, IDamagable
             return;
         }
 
-        MovementSound(EnumMovement.Walk);
+        //MovementSound(EnumMovement.Walk);
         /* 아래 3줄을 각각
          * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
         // MovementSound(EnumMovement.Crouch); // 앉은걸음
@@ -313,8 +313,12 @@ public class Player : MonoBehaviour, IDamagable
         Debug.Log(yRaw);
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * RopeUpForce);
-        Jump(dir);
         _AnimState = AnimState.clime;
+
+        if(yRaw == 0)
+        {
+            _AnimState = AnimState.idle;
+        }
         SetCurrentAnimation(_AnimState);
         FlipAnim();
 
