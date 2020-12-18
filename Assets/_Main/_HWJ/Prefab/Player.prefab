@@ -88,6 +88,9 @@ MonoBehaviour:
   hideItemLayer:
     serializedVersion: 2
     m_Bits: 16384
+  stairLayer:
+    serializedVersion: 2
+    m_Bits: 32768
   OnGround: 0
   OnWall: 0
   OnLope: 0
@@ -120,16 +123,18 @@ MonoBehaviour:
   RopeUpForce: 1
   handsPos: {fileID: 858498154200576312}
   item: {fileID: 0}
+  isInvincibility: 0
   skeletonAnimation: {fileID: 8227953999626485722}
   AnimClip:
-  - {fileID: 11400000, guid: 6d9dba32bdfc1a24d933195d09ca7bbb, type: 2}
-  - {fileID: 11400000, guid: 4ba906c6a7c6de74eb1cffacfa4369b5, type: 2}
-  - {fileID: 11400000, guid: 1a9d11bb9a7448d48928bae235a1f2f9, type: 2}
-  - {fileID: 11400000, guid: 3200a9b19b778c44d99bc90fa6c66f13, type: 2}
-  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
-  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
-  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
-  - {fileID: 11400000, guid: b3164fb5f9064ef478476504fabd2ca0, type: 2}
+  - {fileID: 11400000, guid: ea6c946888a529e4196310738d232772, type: 2}
+  - {fileID: 11400000, guid: dea123701cfd6be49aa8a747cf494821, type: 2}
+  - {fileID: 11400000, guid: 6728b3fcce6324f4395012b87bdc8eca, type: 2}
+  - {fileID: 11400000, guid: 28bdbdcdd6483474bb77165a13b457fe, type: 2}
+  - {fileID: 11400000, guid: 0308fe830d88ebc48bfecba7e65217cd, type: 2}
+  - {fileID: 11400000, guid: 79f7cd2c3d08963448799c76b3404386, type: 2}
+  - {fileID: 11400000, guid: cfa489cb6c3563541b5fff807051b9cd, type: 2}
+  - {fileID: 11400000, guid: 1ca6fdb533c8413458e127067b4aaf0a, type: 2}
+  - {fileID: 11400000, guid: 1331b6287cae038448d9e17e54077f32, type: 2}
   WalkSoundCoolDown: 0.2
   WalkSoundValue: 2
 --- !u!50 &8227953999411299619
@@ -216,9 +221,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6cb32d4232247a84cb58343dcb5ecf1a, type: 2}
-  - {fileID: 2100000, guid: 633857fed0b807e43af86acb997247e6, type: 2}
-  - {fileID: 2100000, guid: 6cb32d4232247a84cb58343dcb5ecf1a, type: 2}
+  - {fileID: 2100000, guid: 48b000aa3b1cc0145b69d5a7cbc62ea8, type: 2}
+  - {fileID: 2100000, guid: 77f079317de08dd4d9177fba910861e6, type: 2}
+  - {fileID: 2100000, guid: 48b000aa3b1cc0145b69d5a7cbc62ea8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -251,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 7d23d59d17bc4d14dba30f5b63250c3b, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 177cda0326edc13468653fa2b243a5dc, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -273,7 +278,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Hero_walk01
+  _animationName: Hero_idle01
   loop: 1
   timeScale: 1
 --- !u!95 &8227953999626485723

@@ -39,7 +39,7 @@ public class Player : MonoBehaviour, IDamagable
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle, walk, run, slowWalk, jump, get, overWall, clime
+        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP
     }
     #endregion
 
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isInvincibility);
+        Debug.Log(coll.OnRightWall);
         WalkSoundCoolDownCheck();
         InputManager();
 
@@ -88,24 +88,13 @@ public class Player : MonoBehaviour, IDamagable
             
         if (coll.OnGround || coll.OnLope)
             Jump(dir);
-        /*
-        #region 숨을시 무적 판정 
-        if (coll.OnHideItem)
-        {
-            Debug.Log("Invincibility");
-            isInvincibility = true;
 
-        }
-        else
-        {
-            Debug.Log("UnInvincibility");
-            isInvincibility = false;
+        if (coll.OnRightWall)
+            StairUp();
 
-        }
-        #endregion
-        */
         if (coll.OnGround)
             GetItem();
+
 
         if (handsPos.transform.childCount !=0)
                 item = handsPos.transform.GetChild(0).gameObject;
@@ -134,6 +123,7 @@ public class Player : MonoBehaviour, IDamagable
         dash = Input.GetKey(KeyCode.LeftShift);
         get = Input.GetKeyDown(KeyCode.Z);
         use = Input.GetKeyDown(KeyCode.X); // 숨기 
+
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
 
@@ -154,11 +144,13 @@ public class Player : MonoBehaviour, IDamagable
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
                 MoveSpeed = 0.5f;
+                //_AnimState = AnimState.walk;
+                
             }
+            StartCoroutine(DisableMovement(0.5f));
             _AnimState = AnimState.slowWalk;
 
         }
-
         else if (dash)
         {
             MoveSpeed = 5f;
@@ -172,7 +164,7 @@ public class Player : MonoBehaviour, IDamagable
 
         rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
 
-        if (rb.velocity.x == 0)
+        if (rb.velocity.x == 0 && !sit)
         {
             _AnimState = AnimState.idle;
             FlipAnim();
@@ -207,6 +199,12 @@ public class Player : MonoBehaviour, IDamagable
     }
     #endregion
 
+    private void StairUp()
+    {
+
+        _AnimState = AnimState.stairUP;
+        SetCurrentAnimation(_AnimState);
+    }
 
     private void GetItem()
     {
@@ -236,6 +234,8 @@ public class Player : MonoBehaviour, IDamagable
                 if(item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
                      item.GetComponent<Item>().UseItem();
 
+                _AnimState = AnimState.Throw;
+                SetCurrentAnimation(_AnimState);
                 handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
                 item = null;
                 Debug.Log(item);
@@ -351,7 +351,7 @@ public class Player : MonoBehaviour, IDamagable
         {
 
             case AnimState.idle:
-                AsncAnimation(AnimClip[(int)AnimState.idle], true, 0.5f);
+                AsncAnimation(AnimClip[(int)AnimState.idle], true, 1f);
                 break;
 
             case AnimState.walk:
@@ -363,26 +363,29 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.slowWalk:
-                AsncAnimation(AnimClip[(int)AnimState.slowWalk], true, 0.5f);
+                AsncAnimation(AnimClip[(int)AnimState.slowWalk], false, 2f);
                 break;
 
             case AnimState.jump:
-                AsncAnimation(AnimClip[(int)AnimState.jump], false, 0.5f);
+                AsncAnimation(AnimClip[(int)AnimState.jump], false, 1.5f);
                 break;
 
             case AnimState.get:
-                AsncAnimation(AnimClip[(int)AnimState.get], false, 0.5f);
+                AsncAnimation(AnimClip[(int)AnimState.get], false, 1.5f);
                 break;
 
-            case AnimState.overWall:
-                AsncAnimation(AnimClip[(int)AnimState.overWall], false, 0.5f);
+            case AnimState.Throw:
+                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 1.5f);
                 break;
 
             case AnimState.clime:
-                AsncAnimation(AnimClip[(int)AnimState.clime], true, 0.5f);
+                AsncAnimation(AnimClip[(int)AnimState.clime], true, 1f);
+                break;
+
+            case AnimState.stairUP:
+                AsncAnimation(AnimClip[(int)AnimState.stairUP], true, 1f);
                 break;
         }
-
 
     }
 
