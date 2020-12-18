@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         if (coll.OnWall && Input.GetKey(KeyCode.LeftShift) && CanMove)
         {
             
-            if (PlayerSide != coll.WallSide)
+           // if (PlayerSide != coll.WallSide)
                 anim.Flip(PlayerSide);
                 
             WallGrab = true;
@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
     private void WallSlide()
     {
         
-        if (coll.WallSide != PlayerSide)
+       // if (coll.WallSide != PlayerSide)
             anim.Flip(PlayerSide);
         
         if (!CanMove)

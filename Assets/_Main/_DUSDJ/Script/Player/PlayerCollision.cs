@@ -6,9 +6,10 @@ public class PlayerCollision : MonoBehaviour
 {
 
     [Header("Layers")]
-    public LayerMask groundLayer;
-    public LayerMask ropeLayer;
-    public LayerMask itemLayer;
+    [Tooltip("Floor 판별")] public LayerMask groundLayer;
+    [Tooltip("Rope 판별")] public LayerMask ropeLayer;
+    [Tooltip("Item 판별")] public LayerMask itemLayer;
+    [Tooltip("HideItem 판별")] public LayerMask hideItemLayer;
 
     [Space]
 
@@ -16,20 +17,18 @@ public class PlayerCollision : MonoBehaviour
     public bool OnWall;
     public bool OnLope;
     public bool OnItem;
+    public bool OnHideItem;
     public bool OnRightWall;
     public bool OnLeftWall;
-    public bool IsRightWall;
-    public bool IsLeftWall;
-    public int WallSide;
 
     [Space]
 
     [Header("Collision")]
 
     public float CollisionRadius = 0.15f;
+    public float ItemCollisionRadius = 0.5f;
     public float BoxSize = 0.5f;
-    public Vector2 BottomOffset, rightOffset, leftOffset , leftWallOffset , rightWallOffset;
-    private Color debugCollisionColor = Color.red;
+    public Vector2 BottomOffset, rightOffset, leftOffset , itemOffset;
 
     // Update is called once per frame
     void Update()
@@ -39,28 +38,26 @@ public class PlayerCollision : MonoBehaviour
             || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, groundLayer);
         OnLope = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, ropeLayer)
             || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, ropeLayer);
-        OnItem = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, itemLayer)
-            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, itemLayer);
+
+        OnItem = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, itemLayer);
+
+        OnHideItem = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, hideItemLayer);
 
         OnRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, groundLayer);
         OnLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, groundLayer);
-        IsRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightWallOffset, CollisionRadius, groundLayer);
-        IsLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftWallOffset, CollisionRadius, groundLayer);
 
-        WallSide = OnRightWall ? -1 : 1;
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
 
-        var positions = new Vector2[] { BottomOffset, rightOffset, leftOffset , leftWallOffset, rightWallOffset };
+        var positions = new Vector2[] { BottomOffset, rightOffset, leftOffset  };
 
         Gizmos.DrawWireSphere((Vector2)transform.position + BottomOffset, CollisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, CollisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, CollisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + leftWallOffset, CollisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + rightWallOffset, CollisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + itemOffset, ItemCollisionRadius);
     }
 
 }

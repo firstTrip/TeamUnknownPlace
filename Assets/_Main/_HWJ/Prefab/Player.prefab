@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3226019085833992088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.54, y: 5.14, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.8374551, w: 0.5465062}
+  m_LocalPosition: {x: -5.5400085, y: 5.1399994, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8227953999626485720}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 113.745}
 --- !u!1 &8227953999411299617
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,22 +85,23 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 4096
+  hideItemLayer:
+    serializedVersion: 2
+    m_Bits: 16384
   OnGround: 0
   OnWall: 0
   OnLope: 0
   OnItem: 0
+  OnHideItem: 0
   OnRightWall: 0
   OnLeftWall: 0
-  IsRightWall: 0
-  IsLeftWall: 0
-  WallSide: 0
   CollisionRadius: 0.15
+  ItemCollisionRadius: 0.4
   BoxSize: 0.5
   BottomOffset: {x: 0, y: 0.1}
   rightOffset: {x: 0.4, y: 0.5}
   leftOffset: {x: -0.4, y: 0.5}
-  leftWallOffset: {x: 0, y: 0}
-  rightWallOffset: {x: 0, y: 0}
+  itemOffset: {x: 0, y: 0.37}
 --- !u!114 &7154329490631138289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,14 +117,8 @@ MonoBehaviour:
   MoveSpeed: 0
   JumpForce: 5
   GravityScale: 1
-  WallSlideSpeed: 5
-  WallJumpLerp: 10
-  DashSpeed: 20
   RopeUpForce: 1
   handsPos: {fileID: 858498154200576312}
-  isDefaultLookLeft: 1
-  WallJumped: 0
-  PlayerSide: 1
   item: {fileID: 0}
   skeletonAnimation: {fileID: 8227953999626485722}
   AnimClip:
