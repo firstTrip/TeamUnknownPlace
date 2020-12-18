@@ -195,10 +195,14 @@ public class Player : MonoBehaviour, IDamagable
             StartCoroutine(DisableMovement(1f));
 
             rb.velocity = new Vector2(rb.velocity.x, 0);
-            rb.velocity += dir * JumpForce;
-           
-            _AnimState = AnimState.jump;
-            SetCurrentAnimation(_AnimState);
+
+            if(rb.velocity == Vector2.zero || dir.y == 0)
+            {
+                rb.velocity += Vector2.up * JumpForce;
+                _AnimState = AnimState.jump;
+                SetCurrentAnimation(_AnimState);
+            }
+
         }
     }
     #endregion
@@ -209,7 +213,6 @@ public class Player : MonoBehaviour, IDamagable
         if (get && coll.OnItem || get && coll.OnHideItem)
         {
             Debug.Log("in GetItem");
-
             if(item != null)
             {
                 Debug.Log("HasItem");
