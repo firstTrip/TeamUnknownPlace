@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Mob
   - Floor
+  - Water
+  - MainLight
+  - Item
   layers:
   - Default
   - TransparentFX

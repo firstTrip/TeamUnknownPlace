@@ -75,10 +75,10 @@ public class Scenario : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(string.Format("{0} : Enter On Scenario", collision.gameObject.name));
-
         if (collision.CompareTag("Player"))
         {
+            Debug.Log(string.Format("{0} : Enter On Scenario", collision.gameObject.name));
+
             if (isEnter)
             {
                 return;

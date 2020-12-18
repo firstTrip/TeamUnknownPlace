@@ -16,6 +16,8 @@ public class DebugManager : MonoBehaviour
     public Text SoundFromText;
     public Text NowSoundNullText;
     public Text PrevTargetText;
+    
+    public Text StayTimeText;
 
     private void Awake()
     {

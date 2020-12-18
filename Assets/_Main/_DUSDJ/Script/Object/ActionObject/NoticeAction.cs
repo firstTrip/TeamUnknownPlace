@@ -8,8 +8,6 @@ public class NoticeAction : MonoBehaviour, ICallback
     public float Duration;
     public string Content;
 
-    public bool BroadCast = false;
-
     private bool isUsed = false;
 
     private void Awake()
@@ -19,25 +17,20 @@ public class NoticeAction : MonoBehaviour, ICallback
 
     private void ObjectAction()
     {
+        if (isUsed)
+        {
+            return;
+        }
+        isUsed = true;
+
         UIManager.Instance.SetNotice(Content, Duration);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isUsed)
-        {
-            return;
-        }
-
         if (collision.CompareTag("Player"))
         {
-            isUsed = true;
             ObjectAction();
-
-            if (BroadCast)
-            {
-                BroadcastMessage("OnTriggerEnter2D", collision);
-            }
         }
     }
 

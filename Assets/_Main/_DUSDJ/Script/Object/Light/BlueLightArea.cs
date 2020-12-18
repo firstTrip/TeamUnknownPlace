@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BlueLightArea : MonoBehaviour
 {
+    [Header("이 빛에 닿으면 붉은빛 없어짐")]public bool IsSpecial = false;
+
     public bool IsActivated = false;    
     public bool IsPassed = false;
 

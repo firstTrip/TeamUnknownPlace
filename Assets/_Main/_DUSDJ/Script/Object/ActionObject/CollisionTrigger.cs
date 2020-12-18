@@ -8,6 +8,10 @@ public class CollisionTrigger : MonoBehaviour
     public string FunctionEnter = "ChildTriggerEnter";
     public string FunctionExit = "ChildTriggerExit";
 
+    public GameObject[] SendMessageTarget;
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (string.IsNullOrEmpty(FunctionEnter))
@@ -17,7 +21,17 @@ public class CollisionTrigger : MonoBehaviour
 
         if (collision.CompareTag(Tag))
         {
-            SendMessageUpwards(FunctionEnter);
+            if(SendMessageTarget.Length > 0)
+            {
+                for (int i = 0; i < SendMessageTarget.Length; i++)
+                {
+                    SendMessageTarget[i].SendMessage(FunctionEnter, collision);
+                }
+            }
+            else
+            {
+                SendMessageUpwards(FunctionEnter, collision);
+            }
         }
         
     }
@@ -31,8 +45,18 @@ public class CollisionTrigger : MonoBehaviour
 
         if (collision.CompareTag(Tag))
         {
-            SendMessageUpwards(FunctionExit);
+            if (SendMessageTarget.Length > 0)
+            {
+                for (int i = 0; i < SendMessageTarget.Length; i++)
+                {
+                    SendMessageTarget[i].SendMessage(FunctionExit, collision);
+                }
+            }
+            else
+            {
+                SendMessageUpwards(FunctionExit, collision);
+            }
         }
-        
+
     }
 }

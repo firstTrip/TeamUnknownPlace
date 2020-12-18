@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public class ZoomAction : ObjectBase, ICallback
-
 {
     public Transform FollowTarget;
     public float OrthoValue = 4.0f;
@@ -42,6 +41,11 @@ public class ZoomAction : ObjectBase, ICallback
 
     public override void ObjectAction()
     {
+        if (isUsed == true)
+        {
+            return;
+        }
+
         isUsed = true;
 
         EffectManager.Instance.ZoomTarget(FollowTarget, OrthoValue, Duration);
@@ -61,11 +65,6 @@ public class ZoomAction : ObjectBase, ICallback
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if(isUsed == true)
-        {
-            return;
-        }
-
         if (collision.CompareTag("Player"))
         {
             ObjectAction();

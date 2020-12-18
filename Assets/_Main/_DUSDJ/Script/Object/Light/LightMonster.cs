@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class LightMonster : MonoBehaviour
 {
@@ -17,7 +18,29 @@ public class LightMonster : MonoBehaviour
     private float tracingTime = 0f;
     [Header("최대가속 시간")]public float AxcelMaxTime = 2.0f;
 
+    [Header("B,R 시간")]public float BanishRevealTime = 2.0f;
+
     public bool IsHunting = false;
+
+    #region Light
+
+    private Light2D edgeLight;
+    private float edgeIntensity;
+    private float edgeInnerRadius;
+    private float edgeOuterRadius;
+
+    private Light2D coreLight;
+    private float coreIntensity;
+    private float coreInnerRadius;
+    private float coreOuterRadius;
+
+    private SpriteRenderer coreSpr;
+    private float coreSprAlpha;
+
+    private IEnumerator LightCoroutine;
+
+    #endregion
+
 
     #region Sound
 
@@ -85,7 +108,7 @@ public class LightMonster : MonoBehaviour
         isArrive = false;
         if (traceReset)
         {
-            tracingTime = 0f;
+            tracingTime = 0f;            
         }
         axcelSpeed = MoveSpeed * nowSound.Value;
 
@@ -120,6 +143,20 @@ public class LightMonster : MonoBehaviour
         
     }
 
+    public void CleanSound()
+    {
+        previousTarget = null;
+        nowSound = null;                
+        tracingTime = 0f;
+        isArrive = true;
+
+        // 소리 지속시간 집중
+        if (DurationCoroutine != null)
+        {
+            StopCoroutine(DurationCoroutine);
+        }        
+    }
+
     #endregion
 
     private int layerMask;
@@ -130,6 +167,22 @@ public class LightMonster : MonoBehaviour
 
     private void Awake()
     {
+        // edge Light Origin
+        edgeLight = GetComponent<Light2D>();
+        edgeIntensity = edgeLight.intensity;
+        edgeInnerRadius = edgeLight.pointLightInnerRadius;
+        edgeOuterRadius = edgeLight.pointLightOuterRadius;
+
+        // core Light Origin
+        coreLight = GetComponentInChildren<Light2D>();
+        coreIntensity = coreLight.intensity;
+        coreInnerRadius = coreLight.pointLightInnerRadius;
+        coreOuterRadius = coreLight.pointLightOuterRadius;
+
+        // core Spr Origin
+        coreSpr = GetComponentInChildren<SpriteRenderer>();
+        coreSprAlpha = coreSpr.color.a;
+
         DamageList = new List<IDamagable>();
 
         tracingTime = 0f;
@@ -178,9 +231,10 @@ public class LightMonster : MonoBehaviour
         // Debug
         DebugManager.Instance.SetText(DebugManager.Instance.IsArriveText, isArrive.ToString());
         DebugManager.Instance.SetText(DebugManager.Instance.TracingTimeText, tracingTime.ToString());
+        DebugManager.Instance.SetText(DebugManager.Instance.StayTimeText, string.Format("{0:f1}/{1:f1}",stayTime,StayLimit));
     }
 
-    #region Hunt, Damage, DeadCheck
+    #region Hunt, Damage, DeadCheck, DeadLock
 
     [Header("목적지 보정")]public float ArrivalCheckValue = 0.03f;
     [Header("교착시간 한계")]public float StayLimit = 20f;
@@ -190,6 +244,9 @@ public class LightMonster : MonoBehaviour
     {
         if (!isArrive)
         {
+            // 이동을 하게 되면 일단 stay는 아닌거임
+            stayTime = 0;
+
             // 1. TargetPoint 도달 체크
             float distance = Vector2.Distance(transform.position, TargetPoint);
             if(distance <= ArrivalCheckValue)
@@ -231,7 +288,7 @@ public class LightMonster : MonoBehaviour
             {
                 dmg = 0;
             }
-            Debug.Log(string.Format("Damage : {0}", dmg));
+
             DamageList[i].Damage(dmg);
         }
     }
@@ -241,9 +298,15 @@ public class LightMonster : MonoBehaviour
         if(NowSound.SoundFrom != null
             && NowSound.SoundFrom.Equals(from))
         {
-            nowSound = null;
-            previousTarget = null;
+            CleanSound();
         }
+    }
+
+    public void DeadLock()
+    {
+        CleanSound();
+
+        stayTime = StayLimit;
     }
 
     #endregion
@@ -278,6 +341,7 @@ public class LightMonster : MonoBehaviour
 
         IsActive = false;
         IsHunting = false;
+        CleanSound();
 
         Vector3 direction = (transform.position - source).normalized;
         direction.z = 0;
@@ -291,6 +355,150 @@ public class LightMonster : MonoBehaviour
 
 
     }
+
+    public void BounceBySpecial(Vector3 source, float power)
+    {
+        Debug.Log("Bounce By Special!");
+
+        IsActive = false;
+        IsHunting = false;
+        CleanSound();
+
+        Vector3 direction = (transform.position - source).normalized;
+        direction.z = 0;
+        Vector3 endValue = transform.position + direction * power;
+
+        transform.DOMove(endValue, 0.3f).SetEase(Ease.OutBack).OnComplete(() => {
+            Banish();
+        });
+    }
+
+    #endregion
+
+    #region Disable
+
+    public void Banish()
+    {
+        IsActive = false;
+        IsHunting = false;
+        CleanSound();
+
+        if (LightCoroutine != null)
+        {
+            StopCoroutine(LightCoroutine);
+        }
+        LightCoroutine = BanishRevealCoroutine(false);
+        StartCoroutine(LightCoroutine);
+    }
+
+    public void Reveal()
+    {
+        IsActive = true;
+
+        if(LightCoroutine != null)
+        {
+            StopCoroutine(LightCoroutine);
+        }
+        LightCoroutine = BanishRevealCoroutine(true);
+        StartCoroutine(LightCoroutine);
+
+    }
+    
+    
+
+    private IEnumerator BanishRevealCoroutine(bool trueIsReveal)
+    {
+        float t = 0;
+
+        #region Set Reveal or Banish Values
+
+        float nowEdgeIntensity = edgeLight.intensity;
+        float nextEdgeIntensity;
+        float nowEdgeInnerRadius = edgeLight.pointLightInnerRadius;
+        float nextEdgeInnerRadius;
+        float nowEdgeOuterRadius = edgeLight.pointLightOuterRadius;
+        float nextEdgeOuterRadius;
+
+        float nowCoreIntensity = coreLight.intensity;
+        float nextCoreIntensity;
+        float nowCoreInnerRadius = coreLight.pointLightInnerRadius;
+        float nextCoreInnerRadius;
+        float nowCoreOuterRadius = coreLight.pointLightOuterRadius;
+        float nextCoreOuterRadius;
+
+        Color nowColor = coreSpr.color;
+        Color nextColor;
+
+        // Reveal
+        if (trueIsReveal)
+        {
+            // edge
+            nextEdgeIntensity = edgeIntensity;
+            nextEdgeInnerRadius = edgeInnerRadius;
+            nextEdgeOuterRadius = edgeOuterRadius;
+
+            // core
+            nextCoreIntensity = coreIntensity;
+            nextCoreInnerRadius = coreInnerRadius;
+            nextCoreOuterRadius = coreOuterRadius;
+
+            // core spr
+            nextColor = new Color(nowColor.r, nowColor.g, nowColor.b, coreSprAlpha);
+        }
+        else
+        {
+            // edge
+            nextEdgeIntensity = 0;
+            nextEdgeInnerRadius = 0;
+            nextEdgeOuterRadius = 0;
+
+            // core
+            nextCoreIntensity = 0;
+            nextCoreInnerRadius = 0;
+            nextCoreOuterRadius = 0;
+
+            nextColor = new Color(nowColor.r, nowColor.g, nowColor.b, 0);
+        }
+
+        #endregion
+
+        while (t < BanishRevealTime)
+        {
+            t += Time.deltaTime;
+
+            float lerpTime = t / BanishRevealTime;
+
+            // edge
+            edgeLight.intensity = Mathf.Lerp(nowEdgeIntensity, nextEdgeIntensity, lerpTime);
+            edgeLight.pointLightInnerRadius = Mathf.Lerp(nowEdgeInnerRadius, nextEdgeInnerRadius, lerpTime);
+            edgeLight.pointLightOuterRadius = Mathf.Lerp(nowEdgeOuterRadius, nextEdgeOuterRadius, lerpTime);
+
+            // core
+            coreLight.intensity = Mathf.Lerp(nowCoreIntensity, nextCoreIntensity, lerpTime);
+            coreLight.pointLightInnerRadius = Mathf.Lerp(nowCoreInnerRadius, nextCoreInnerRadius, lerpTime);
+            coreLight.pointLightOuterRadius = Mathf.Lerp(nowCoreOuterRadius, nextCoreOuterRadius, lerpTime);
+
+            // core spr
+            coreSpr.color = Color.Lerp(nowColor, nextColor, lerpTime);
+
+            yield return null;
+        }
+
+        /* Set Complete */
+        // edge
+        edgeLight.intensity = nextEdgeIntensity;
+        edgeLight.pointLightInnerRadius = nextEdgeInnerRadius;
+        edgeLight.pointLightOuterRadius = nextEdgeOuterRadius;
+
+        // core
+        coreLight.intensity = nextCoreIntensity;
+        coreLight.pointLightInnerRadius = nextCoreInnerRadius;
+        coreLight.pointLightOuterRadius = nextCoreOuterRadius;
+
+        // core spr
+        coreSpr.color = nextColor;
+    }
+
 
     #endregion
 
@@ -307,7 +515,16 @@ public class LightMonster : MonoBehaviour
         // 파랑빛 충돌시 바운스
         if (collision.gameObject.layer == LayerMask.NameToLayer("BlueLight"))
         {
-            Bounce(collision.transform.position, 2.0f);
+            // Special 체크
+            if (collision.GetComponent<BlueLightArea>().IsSpecial)
+            {
+                BounceBySpecial(collision.transform.position, 4.0f);
+            }
+            else
+            {
+                Bounce(collision.transform.position, 2.0f);
+            }
+
             return;
         }
 

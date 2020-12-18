@@ -31,7 +31,6 @@ public class LightManager : MonoBehaviour
 
     #endregion
 
-
     #region Blue Light
     public Light2D BlueLight;
     public float OriginIntensity = 1;
@@ -39,14 +38,6 @@ public class LightManager : MonoBehaviour
     public float OuterRadius = 18;
 
     IEnumerator BlueLightCoroutine;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            CloseBlueLight();
-        }
-    }
 
     public void SetBlueLight(Vector3 pos)
     {
@@ -56,6 +47,13 @@ public class LightManager : MonoBehaviour
         }
 
         BlueLight.transform.position = pos;
+
+        if (BlueLightCoroutine != null)
+        {
+            StopCoroutine(BlueLightCoroutine);
+        }
+        BlueLightCoroutine = SetBlueLightCoroutine();
+        StartCoroutine(BlueLightCoroutine);
 
         BlueLight.gameObject.SetActive(true);
     }
@@ -68,6 +66,22 @@ public class LightManager : MonoBehaviour
         }
         BlueLightCoroutine = CloseBlueLightCoroutine();
         StartCoroutine(BlueLightCoroutine);
+    }
+
+    IEnumerator SetBlueLightCoroutine()
+    {
+        float t = 0;
+
+        while (t < 2.0f)
+        {
+            t += Time.deltaTime;
+
+            BlueLight.intensity = Mathf.Lerp(0, OriginIntensity, t / 2.0f);
+            BlueLight.pointLightInnerRadius = Mathf.Lerp(0, InnerRadius, t / 2.0f);
+            BlueLight.pointLightOuterRadius = Mathf.Lerp(0, OuterRadius, t / 2.0f);
+
+            yield return null;
+        }
     }
 
     IEnumerator CloseBlueLightCoroutine()
@@ -93,6 +107,7 @@ public class LightManager : MonoBehaviour
     #region Main Light (빛이 1개라는 전제)
 
     [HideInInspector] public LightMonster MainLight;
+    
 
     #endregion
 
@@ -131,7 +146,21 @@ public class LightManager : MonoBehaviour
 
     public void DeadCheck(GameObject from)
     {
-        MainLight.DeadCheck(from);
+        MainLight.DeadCheck(from);        
+    }
+
+    #endregion
+
+    #region Banish, Reveal
+
+    public void Banish()
+    {
+        MainLight.Banish();
+    }
+
+    public void Reveal()
+    {
+        MainLight.Reveal();
     }
 
     #endregion

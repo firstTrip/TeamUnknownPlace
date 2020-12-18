@@ -84,6 +84,15 @@ public class GameManager : MonoBehaviour
         {
             TempUI.SetActive(!TempUI.activeSelf);
         }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            LightManager.Instance.MainLight.Banish();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            LightManager.Instance.MainLight.Reveal();
+        }
     }
 
 
