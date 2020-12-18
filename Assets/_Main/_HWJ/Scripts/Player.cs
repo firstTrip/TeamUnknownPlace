@@ -156,8 +156,9 @@ public class Player : MonoBehaviour, IDamagable
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
                 MoveSpeed = 0.5f;
+                MovementSound(EnumMovement.Crouch);
                 //_AnimState = AnimState.walk;
-                
+
             }
             StartCoroutine(DisableMovement(0.5f));
             _AnimState = AnimState.slowWalk;
@@ -167,6 +168,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             MoveSpeed = 5f;
             _AnimState = AnimState.run;
+            MovementSound(EnumMovement.Run);
         }
         else
         {
@@ -184,12 +186,13 @@ public class Player : MonoBehaviour, IDamagable
             return;
         }
 
+        MovementSound(EnumMovement.Walk);
         /* 아래 3줄을 각각
          * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
         // MovementSound(EnumMovement.Crouch); // 앉은걸음
         // MovementSound(EnumMovement.Walk); // 걷기
         // MovementSound(EnumMovement.Run); // 달리기
-        
+
         FlipAnim();
         SetCurrentAnimation(_AnimState);
     }
