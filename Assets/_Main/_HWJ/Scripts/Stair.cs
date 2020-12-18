@@ -25,7 +25,6 @@ public class Stair : MonoBehaviour
         {
             if (other.GetComponentInParent<Player>().GetUseStair())
             {
-                Debug.Log("qweasdzxc");
                 edge.isTrigger = false;
             }
         }
@@ -38,6 +37,5 @@ public class Stair : MonoBehaviour
         {
 
         }
-             //edge.isTrigger = true;
     }
 }

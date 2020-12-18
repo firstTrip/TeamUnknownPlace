@@ -91,7 +91,7 @@ public class Player : MonoBehaviour, IDamagable
         if (coll.OnGround)
             Jump(dir);
 
-        if (coll.OnRightWall && dir.y != 0)
+        if (coll.OnRightWall && dir.y > 0 && coll.OnGround)
         {
             StairUp();
         }
@@ -198,7 +198,8 @@ public class Player : MonoBehaviour, IDamagable
 
             if(rb.velocity == Vector2.zero || dir.y == 0)
             {
-                rb.velocity += Vector2.up * JumpForce;
+                rb.velocity = new Vector2(rb.velocity.x, JumpForce);
+
                 _AnimState = AnimState.jump;
                 SetCurrentAnimation(_AnimState);
             }
