@@ -28,6 +28,7 @@ public class Player : MonoBehaviour, IDamagable
     private bool use;
     private bool useStair;
     private bool isWall;
+    public bool callWakeUpFlag;
     public bool isInvincibility; //  true 일시 대미지 x 
 
 
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour, IDamagable
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP
+        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp
     }
     #endregion
 
@@ -89,6 +90,8 @@ public class Player : MonoBehaviour, IDamagable
         WalkSoundCoolDownCheck();
         InputManager();
 
+        CallWakeUp();
+
         dir = new Vector2(x, y);
 
         if (!coll.OnRope)
@@ -130,6 +133,7 @@ public class Player : MonoBehaviour, IDamagable
             rb.velocity = Vector2.zero;
             return;
         }
+        
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
@@ -156,7 +160,7 @@ public class Player : MonoBehaviour, IDamagable
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
                 MoveSpeed = 0.5f;
-                //MovementSound(EnumMovement.Crouch);
+                MovementSound(EnumMovement.Crouch);
                 //_AnimState = AnimState.walk;
 
             }
@@ -168,7 +172,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             MoveSpeed = 5f;
             _AnimState = AnimState.run;
-            //MovementSound(EnumMovement.Run);
+            MovementSound(EnumMovement.Run);
         }
         else
         {
@@ -186,7 +190,7 @@ public class Player : MonoBehaviour, IDamagable
             return;
         }
 
-        //MovementSound(EnumMovement.Walk);
+        MovementSound(EnumMovement.Walk);
         /* 아래 3줄을 각각
          * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
         // MovementSound(EnumMovement.Crouch); // 앉은걸음
@@ -302,6 +306,17 @@ public class Player : MonoBehaviour, IDamagable
     public bool GetItemUse()
     {
         return use;
+    }
+
+    public void CallWakeUp()
+    {
+        if (callWakeUpFlag)
+        {
+            _AnimState = AnimState.wakeUp;
+            SetCurrentAnimation(_AnimState);
+            StartCoroutine(DisableMovement(1f));
+        }
+    
     }
 
     #region RopeAction
@@ -454,6 +469,10 @@ public class Player : MonoBehaviour, IDamagable
 
             case AnimState.stairUP:
                 AsncAnimation(AnimClip[(int)AnimState.stairUP], true, 1f);
+                break;
+
+            case AnimState.wakeUp:
+                AsncAnimation(AnimClip[(int)AnimState.wakeUp], true, 1f);
                 break;
         }
 

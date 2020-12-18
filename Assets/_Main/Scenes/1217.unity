@@ -2382,16 +2382,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
-        type: 3}
-      propertyPath: WalkSoundCoolDown
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
-        type: 3}
-      propertyPath: WalkSoundValue
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2451,11 +2441,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227953999626485721, guid: a6256fb77b6323d46ba8f6ee78efa16c,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8227953999626485727, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
@@ -2828,38 +2813,6 @@ MonoBehaviour:
   OrthoValue: 3
   Duration: 2
   StopWhileZoom: 1
---- !u!1 &708834163 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8227953999411299617, guid: a6256fb77b6323d46ba8f6ee78efa16c,
-    type: 3}
-  m_PrefabInstance: {fileID: 564820848}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &708834164
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708834163}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.039210796, y: 0.7014389}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.41619396, y: 1.3398275}
-  m_EdgeRadius: 0
 --- !u!4 &708834168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
