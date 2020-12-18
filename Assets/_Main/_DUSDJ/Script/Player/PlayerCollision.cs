@@ -10,6 +10,7 @@ public class PlayerCollision : MonoBehaviour
     [Tooltip("Rope 판별")] public LayerMask ropeLayer;
     [Tooltip("Item 판별")] public LayerMask itemLayer;
     [Tooltip("HideItem 판별")] public LayerMask hideItemLayer;
+    [Tooltip(" 계단 판별")] public LayerMask stairLayer;
 
     [Space]
 
@@ -43,8 +44,7 @@ public class PlayerCollision : MonoBehaviour
 
         OnHideItem = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, hideItemLayer);
 
-        OnRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, groundLayer);
-        OnLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, groundLayer);
+        OnRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, stairLayer);
 
     }
 
