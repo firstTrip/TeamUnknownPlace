@@ -309,7 +309,6 @@ public class Player : MonoBehaviour, IDamagable
         
         if (WalkSoundCoolDownNow <= 0)
         {
-            EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
             AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position);
 
             WalkSoundCoolDownNow = WalkSoundCoolDown;

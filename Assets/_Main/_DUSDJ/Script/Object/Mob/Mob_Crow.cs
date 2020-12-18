@@ -6,24 +6,16 @@ using UnityEngine;
 
 public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 {
-    [System.Serializable]
-    public struct StructSoundData
-    {
-        [Header("사운드 키")] public string SoundKey;
-        [Header("사운드웨이브 크기")] public float SoundWaveScale;
-        [Header("반복하는지?")] public bool Loop;
-        [Header("소리발생 쿨다운")] public float ActionCoolDown;
-
-        [Header("소리 밸류")] public int SoundValue;
-    }
+    [Header("튜토리얼")] public bool Tutorial = true;
 
     [Header("Sound Data")] public StructSoundData SoundData;
-    private Vector3 soundWaveScale;
-    [Space]
+    [Header("루프여부")]public bool SoundLoop = false;
 
     [Header("Effect Data")] public string EffectKey;
     [Header("이펙트 끝나는 시간")] public float EffectDuration;
     [Header("이펙트 크기")] public Vector3 EffectScale = Vector3.one;
+
+    
 
     [Space]
 
@@ -59,7 +51,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 
     public void CallbackAction()
     {
-        Action();
+        ObjectAction();
     }
 
     public GameObject GetGameObject()
@@ -78,29 +70,32 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     {
         anim = GetComponent<Animator>();
 
-        soundWaveScale = new Vector3(SoundData.SoundWaveScale, SoundData.SoundWaveScale, 1.0f);
         IsAlive = true;
     }
 
-    public void Action()
+    public void ObjectAction()
     {
-        // 사냥시작
-        LightManager.Instance.MainLight.IsHunting = true;
+        // 튜토리얼에만 적용
+        if (Tutorial)
+        {
+            // 사냥시작
+            LightManager.Instance.MainLight.IsHunting = true;
 
-        // 까마귀
+            // 까마귀 줌 & 플레이어 조작 정지
+            EffectManager.Instance.ZoomTarget(transform, 3.0f);
+            GameManager.Instance.NowState = EnumGameState.Ready;
+        }
+
+        // 까마귀 이펙트
         EffectManager.Instance.SetPool(EffectKey, transform.position, EffectScale);
 
-        // 까마귀 줌 & 플레이어 조작 정지
-        EffectManager.Instance.ZoomTarget(transform, 3.0f);
-        GameManager.Instance.NowState = EnumGameState.Ready;
-
+        // 애니메이션 & 이동 & 사운드 코루틴
         Action act = () => {
             anim.SetBool("Action", true);
 
-            transform.DOMoveX(-12f, 12f);
+            transform.DOMoveX(-12f, 8f);
             StartCoroutine(SoundCoroutine());            
         };
-
 
         IEnumerator delayCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.25f, act);
         StartCoroutine(delayCoroutine);   
@@ -109,27 +104,39 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     public void Dead()
     {
         // 일단 하드코딩
-        Debug.Log("Crow Dead");
         IsAlive = false;
 
-        // 자막
-        UIManager.Instance.SetNotice("붉은 빛은 큰 소리를 내는 까마귀를 따라갔다.", 4.0f);
-
-        EffectManager.Instance.SetPool("Dead", transform.position);
+        // DOKill, StopCoroutine
         transform.DOKill();
         StopAllCoroutines();
 
-        AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position);
-        EffectManager.Instance.SetPool("SoundWave", transform.position, soundWaveScale);
+        // Effect
+        EffectManager.Instance.SetPool("Dead", transform.position);
 
-        IEnumerator coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {            
-            // 조작 재개 & 플레이어 카메라
-            GameManager.Instance.NowState = EnumGameState.Action;
-            EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);       
-            gameObject.SetActive(false);
-        });
+        IEnumerator coroutine;
 
-        StartCoroutine(coroutine);   
+        // 튜토리얼에만 적용
+        if (Tutorial)
+        {
+            // 자막
+            UIManager.Instance.SetNotice("붉은 빛은 큰 소리를 낸 까마귀를 삼켰다.", 4.0f);
+
+            coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {
+                // 조작 재개 & 플레이어 카메라
+                GameManager.Instance.NowState = EnumGameState.Action;
+                EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);
+                gameObject.SetActive(false);
+            });
+        }
+        // 평상시
+        else
+        {
+            coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {                
+                gameObject.SetActive(false);
+            });
+        }
+        StartCoroutine(coroutine);
+
     }
 
     public void Damage(float value)
@@ -155,10 +162,9 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
             {
                 t -= SoundData.ActionCoolDown;
 
-                AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position);
-                EffectManager.Instance.SetPool("SoundWave", transform.position, soundWaveScale);
-
-                if(SoundData.Loop == false)
+                AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
+                
+                if(SoundLoop == false)
                 {
                     break;
                 }

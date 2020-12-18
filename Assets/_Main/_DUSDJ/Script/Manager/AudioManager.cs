@@ -121,7 +121,7 @@ public class AudioManager : MonoBehaviour
         soundEffectAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public Sound PlaySound(string clipName, int value, Vector3 position)
+    public Sound PlaySound(string clipName, int value, Vector3 position, GameObject from = null)
     {
         if (!DataDic.ContainsKey(clipName))
         {
@@ -129,11 +129,16 @@ public class AudioManager : MonoBehaviour
             return null;
         }
 
+        // 소리재생
         soundEffectAudioSource.PlayOneShot(DataDic[clipName]);
 
-        Sound s = new Sound(DataDic[clipName].length, value, position);
+        // Sound Wave
+        Vector3 soundWaveScale = new Vector3(value * 0.05f, value * 0.05f,1.0f);
+        EffectManager.Instance.SetPool("SoundWave", position, soundWaveScale);
 
-        LightManager.Instance.LookBySound(s);
+        Sound s = new Sound(DataDic[clipName].length, value, position, from);
+
+        LightManager.Instance.HearSound(s);
 
         return s;
     }

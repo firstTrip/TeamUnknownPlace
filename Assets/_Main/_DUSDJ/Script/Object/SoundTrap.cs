@@ -71,8 +71,7 @@ public class SoundTrap : MonoBehaviour
             isUsed = true;
             ActionCoolDownNow = SoundData.ActionCoolDown;
 
-            EffectManager.Instance.SetPool("SoundWave", transform.position, SoundWaveScale);
-            Sound s = AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position);
+            Sound s = AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
 
             // 콜백이 있으면, 소리 끝난 다음에 발동
             if (Callback != null)

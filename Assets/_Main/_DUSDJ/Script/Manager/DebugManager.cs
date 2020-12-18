@@ -7,15 +7,21 @@ public class DebugManager : MonoBehaviour
 {
     public static DebugManager Instance;
 
+    public Text IsHuntingBox;
+    public Text DistanceBox;
+    public Text IsHitBlueLightBox;
+
+    public Text IsArriveText;
+    public Text TracingTimeText;
+    public Text SoundFromText;
+    public Text NowSoundNullText;
+    public Text PrevTargetText;
+
     private void Awake()
     {
         Instance = this;
     }
 
-    public Text IsHuntingBox;
-    public Text DistanceBox;
-    public Text IsHitBlueLightBox;
-    
     public void SetText(Text box, string content)
     {
         box.text = content;

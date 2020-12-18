@@ -81,8 +81,7 @@ public class EffectTrap : MonoBehaviour, ICallback
         {
             int index = i;
             Action act = () => {
-                EffectManager.Instance.SetPool("SoundWave", transform.position + SoundData.SoundPoint[index].PositionAdder, SoundWaveScale);
-                AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position + SoundData.SoundPoint[index].PositionAdder);
+                AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position + SoundData.SoundPoint[index].PositionAdder, gameObject);
             };
 
             IEnumerator coroutine = DUSDJUtil.ActionAfterSecondCoroutine(SoundData.SoundPoint[i].Timings, act);

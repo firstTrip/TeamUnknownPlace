@@ -196,7 +196,7 @@ public class PlayerTest : MonoBehaviour
             SetCurrentAnimation(_AnimState);
         }
 
-        if(handsPos.GetChildCount() !=0)
+        if(handsPos.childCount !=0)
         {
             item = handsPos.GetChild(0).gameObject;
             if (item.GetComponent<Item>().itemType.ToString() == "UnCarriable")
@@ -279,7 +279,6 @@ public class PlayerTest : MonoBehaviour
         #region WalkSound
         if (WalkSoundCoolDownNow <= 0)
         {
-            EffectManager.Instance.SetPool("SoundWave", transform.position, new Vector3(0.5f, 0.5f, 1f));
             AudioManager.Instance.PlaySound("Footstep", WalkSoundValue, transform.position);
 
             WalkSoundCoolDownNow = WalkSoundCoolDown;

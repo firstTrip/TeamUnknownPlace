@@ -11,7 +11,6 @@ public class Scenario : MonoBehaviour
     private PlayableDirector TimeLine; // 타임라인 있는지?
     private Collider2D CinemachineCollider; // 시네머신 영역
     private GameObject WallCollider; // 못 돌아가게 막을 벽
-    private LightArea[] LightAreaArray; // 이 씬에서 다룰 빛 영역
 
     // 체크
     private bool isEnter = false;
@@ -23,8 +22,7 @@ public class Scenario : MonoBehaviour
         CinemachineCollider = transform.Find("CinemachineCollider").GetComponent<Collider2D>();
         TimeLine = transform.GetComponentInChildren<PlayableDirector>();        
         WallCollider = transform.Find("WallCollider").gameObject;
-        LightAreaArray = transform.Find("LightArea").GetComponentsInChildren<LightArea>();
-
+        
         ObjectsSetActive(false);
     }
 
@@ -36,11 +34,6 @@ public class Scenario : MonoBehaviour
         if (value)
         {
             WallCollider?.SetActive(value);
-        }
-        
-        foreach (var item in LightAreaArray)
-        {
-            item.gameObject.SetActive(value);
         }
     }
 

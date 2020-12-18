@@ -33,8 +33,7 @@ public class Trap : ObjectBase, ICallback
 
         /* 덜걱 소리가 나고, 일정시간 뒤에 발동 */
         //Sound & SoundWave
-        EffectManager.Instance.SetPool("SoundWave", transform.position, TrapActivateSoundScale);        
-        AudioManager.Instance.PlaySound(TrapActivateSound.SoundKey, TrapActivateSound.SoundValue, transform.position);
+        AudioManager.Instance.PlaySound(TrapActivateSound.SoundKey, TrapActivateSound.SoundValue, transform.position, gameObject);
 
         // 지연시간 후 액션 코루틴
         IEnumerator coroutine = DUSDJUtil.ActionAfterSecondCoroutine(TrapDelay, AfterAction);
@@ -44,8 +43,7 @@ public class Trap : ObjectBase, ICallback
     private void AfterAction()
     {
         // Sound Data
-        EffectManager.Instance.SetPool("SoundWave", transform.position, SoundWaveScale);
-        AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position);
+        AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
 
         // 함정 변화 처리 (애니메이션?)
         anim.SetBool("Action", true);
