@@ -4889,6 +4889,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: AnimClip.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: AnimClip.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: cfa4c78c3c946f74c86c100227e5d569,
+        type: 2}
     - target: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_LocalPosition.x

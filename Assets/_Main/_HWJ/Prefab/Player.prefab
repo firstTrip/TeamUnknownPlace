@@ -143,6 +143,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1def829d9a5cfa4ab1707ce70b0a876, type: 2}
   - {fileID: 11400000, guid: dba3cf3e03eb64e4db8cc5257c394fd7, type: 2}
   - {fileID: 11400000, guid: 72ab0260ae64b4c49b554600b6ce060d, type: 2}
+  - {fileID: 11400000, guid: cfa4c78c3c946f74c86c100227e5d569, type: 2}
   CrouchSoundCoolDown: 0.5
   CrouchSoundValue: 10
   WalkSoundCoolDown: 0.5

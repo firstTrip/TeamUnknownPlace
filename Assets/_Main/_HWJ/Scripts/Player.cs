@@ -41,7 +41,7 @@ public class Player : MonoBehaviour, IDamagable
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp ,NomalDead ,WaterDead
+        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp ,NomalDead ,WaterDead , Down
     }
 
     public enum DeadState
@@ -144,7 +144,6 @@ public class Player : MonoBehaviour, IDamagable
             rb.velocity = Vector2.zero;
             return;
         }
-        
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
@@ -326,11 +325,18 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (callWakeUpFlag)
         {
+            StartCoroutine(DisableMovement(1f));
             _AnimState = AnimState.wakeUp;
             SetCurrentAnimation(_AnimState);
-            StartCoroutine(DisableMovement(1f));
+            
         }
+    }
     
+    public void CallDown()
+    {
+        StartCoroutine(DisableMovement(1f));
+        _AnimState = AnimState.Down;
+        SetCurrentAnimation(_AnimState);
     }
 
     public void CallDead(DeadState deadState )
@@ -520,7 +526,10 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.WaterDead:
-                AsncAnimation(AnimClip[(int)AnimState.WaterDead], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.WaterDead], false, 1f);
+                break;
+            case AnimState.Down:
+                AsncAnimation(AnimClip[(int)AnimState.Down], false, 1f);
                 break;
         }
 
