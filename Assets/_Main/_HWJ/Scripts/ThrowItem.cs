@@ -18,7 +18,6 @@ public class ThrowItem : Item
     {
         if (GO != null)
         {
-            
             gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.GetChild(0).position;
             x = GO.GetComponent<Player>().xRaw;
 
