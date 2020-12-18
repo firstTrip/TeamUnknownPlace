@@ -19,7 +19,7 @@ public class Stair : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -35,6 +35,7 @@ public class Stair : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            edge.isTrigger = true;
 
         }
     }

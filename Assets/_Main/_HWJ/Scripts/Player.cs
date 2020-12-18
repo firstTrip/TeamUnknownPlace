@@ -34,7 +34,7 @@ public class Player : MonoBehaviour, IDamagable
 
     float x;
     float y;
-    float xRaw;
+    public float xRaw;
     float yRaw;
 
     private string currentAnimation;
@@ -87,6 +87,8 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(isInvincibility);
         WalkSoundCoolDownCheck();
         InputManager();
 
@@ -100,8 +102,9 @@ public class Player : MonoBehaviour, IDamagable
         if (coll.OnGround)
             Jump(dir);
 
-        if (coll.OnRightWall && dir.y > 0 )
+        if (coll.OnRightWall && yRaw !=0 )
         {
+            Debug.Log("qweasdzxc");
             StairUp();
         }
         else
@@ -160,7 +163,7 @@ public class Player : MonoBehaviour, IDamagable
             if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
             {
                 MoveSpeed = 0.5f;
-                MovementSound(EnumMovement.Crouch);
+                //MovementSound(EnumMovement.Crouch);
                 //_AnimState = AnimState.walk;
 
             }
@@ -172,7 +175,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             MoveSpeed = 5f;
             _AnimState = AnimState.run;
-            MovementSound(EnumMovement.Run);
+            //MovementSound(EnumMovement.Run);
         }
         else
         {
@@ -190,7 +193,6 @@ public class Player : MonoBehaviour, IDamagable
             return;
         }
 
-        MovementSound(EnumMovement.Walk);
         /* 아래 3줄을 각각
          * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
         // MovementSound(EnumMovement.Crouch); // 앉은걸음
@@ -323,9 +325,8 @@ public class Player : MonoBehaviour, IDamagable
     private void RopeAction()
     {
 
-        Debug.Log("rope");
         rb.AddForce(Vector2.up * yRaw * 0.1f, ForceMode2D.Impulse);
-        Debug.Log(yRaw);
+
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * RopeUpForce);
         _AnimState = AnimState.clime;
