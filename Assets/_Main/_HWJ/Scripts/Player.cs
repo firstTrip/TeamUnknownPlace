@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IDamagable
     private bool canMove;
     private bool sit;
     private bool dash;
-    private bool get; // Z 누른 경우
+    public bool get; // Z 누른 경우
     private bool use;
     private bool useStair;
     private bool isWall;
@@ -78,8 +78,6 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(coll.OnRope);
-        Debug.Log(useStair);
         WalkSoundCoolDownCheck();
         InputManager();
 
@@ -91,20 +89,16 @@ public class Player : MonoBehaviour, IDamagable
         if (coll.OnGround)
             Jump(dir);
 
-        if (coll.OnRightWall && dir.y > 0 && coll.OnGround)
+        if (coll.OnRightWall && dir.y > 0 )
         {
             StairUp();
         }
         else
             useStair = false;
 
-
         if (coll.OnGround)
             GetItem();
 
-
-        if (handsPos.transform.childCount !=0)
-                item = handsPos.transform.GetChild(0).gameObject;
 
         UseItem();
 
@@ -123,13 +117,15 @@ public class Player : MonoBehaviour, IDamagable
 
         if (GameManager.Instance.NowState == EnumGameState.Ready)
         {
+            x = 0;
+            y = 0;
             rb.velocity = Vector2.zero;
             return;
         }
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
-        get = Input.GetKeyDown(KeyCode.Z);
+        get = Input.GetKeyUp(KeyCode.Z);
         use = Input.GetKeyDown(KeyCode.X); // 숨기 
 
         x = Input.GetAxis("Horizontal");
@@ -226,12 +222,14 @@ public class Player : MonoBehaviour, IDamagable
                 return;
             }
 
+            if (handsPos.transform.childCount != 0)
+                item = handsPos.transform.GetChild(0).gameObject;
+
             StartCoroutine(DisableMovement(0.5f));
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
-            Debug.Log(handsPos.childCount);
-
         }
+
 
     }
     private void UseItem()
@@ -239,32 +237,39 @@ public class Player : MonoBehaviour, IDamagable
         if (item != null)
         {
             if (get)
-            {
-                if(item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
-                     item.GetComponent<Item>().UseItem();
+            { 
+                if (item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
+                {
+                    Debug.Log("asdqwezxc");
+                    item.GetComponent<Item>().UseItem();
 
-                _AnimState = AnimState.Throw;
-                SetCurrentAnimation(_AnimState);
-                handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-                item = null;
-                Debug.Log(item);
+                    StartCoroutine(DisableMovement(0.5f));
+                    _AnimState = AnimState.Throw;
+                    SetCurrentAnimation(_AnimState);
+
+                    item = null;
+                }
             }
 
-            if (use)
+         
+        }
+        if (use)
+        {
+            if (handsPos.transform.childCount != 0)
+                item = handsPos.transform.GetChild(0).gameObject;
+
+            if (item != null)
             {
                 if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
                 {
+
                     item.GetComponent<Item>().UseItem();
                     item = null;
-
                 }
 
-                // handsPos.GetChild(0).gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-
             }
-        }
-        else return;
 
+        }
     }
 
     public bool GetItemStatus()
@@ -388,7 +393,7 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.Throw:
-                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 1.5f);
+                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 2f);
                 break;
 
             case AnimState.clime:
