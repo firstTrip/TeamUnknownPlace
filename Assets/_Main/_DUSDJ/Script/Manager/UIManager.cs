@@ -64,6 +64,7 @@ public class UIManager : MonoBehaviour
         }
 
         NoticeText.text = content;
+        NoticeText.DOFade(0, 0);
         NoticeText.DOFade(1.0f, 2.0f).OnComplete(()=>
         {
             if(duration > 0)

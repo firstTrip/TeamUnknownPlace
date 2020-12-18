@@ -78,8 +78,8 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
         // 튜토리얼에만 적용
         if (Tutorial)
         {
-            // 사냥시작
-            LightManager.Instance.MainLight.IsHunting = true;
+            // 사냥시작 : 시작부터 Hunting 켜놓을지 고려사항임
+            // LightManager.Instance.MainLight.IsHunting = true;
 
             // 까마귀 줌 & 플레이어 조작 정지
             EffectManager.Instance.ZoomTarget(transform, 3.0f);

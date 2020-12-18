@@ -7,6 +7,7 @@ using UnityEngine;
 public class LightMonster : MonoBehaviour
 {
     [Header("소리1당 속도 비율")]public float MoveSpeed;
+    [Header("데미지 = N-거리")] public float DamageBase = 2.0f;
 
     private GameObject previousTarget;
     private Vector2 TargetPoint;
@@ -14,9 +15,9 @@ public class LightMonster : MonoBehaviour
 
     private float axcelSpeed = 0f;
     private float tracingTime = 0f;
-    public float AxcelMaxTime = 2.0f;
+    [Header("최대가속 시간")]public float AxcelMaxTime = 2.0f;
 
-    [Header("소리 추적중인지?")] public bool IsHunting;
+    public bool IsHunting = false;
 
     #region Sound
 
@@ -138,6 +139,7 @@ public class LightMonster : MonoBehaviour
         layerMask = 1 << LayerMask.NameToLayer("BlueLight");
 
         IsActive = true;
+        IsHunting = true;
     }
 
     private void Update()
@@ -215,14 +217,19 @@ public class LightMonster : MonoBehaviour
             }
         }
     }
-
+    
     public void DamageAll()
     {
         for (int i = 0; i < DamageList.Count; i++)
         {
             float distance = Vector2.Distance(transform.position, DamageList[i].GetGameObject().transform.position);
-            Debug.Log(string.Format("Damage Distance : {0}", distance));
-            DamageList[i].Damage(distance);
+            float dmg = DamageBase - distance;
+            if(dmg < 0)
+            {
+                dmg = 0;
+            }
+            Debug.Log(string.Format("Damage : {0}", dmg));
+            DamageList[i].Damage(dmg);
         }
     }
 
