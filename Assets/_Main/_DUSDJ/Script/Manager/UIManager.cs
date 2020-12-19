@@ -38,10 +38,107 @@ public class UIManager : MonoBehaviour
     public GameObject GamePauseObject;
     private Animator GamePauseAnim;
 
+    public GameObject GameOverObject;
+
     public Color SelectedColor;
     public Color UnSelectedColor;
 
     public TextMeshProUGUI NoticeText;
+
+    #endregion
+
+    #region Game Over
+    public Image[] GameOverMenuArray;
+    public enum GameOverMenu
+    {
+        Restart = 0,
+        Menu = 1,
+    }
+    private GameOverMenu selectedGameOverMenu = 0;
+
+    private bool isGameOverAnimating = false;
+
+
+    public void SetGameOver(bool trueFalse)
+    {
+        if (isGameOverAnimating)
+        {
+            return;
+        }
+
+        if (trueFalse)
+        {
+            isGameOverAnimating = true;
+            GameOverObject.SetActive(true);
+            // GameManager.Instance.PauseGame(true);
+        }
+        else
+        {
+            GameOverObject.SetActive(false);
+            // GameManager.Instance.PauseGame(false);
+        }
+    }
+
+    public void AfterGameOverAnimation()
+    {
+        isGameOverAnimating = false;
+        selectedGameOverMenu = (GameOverMenu)1;
+        UpdateGameOverMenu(-1);
+    }
+
+    public void UpdateGameOverMenu(int i)
+    {
+        if(i == -1)
+        {
+            if(selectedGameOverMenu == 0)
+            {
+                selectedGameOverMenu = (GameOverMenu)1;
+            }
+            else
+            {
+                selectedGameOverMenu -= 1;
+            }
+        }
+        else
+        {
+            if (selectedGameOverMenu == (GameOverMenu)1)
+            {
+                selectedGameOverMenu = 0;
+            }
+            else
+            {
+                selectedGameOverMenu += 1;
+            }
+        }
+
+        for (int k = 0; k < GameOverMenuArray.Length; k++)
+        {
+            if(k == (int)selectedPauseMenu)
+            {
+                GameOverMenuArray[k].color = SelectedColor;
+                continue;
+            }
+
+            GameOverMenuArray[k].color = UnSelectedColor;
+        }
+    }
+
+    public void GameOverMenuAction()
+    {
+        switch (selectedGameOverMenu)
+        {
+            case GameOverMenu.Restart:
+                GameManager.Instance.GameOver(false);
+                SaveManager.Instance.LoadAll();
+                break;
+
+
+            case GameOverMenu.Menu:
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene(0);
+                break;
+        }
+    }
 
     #endregion
 

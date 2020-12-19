@@ -45,11 +45,6 @@ public class OtherBoy : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        Debug.Log(rb.velocity.x);
-    }
-
     private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
     {
 

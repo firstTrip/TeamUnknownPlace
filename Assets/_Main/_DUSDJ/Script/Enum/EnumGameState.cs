@@ -1,6 +1,5 @@
 ﻿public enum EnumGameState
 {
     Ready,
-    Action,
-
+    Action,    
 }

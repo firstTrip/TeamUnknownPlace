@@ -75,6 +75,25 @@ public class GameManager : MonoBehaviour
         Init();
     }
 
+    #region Game Over
+
+    private bool isGameOver = false;
+
+    public void GameOver(bool trueFalse)
+    {
+        if(trueFalse == isGameOver)
+        {
+            return;
+        }
+        else
+        {
+            isGameOver = trueFalse;
+            UIManager.Instance.SetGameOver(trueFalse);
+        }
+    }
+
+    #endregion
+
     #region GamePause
 
     private bool isGamePaused = false;
@@ -98,6 +117,30 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        #region Game Over
+
+        if (isGameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                UIManager.Instance.UpdateGameOverMenu(-1);
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                UIManager.Instance.UpdateGameOverMenu(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Z)
+                || Input.GetKeyDown(KeyCode.Return)
+                || Input.GetKeyDown(KeyCode.Space))
+            {
+                UIManager.Instance.GameOverMenuAction();
+            }
+
+            return;
+        }
+
+        #endregion
+
         #region Game Pause
 
         if (Input.GetKeyDown(KeyCode.Escape))
