@@ -23,7 +23,6 @@ public class ThrowItem : Item
         {
             gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.GetChild(0).position;
             x = GO.GetComponent<Player>().transform.localScale.x;
-            Debug.Log(x);
 
         }
 
@@ -47,7 +46,6 @@ public class ThrowItem : Item
         {
             if (!isActive)
             {
-                Debug.Log("in isActive");
                 rb.gravityScale = 1;
 
             }

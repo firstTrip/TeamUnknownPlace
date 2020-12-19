@@ -4986,6 +4986,12 @@ MonoBehaviour:
   Callbacks:
   - {fileID: 295717536}
   - {fileID: 602212945}
+--- !u!50 &1417289301 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 3831684432953291138, guid: 18f32d13beaf57d499fff74aee06ad1c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1889053255}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1417580465
 GameObject:
   m_ObjectHideFlags: 0
@@ -7235,11 +7241,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1682190024928639615}
     m_Modifications:
+    - target: {fileID: 303036467141421697, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
     - target: {fileID: 715647052591694023, guid: 18f32d13beaf57d499fff74aee06ad1c,
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1128617217883547721, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
     - target: {fileID: 1239731558089691737, guid: 18f32d13beaf57d499fff74aee06ad1c,
         type: 3}
       propertyPath: m_IsTrigger
@@ -7255,11 +7271,31 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4481419163356520110, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
+    - target: {fileID: 5556576388943071804, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
+    - target: {fileID: 6274668866430390408, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
     - target: {fileID: 7111779952495170645, guid: 18f32d13beaf57d499fff74aee06ad1c,
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7570562820338608416, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
     - target: {fileID: 8340667483656487770, guid: 18f32d13beaf57d499fff74aee06ad1c,
         type: 3}
       propertyPath: m_IsTrigger
@@ -7325,6 +7361,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8586898708744204729, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
+    - target: {fileID: 9010644312202643461, guid: 18f32d13beaf57d499fff74aee06ad1c,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1417289301}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18f32d13beaf57d499fff74aee06ad1c, type: 3}
 --- !u!1 &1897637926
@@ -11379,6 +11425,8 @@ EdgeCollider2D:
   - {x: 10.4972, y: -0.35264063}
   - {x: 15.243914, y: -0.30022383}
   - {x: 15.722237, y: -0.27258492}
+  - {x: 15.789175, y: -0.9857006}
+  - {x: 20.125307, y: -0.9066887}
   - {x: 15.506283, y: -1.8231273}
   - {x: 8.601988, y: -1.7518559}
   - {x: -0.49555016, y: -1.7643213}
@@ -12139,6 +12187,8 @@ MonoBehaviour:
     m_Bits: 256
   OnGround: 0
   BottomOffset: {x: 0, y: -0.42}
+  xThrow: 5
+  yThrow: 2
 --- !u!114 &1682190025858537277
 MonoBehaviour:
   m_ObjectHideFlags: 0
