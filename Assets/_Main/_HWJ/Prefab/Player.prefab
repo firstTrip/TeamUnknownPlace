@@ -30,6 +30,19 @@ Transform:
   m_Father: {fileID: 8227953999626485720}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1342600112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5089918421423022724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c781076e2b190419111c62c342741a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: {fileID: 8227953999626485721}
 --- !u!1 &8227953999411299617
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +56,6 @@ GameObject:
   - component: {fileID: 7154329490631138289}
   - component: {fileID: 8227953999411299619}
   - component: {fileID: 708834164}
-  - component: {fileID: 7581298190785877406}
   - component: {fileID: 1312354628893229500}
   m_Layer: 0
   m_Name: Player
@@ -125,6 +137,8 @@ MonoBehaviour:
   JumpForce: 7
   GravityScale: 1
   RopeUpForce: 1
+  MaxHP: 10
+  hp: 0
   handsPos: {fileID: 858498154200576312}
   item: {fileID: 0}
   anim: {fileID: 5089918421423022727}
@@ -200,25 +214,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.41619396, y: 1.3398275}
   m_EdgeRadius: 0
---- !u!95 &7581298190785877406
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999411299617}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 46ca5c055d60dd444b6ae2a155acc5fa, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &1312354628893229500
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -281,7 +276,6 @@ GameObject:
   - component: {fileID: 8227953999626485727}
   - component: {fileID: 8227953999626485724}
   - component: {fileID: 8227953999626485722}
-  - component: {fileID: 8227953999626485723}
   - component: {fileID: 8227953999626485726}
   - component: {fileID: 8227953999626485725}
   m_Layer: 0
@@ -393,25 +387,6 @@ MonoBehaviour:
   _animationName: Hero_slowwalk01
   loop: 1
   timeScale: 1
---- !u!95 &8227953999626485723
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227953999626485721}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &8227953999626485726
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -465,6 +440,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Destroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2117254438930330275, guid: 1e5fee4df3052464cb3ac91fe845d8f9,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2117254438930330275, guid: 1e5fee4df3052464cb3ac91fe845d8f9,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2117254438930330276, guid: 1e5fee4df3052464cb3ac91fe845d8f9,
         type: 3}
@@ -523,6 +508,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e5fee4df3052464cb3ac91fe845d8f9, type: 3}
+--- !u!1 &5089918421423022724 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2117254438930330273, guid: 1e5fee4df3052464cb3ac91fe845d8f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6612122527503044645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5089918421423022721 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2117254438930330276, guid: 1e5fee4df3052464cb3ac91fe845d8f9,
@@ -597,10 +588,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6450342963808712504, guid: c2024950492f93e46b7b9438e409df9e,
+        type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9001183313684224307, guid: c2024950492f93e46b7b9438e409df9e,
         type: 3}
       propertyPath: m_Name
       value: Cover
+      objectReference: {fileID: 0}
+    - target: {fileID: 9001183313684224307, guid: c2024950492f93e46b7b9438e409df9e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2024950492f93e46b7b9438e409df9e, type: 3}

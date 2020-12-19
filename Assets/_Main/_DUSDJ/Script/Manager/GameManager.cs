@@ -85,13 +85,14 @@ public class GameManager : MonoBehaviour
             TempUI.SetActive(!TempUI.activeSelf);
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            LightManager.Instance.MainLight.Banish();
+            SaveManager.Instance.SaveAll();
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            LightManager.Instance.MainLight.Reveal();
+            SaveManager.Instance.LoadAll();
         }
     }
 
@@ -124,5 +125,10 @@ public class GameManager : MonoBehaviour
     public void ChangeState(EnumGameState state)
     {
         NowState = state;
+
+        if (state.Equals(EnumGameState.Action))
+        {
+            PlayerChara.ForceCanMove(true);
+        }
     }
 }

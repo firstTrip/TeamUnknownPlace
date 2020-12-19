@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
-public class Player : MonoBehaviour, IDamagable
+public class Player : MonoBehaviour, IDamagable, ISaveLoad
 {
 
     #region Values
@@ -14,6 +14,87 @@ public class Player : MonoBehaviour, IDamagable
     [Tooltip("덮어씌울 중력배율")] public float GravityScale;
     [Tooltip("로프 이동 속도")] public float RopeUpForce;
 
+    #region HP Property & Dead()
+    [Header("최대체력")]public float MaxHP = 10f;
+    [SerializeField][Header("현재체력")]
+    private float hp;
+    public float HP
+    {
+        get
+        {
+            return hp;
+        }
+        set
+        {
+            if(value > MaxHP)
+            {
+                value = MaxHP;
+            }
+
+            if(value <= 0)
+            {
+                hp = 0;
+                Dead();
+                return;
+            }
+
+            hp = value;
+        }
+    }
+
+    private bool isAlive = true;
+
+    public void Dead()
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+
+        Debug.LogWarning("Player Dead");
+
+        CallState(PlayerState.Nomal);
+        DeadEffect();
+    }
+
+    public void DeadByWater()
+    {
+        CallState(PlayerState.Water);
+        DeadEffect();
+    }
+
+    public void DeadEffect()
+    {
+        // Effect?
+
+        // 추적 중지
+        LightManager.Instance.DeadCheck(gameObject);
+
+        // 상태처리, 입력 제거
+        isAlive = false;
+
+        StartCoroutine(DUSDJUtil.ActionAfterSecondCoroutine(1.0f, () =>{
+            AfterDead();
+        }));
+    }
+
+    public void AfterDead()
+    {
+        UIManager.Instance.ShowDeadUI(true);
+    }
+
+    public void InitHP()
+    {
+        hp = MaxHP;
+    }
+
+    public void Heal(float value)
+    {
+        HP += value;
+    }
+
+    #endregion
+
     [Space]
 
     public Transform handsPos = null;
@@ -23,7 +104,7 @@ public class Player : MonoBehaviour, IDamagable
     public Animator anim;
     [Space]
 
-    private bool canMove;
+    public bool canMove;
     private bool sit;
     private bool dash;
     private bool use;
@@ -38,6 +119,7 @@ public class Player : MonoBehaviour, IDamagable
     private float yRaw;
     public float xRaw;
 
+    private int currentState;
     private string currentAnimation;
     private AnimState _AnimState;
     private enum AnimState
@@ -82,10 +164,16 @@ public class Player : MonoBehaviour, IDamagable
     // Start is called before the first frame update
     void Start()
     {
+        //ISaveLoad
+        ISaveLoadInit();
+        // Hp
+        InitHP();
+
+
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
-        _AnimState = AnimState.idle;
+        _AnimState = AnimState.NomalDead;
         SetCurrentAnimation(_AnimState);
         canMove = true;
 
@@ -94,12 +182,13 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentAnimation);
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            StartEffect();
 
+        if (currentAnimation == "Hero_die01" || currentAnimation == "Hero_drown01")
+        {
+            rb.velocity = Vector2.zero;
+            canMove = false;
         }
+
 
         WalkSoundCoolDownCheck();
         InputManager();
@@ -107,15 +196,15 @@ public class Player : MonoBehaviour, IDamagable
         dir = new Vector2(x, y);
 
 
+        if (!canMove)
+            return;
 
         if (!coll.OnRope)
             Walk(dir);
 
         if (coll.OnGround || coll.OnRope)
             Jump(dir);
-
-        if (!canMove)
-            return;
+       
 
         #region 로프 사용시 중력값 조정
         if (coll.OnRope)
@@ -141,15 +230,17 @@ public class Player : MonoBehaviour, IDamagable
     }
     private void StartEffect()
     {
+        CallState(PlayerState.Nomal);
         anim.SetTrigger("Die");
-
-        _AnimState = AnimState.NomalDead;
-        SetCurrentAnimation(_AnimState);
-
-
+        
     }
 
     #region InputManager
+    public void ForceCanMove(bool value)
+    {
+        canMove = value;
+    }
+
     private void InputManager()
     {
 
@@ -161,9 +252,11 @@ public class Player : MonoBehaviour, IDamagable
             rb.velocity = Vector2.zero;
             return;
         }
+        /* 아래 코드가 존재할 경우 DisableMovement 관련 코드 불가능.
+         * GameState 변경시 강제로 변화시키는 코드 만들어서 적용시킬게요.
         else
             canMove = true;
-
+            */
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
@@ -182,8 +275,6 @@ public class Player : MonoBehaviour, IDamagable
     #region Walk
     private void Walk(Vector2 dir)
     {
-        if (!canMove)
-            return;
 
         if (sit)
         {
@@ -200,8 +291,9 @@ public class Player : MonoBehaviour, IDamagable
                 SetCurrentAnimation(_AnimState);
             }
 
-            StartCoroutine(DisableMovement(0.5f));
-            _AnimState = AnimState.slowWalk;
+            //StartCoroutine(DisableMovement(0.5f));
+            _AnimState = AnimState.NomalDead;
+
 
         }
         else if (dash)
@@ -220,6 +312,8 @@ public class Player : MonoBehaviour, IDamagable
 
         if (rb.velocity.x == 0 && !sit)
         {
+             if (!canMove)
+            return;
             _AnimState = AnimState.idle;
             FlipAnim();
             SetCurrentAnimation(_AnimState);
@@ -332,6 +426,11 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
+    public void RemoveSprite()
+    {
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+    }
+
     public bool GetItemStatus()
     {
         return get;
@@ -362,7 +461,7 @@ public class Player : MonoBehaviour, IDamagable
         SetCurrentAnimation(_AnimState);
     }
 
-    public void CallState(PlayerState deadState )
+    public void CallState(PlayerState deadState)
     {
             
         switch (playerState)
@@ -392,8 +491,6 @@ public class Player : MonoBehaviour, IDamagable
             case PlayerState.Allive:
 
                 canMove = true;
-                _AnimState = AnimState.idle;
-                SetCurrentAnimation(_AnimState);
 
                 break;
         }
@@ -411,6 +508,7 @@ public class Player : MonoBehaviour, IDamagable
 
         if(yRaw == 0)
         {
+            Debug.Log("??");
             _AnimState = AnimState.idle;
         }
         SetCurrentAnimation(_AnimState);
@@ -551,11 +649,11 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.wakeUp:
-                AsncAnimation(AnimClip[(int)AnimState.wakeUp], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.wakeUp], false, 1f);
                 break;
 
             case AnimState.NomalDead:
-                AsncAnimation(AnimClip[(int)AnimState.NomalDead], false, 2f);
+                AsncAnimation(AnimClip[(int)AnimState.NomalDead], false, 1f);
                 break;
 
             case AnimState.WaterDead:
@@ -573,6 +671,7 @@ public class Player : MonoBehaviour, IDamagable
     #region IDamagable
     public void Damage(float value)
     {
+        HP -= value;
         return;
     }
 
@@ -580,6 +679,41 @@ public class Player : MonoBehaviour, IDamagable
     {
         return gameObject;
     }
+    #endregion
+
+    #region ISaveLoad
+
+    public struct StructSaveData {
+        public Vector3 SavePosition;
+    }    
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        Debug.Log(string.Format("ISave : {0}", gameObject.name));
+        SaveData.SavePosition = transform.position;
+
+    }
+
+    public void ILoad()
+    {
+        Debug.Log(string.Format("ILoad : {0}", gameObject.name));
+
+        transform.position = SaveData.SavePosition;
+
+        CallState(PlayerState.Allive);
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
     #endregion
 
 }

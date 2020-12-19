@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class LightMonster : MonoBehaviour
+public class LightMonster : MonoBehaviour, ISaveLoad
 {
     [Header("소리1당 속도 비율")]public float MoveSpeed;
     [Header("데미지 = N-거리")] public float DamageBase = 2.0f;
+    [Header("데미지 주기시간")] public float DamageDelay = 0.2f;
+    private float damageDelayNow = 0f;
 
     private GameObject previousTarget;
     private Vector2 TargetPoint;
@@ -176,6 +178,8 @@ public class LightMonster : MonoBehaviour
 
     private void Awake()
     {
+        ISaveLoadInit();
+
         // edge Light Origin
         edgeLight = GetComponent<Light2D>();
         edgeIntensity = edgeLight.intensity;
@@ -243,6 +247,9 @@ public class LightMonster : MonoBehaviour
         DebugManager.Instance.SetText(DebugManager.Instance.StayTimeText, string.Format("{0:f1}/{1:f1}",stayTime,StayLimit));
     }
 
+
+
+
     #region Hunt, Damage, DeadCheck, DeadLock
 
     [Header("목적지 보정")]public float ArrivalCheckValue = 0.03f;
@@ -290,6 +297,16 @@ public class LightMonster : MonoBehaviour
     
     public void DamageAll()
     {
+        if(damageDelayNow < DamageDelay)
+        {
+            damageDelayNow += Time.deltaTime;
+            return;
+        }
+        else
+        {
+            damageDelayNow -= DamageDelay;
+        }
+
         for (int i = 0; i < DamageList.Count; i++)
         {
             float distance = Vector2.Distance(transform.position, DamageList[i].GetGameObject().transform.position);
@@ -570,5 +587,58 @@ public class LightMonster : MonoBehaviour
 
     #endregion
 
+
+    #region ISaveLoad
+
+    public struct StructSaveData
+    {
+        public Vector3 SavePosition;
+    }
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        SaveData.SavePosition = transform.position;
+    }
+
+    public void ILoad()
+    {
+        transform.position = SaveData.SavePosition;
+
+        DamageList.Clear();
+
+        if (DurationCoroutine != null)
+        {
+            StopCoroutine(DurationCoroutine);
+            DurationCoroutine = null;
+        }
+        
+        nowSound = null;
+        previousTarget = null;
+        isArrive = false;
+        axcelSpeed = 0f;
+        tracingTime = 0f;
+        stayTime = 0f;
+
+        IsActive = true;
+        IsHunting = false;
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    #endregion
 
 }
