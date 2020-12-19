@@ -11,14 +11,16 @@ public class OtherBoy : MonoBehaviour
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
 
+  
+    private string currentAnimation;
+    private AnimState _AnimeState;
+
     private enum AnimState
     {
         idle, roll
     }
-    private string currentAnimation;
-    private AnimState _AnimeState;
-    public GameObject Boy;
-    public Rigidbody2D BoyRb;
+
+    private Rigidbody2D BoyRb;
 
     [Header("Sound Data")] public StructSoundData SoundData;
     [Header("루프여부")] public bool SoundLoop = false;
@@ -30,8 +32,8 @@ public class OtherBoy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        _AnimeState = AnimState.idle;
-        SetCurrentAnimation(_AnimeState);
+        //_AnimeState = AnimState.idle;
+        //SetCurrentAnimation(_AnimeState);
 
     }
 
@@ -42,15 +44,6 @@ public class OtherBoy : MonoBehaviour
         AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
     }
 
-    public void ObjectAction()
-    {
-
-        BoyRb = Boy.GetComponent<Player>();
-        Boy.GetComponent<OtherBoy>().rollAnim();
-        BoyRb.gravityScale = 1;
-        BoyRb.velocity = new Vector2((-1) * 2, 1);
-
-    }
 
     private void Update()
     {
@@ -74,11 +67,6 @@ public class OtherBoy : MonoBehaviour
 
         switch (_state)
         {
-
-            case AnimState.idle:
-                AsncAnimation(AnimClip[(int)AnimState.idle], false, 1f);
-                break;
-
             case AnimState.roll:
                 AsncAnimation(AnimClip[(int)AnimState.roll], false, 1f);
                 break;
@@ -86,4 +74,15 @@ public class OtherBoy : MonoBehaviour
 
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            BoyRb = collision.GetComponent<Player>().rb;
+            collision.GetComponent<Player>().RollAnimPlayer();
+            BoyRb.gravityScale = 1;
+            BoyRb.velocity = new Vector2((-1) * 2, 1);
+        }
+    }
 }

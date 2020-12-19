@@ -131,7 +131,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     private AnimState _AnimState;
     private enum AnimState
     {
-        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp ,NomalDead ,WaterDead , Down
+        idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp ,NomalDead ,WaterDead , Down ,Roll
     }
 
     public enum PlayerState
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     #region Components
     private PlayerCollision coll;
-    private Rigidbody2D rb { get; set; }
+    public Rigidbody2D rb { get; set; }
 
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
@@ -481,6 +481,14 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         SetCurrentAnimation(_AnimState);
     }
 
+    public void RollAnimPlayer()
+    {
+        StartDisable(8.5f);
+        _AnimState = AnimState.Roll;
+        SetCurrentAnimation(_AnimState);
+
+    }
+
     public void CallState(PlayerState deadState)
     {
         switch (deadState)
@@ -680,6 +688,10 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 break;
             case AnimState.Down:
                 AsncAnimation(AnimClip[(int)AnimState.Down], false, 1f);
+                break;
+
+            case AnimState.Roll:
+                AsncAnimation(AnimClip[(int)AnimState.Roll], false, 1f);
                 break;
         }
 
