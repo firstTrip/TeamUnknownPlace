@@ -229,7 +229,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             GetItem();
         }
 
-        if (coll.OnRightWall && yRaw !=0 )
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             StairUp();
         }
@@ -335,7 +335,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(DisableMovement(1f));
+            StartDisable(1f);
 
             if (coll.OnRope)
             {
@@ -417,7 +417,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 {
                     item.GetComponent<Item>().UseItem();
 
-                    StartCoroutine(DisableMovement(0.5f));
+                    StartDisable(0.5f);
                     _AnimState = AnimState.Throw;
                     SetCurrentAnimation(_AnimState);
                     item = null;
@@ -469,7 +469,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     public void CallWakeUp()
     {
-        StartCoroutine(DisableMovement(8.5f));
+        StartDisable(8.5f);
         _AnimState = AnimState.wakeUp;
         SetCurrentAnimation(_AnimState);
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Stair : MonoBehaviour
 {
+    public bool isUp;
 
     private EdgeCollider2D edge;
     // Start is called before the first frame update
@@ -19,18 +20,23 @@ public class Stair : MonoBehaviour
     }
 
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            transform.parent.GetComponent<Collider2D>().enabled = !isUp;
+
+
             if (other.GetComponentInParent<Player>().GetUseStair())
             {
-                edge.isTrigger = false;
+            
+
             }
         }
 
     }
 
+    /*
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -39,4 +45,5 @@ public class Stair : MonoBehaviour
 
         }
     }
+    */
 }
