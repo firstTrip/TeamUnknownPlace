@@ -70,12 +70,20 @@ public class LightMonster : MonoBehaviour
                 reset = true;
             }
 
+            // 1. 집중하던 소리에 도착했음.
+            if (isArrive)
+            {
+                SetSound(value, reset);
+                return;
+            }
+
             // 1. 현재 집중하는 소리가 없음.
             if (nowSound == null)
             {
                 SetSound(value, reset);
                 return;
             }
+            
 
             // 2. 집중하는 소리 있음
             // 2-1. 더 큰 소리를 들었을 때 -> 추적 변경
@@ -112,7 +120,8 @@ public class LightMonster : MonoBehaviour
         }
         axcelSpeed = MoveSpeed * nowSound.Value;
 
-        // 소리 지속시간 집중
+        // 소리 지속시간 집중 -> 도착제로 변경
+        /*
         if (DurationCoroutine != null)
         {
             StopCoroutine(DurationCoroutine);
@@ -121,9 +130,9 @@ public class LightMonster : MonoBehaviour
             nowSound = null;
         });
         StartCoroutine(DurationCoroutine);
-
+        */
         // Debug
-        if(previousTarget != null)
+        if (previousTarget != null)
         {
             DebugManager.Instance.SetText(DebugManager.Instance.PrevTargetText, previousTarget.name);
         }
@@ -252,6 +261,7 @@ public class LightMonster : MonoBehaviour
             if(distance <= ArrivalCheckValue)
             {
                 isArrive = true;
+                nowSound = null;
             }
             // 2. 목적지 도달하지 못했을 시
             else
@@ -295,6 +305,11 @@ public class LightMonster : MonoBehaviour
 
     public void DeadCheck(GameObject from)
     {
+        if(NowSound == null)
+        {
+            return;
+        }
+
         if(NowSound.SoundFrom != null
             && NowSound.SoundFrom.Equals(from))
         {

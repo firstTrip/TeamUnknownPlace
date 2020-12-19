@@ -107,7 +107,7 @@ public class LightManager : MonoBehaviour
     #region Main Light (빛이 1개라는 전제)
 
     [HideInInspector] public LightMonster MainLight;
-    
+    private InnerLightMovement innerLightMovement;
 
     #endregion
 
@@ -133,6 +133,9 @@ public class LightManager : MonoBehaviour
         MainLight = GameObject.Find("MainLight").GetComponent<LightMonster>();
         MainLight.Init();
 
+        innerLightMovement = MainLight.GetComponentInChildren<InnerLightMovement>();
+        innerLightMovement.StartMovement();
+
         BlueLight = GameObject.Find("BlueLight").GetComponent<Light2D>();
     }
 
@@ -156,11 +159,15 @@ public class LightManager : MonoBehaviour
     public void Banish()
     {
         MainLight.Banish();
+
+        innerLightMovement.EndMovement();
     }
 
     public void Reveal()
     {
         MainLight.Reveal();
+
+        innerLightMovement.StartMovement();
     }
 
     #endregion
