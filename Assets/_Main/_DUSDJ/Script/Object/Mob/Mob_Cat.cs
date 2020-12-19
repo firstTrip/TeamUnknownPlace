@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
-public class Mob_Cat : MonoBehaviour
+public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
 {
     public StructSoundData SoundData;
 
@@ -23,7 +23,31 @@ public class Mob_Cat : MonoBehaviour
     private Vector2 movePoint;
     private bool isArrive = false;
     private bool isActivated = false;
+    private bool isAlive = true;
 
+    [SerializeField]
+    private float hp;
+    public float HP
+    {
+        get { return hp; }
+        set
+        {
+            if (value <= 0)
+            {
+
+                hp = 0;
+
+                // Dead Effect & Dead
+                RunAway();
+
+                return;
+            }
+
+            hp = value;
+
+            // hp에 따른 변화?
+        }
+    }
 
 
 
@@ -101,6 +125,8 @@ public class Mob_Cat : MonoBehaviour
     {
         if (isArrive)
         {
+            SetCurrentAnimation(CatAnim.Touch);
+
             if (stay >= MoveDealy)
             {
                 if (NumOfActivatedMovement >= NumOfMovement)
@@ -124,6 +150,8 @@ public class Mob_Cat : MonoBehaviour
             return;
         }
 
+        SetCurrentAnimation(CatAnim.Walk);
+
         float distance = Vector2.Distance((Vector2)transform.position, movePoint);
         if (distance <= MinDistance)
         {
@@ -138,6 +166,8 @@ public class Mob_Cat : MonoBehaviour
     public void RunAway()
     {
         Debug.Log("고양이 Out");
+        isAlive = false;
+
         gameObject.SetActive(false);
     }
 
@@ -174,5 +204,73 @@ public class Mob_Cat : MonoBehaviour
         }
 
     }
+    #region IDamagable
+
+    public void Damage(float value)
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+
+        HP -= value;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    #endregion
+
+    #region ISaveLoad
+    public struct StructSaveData
+    {
+        public Vector3 Position;
+        public bool IsAlive;
+        public float HP;
+        public int NumOfActivatedMovement;
+        public bool isArrive;
+        public bool isActivated;
+    }
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        Debug.Log(string.Format("ISave : {0}", gameObject.name));
+        SaveData.Position = transform.position;
+        SaveData.IsAlive = isAlive;
+        SaveData.HP = HP;
+        SaveData.NumOfActivatedMovement = NumOfActivatedMovement;
+        SaveData.isArrive = isArrive;
+        SaveData.isActivated = isActivated;
+    }
+
+    public void ILoad()
+    {
+        transform.position = SaveData.Position;
+        isAlive = SaveData.IsAlive;
+        hp = SaveData.HP;
+        NumOfActivatedMovement = SaveData.NumOfActivatedMovement;
+        isArrive = SaveData.isArrive;
+        isActivated = SaveData.isActivated;
+
+        if (isAlive)
+        {
+            gameObject.SetActive(true);            
+        }
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
+    #endregion
 
 }

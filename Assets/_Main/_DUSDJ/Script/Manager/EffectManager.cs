@@ -173,17 +173,26 @@ public class EffectManager : MonoBehaviour
 
     #endregion
 
+    #region Clean
+
+    public void Clean()
+    {
+        foreach (var list in List)
+        {
+            foreach (var effect in list.Value)
+            {
+                effect.Clean();
+            }
+        }
+    }
+
+    #endregion
+
 
     #region Camera Effect
 
-    private IEnumerator CameraZoomCoroutine;
     private IEnumerator ZoomDelayCoroutine;
     private float ZoomTime = 0.5f;
-
-    public void TargetCamera()
-    {
-
-    }
 
     public void ZoomTarget(Transform target, float orthoValue, float duration = -1)
     {

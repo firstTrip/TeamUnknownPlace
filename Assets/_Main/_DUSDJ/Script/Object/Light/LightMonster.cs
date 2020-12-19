@@ -23,6 +23,7 @@ public class LightMonster : MonoBehaviour, ISaveLoad
     [Header("B,R 시간")]public float BanishRevealTime = 2.0f;
 
     public bool IsHunting = false;
+    private bool isBanish = false;
 
     #region Light
 
@@ -408,9 +409,10 @@ public class LightMonster : MonoBehaviour, ISaveLoad
     #endregion
 
     #region Disable
-
     public void Banish()
     {
+        isBanish = true;
+
         IsActive = false;
         IsHunting = false;
         CleanSound();
@@ -425,6 +427,8 @@ public class LightMonster : MonoBehaviour, ISaveLoad
 
     public void Reveal()
     {
+        isBanish = false;
+        IsHunting = false;
         IsActive = true;
 
         if(LightCoroutine != null)
@@ -593,6 +597,7 @@ public class LightMonster : MonoBehaviour, ISaveLoad
     public struct StructSaveData
     {
         public Vector3 SavePosition;
+        public bool SaveIsBanish;
     }
     public StructSaveData SaveData;
 
@@ -604,12 +609,12 @@ public class LightMonster : MonoBehaviour, ISaveLoad
     public void ISave()
     {
         SaveData.SavePosition = transform.position;
+        SaveData.SaveIsBanish = isBanish;
     }
 
     public void ILoad()
     {
         transform.position = SaveData.SavePosition;
-
         DamageList.Clear();
 
         if (DurationCoroutine != null)
@@ -627,6 +632,16 @@ public class LightMonster : MonoBehaviour, ISaveLoad
 
         IsActive = true;
         IsHunting = false;
+
+
+        if (SaveData.SaveIsBanish)
+        {
+            Banish();
+        }
+        else
+        {
+            Reveal();
+        }
     }
 
     public void ISaveDelete()

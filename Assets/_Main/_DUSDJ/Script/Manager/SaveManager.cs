@@ -65,6 +65,9 @@ public class SaveManager : MonoBehaviour
 
     public void LoadAll()
     {
+        EffectManager.Instance.Clean();
+        AudioManager.Instance.Clean();
+
         foreach (var so in SaveObjectDic)
         {
             so.Value.ILoad();

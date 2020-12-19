@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ZoomAction : ObjectBase, ICallback
+public class ZoomAction : ActionObject
 {
     public Transform FollowTarget;
     public float OrthoValue = 4.0f;
@@ -14,70 +14,22 @@ public class ZoomAction : ObjectBase, ICallback
 
     public bool StopWhileZoom = false;
 
-    private bool isUsed = false;
-
-    public override void Init()
+    protected override void AfterCheckAction()
     {
-        base.Init();
-
-        isUsed = false;
-
-    }
-
-
-    #region ICallback
-
-    public void CallbackAction()
-    {
-        ObjectAction();
-    }
-
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-
-    #endregion
-
-    public override void ObjectAction()
-    {
-        if (isUsed == true)
-        {
-            return;
-        }
-
-        isUsed = true;
-
+        
         EffectManager.Instance.ZoomTarget(FollowTarget, OrthoValue, Duration);
 
         if (StopWhileZoom)
         {
-            GameManager.Instance.NowState = EnumGameState.Ready;
+            GameManager.Instance.ChangeState(EnumGameState.Ready);
         }
 
         IEnumerator ZoomCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(Duration, () =>
         {
-            GameManager.Instance.NowState = EnumGameState.Action;
+            GameManager.Instance.ChangeState(EnumGameState.Action);
         });
 
         StartCoroutine(ZoomCoroutine);
     }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            ObjectAction();
-        }
-        
-    }
-
-    protected override void OnTriggerExit2D(Collider2D collision)
-    {
-        
-    }
-
-    
-
 
 }

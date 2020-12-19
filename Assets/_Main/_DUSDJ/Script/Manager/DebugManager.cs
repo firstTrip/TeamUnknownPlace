@@ -19,6 +19,14 @@ public class DebugManager : MonoBehaviour
     
     public Text StayTimeText;
 
+
+    public Text PlayerHPText;
+    public Text PlayerIsAliveText;
+    public Text PlayerCanMoveText;
+
+    public Text GameStateText;
+    
+
     private void Awake()
     {
         Instance = this;
