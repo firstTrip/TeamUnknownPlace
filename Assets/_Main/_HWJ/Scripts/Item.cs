@@ -41,16 +41,16 @@ public class Item : MonoBehaviour
 
     public virtual void UseMaterial()
     {
-        if (StarFlag)
-        {
+        
+        
             Debug.Log("into Material");
             GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
             Go.transform.localScale = new Vector3(1, 1, 1);
             Go.GetComponent<SpriteRenderer>().material = _material;
-            //Go.GetComponent<Item>().enabled = false;
+            Go.GetComponent<Item>().enabled = false;
             Go.transform.SetParent(this.gameObject.transform);
             StarFlag = false;
-        }
+        
 
     }
 

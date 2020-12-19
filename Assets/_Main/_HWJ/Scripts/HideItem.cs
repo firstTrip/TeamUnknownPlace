@@ -11,7 +11,7 @@ public class HideItem : Item
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        //UseMaterial();
+        UseMaterial();
     }
 
     public override void UseItem()
@@ -19,6 +19,8 @@ public class HideItem : Item
         spriteRenderer.sortingLayerName = "Middleground_AP";
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         this.gameObject.transform.position = transform.position;
+        this.gameObject.transform.GetChild(0).SetParent(this.transform);
+        this.gameObject.transform.GetChild(0).position = transform.position;
         StartCoroutine(DisableUse(0.2f));
     }
 

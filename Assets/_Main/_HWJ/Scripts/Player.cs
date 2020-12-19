@@ -183,6 +183,8 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     void Update()
     {
 
+        Debug.Log(isInvincibility);
+
         if (currentAnimation == "Hero_die01" || currentAnimation == "Hero_drown01")
         {
             rb.velocity = Vector2.zero;
