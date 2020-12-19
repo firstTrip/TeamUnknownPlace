@@ -509,6 +509,9 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
             case PlayerState.Allive:
                 canMove = true;
+                _AnimState = AnimState.idle;
+                SetCurrentAnimation(_AnimState);
+
 
                 _AnimState = AnimState.idle;
                 SetCurrentAnimation(_AnimState);
