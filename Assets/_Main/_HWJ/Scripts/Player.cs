@@ -321,7 +321,9 @@ public class Player : MonoBehaviour, IDamagable
     public void CallWakeUp()
     {
         Debug.LogWarning("CallWakeUp");
+
         StartCoroutine(DisableMovement(8.5f));
+
         _AnimState = AnimState.wakeUp;
         SetCurrentAnimation(_AnimState);
         
