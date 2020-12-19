@@ -48,7 +48,7 @@ public class Cover : Item
     IEnumerator DisableUse(float time)
     {
         isUse = true;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         isUse = false;
     }
 
@@ -56,7 +56,7 @@ public class Cover : Item
     IEnumerator TakeOffTime(float time)
     {
         
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         this.gameObject.transform.position = transform.position;
     }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -33,7 +35,130 @@ public class UIManager : MonoBehaviour
 
     #region UI Cashing
 
+    public GameObject GamePauseObject;
+    private Animator GamePauseAnim;
+
+    public Color SelectedColor;
+    public Color UnSelectedColor;
+
     public TextMeshProUGUI NoticeText;
+
+    #endregion
+
+    #region Game Pause
+
+    public Image[] MenuArray;
+    public enum PauseMenu
+    {
+        Continue = 0,
+        Menu = 1,
+        Exit = 2,
+    }
+    private PauseMenu selectedPauseMenu = 0;
+    private bool isPauseExiting = false;
+    public void SetGamePause(bool trueFalse)
+    {
+        if (isPauseExiting)
+        {
+            return;
+        }
+
+        if (trueFalse)
+        {
+            selectedPauseMenu = (PauseMenu)1;
+            UpdatePauseMenu(-1);
+
+            GamePauseObject.SetActive(true);
+            GameManager.Instance.PauseGame(true);
+        }
+        else
+        {
+            isPauseExiting = true;
+            GamePauseAnim.SetTrigger("Exit");
+        }        
+    }
+
+    public void ExitGamePause()
+    {
+        isPauseExiting = false;
+
+        GamePauseObject.SetActive(false);
+        GameManager.Instance.PauseGame(false);
+    }
+
+    public void UpdatePauseMenu(int i)
+    {
+        if (isPauseExiting)
+        {
+            return;
+        }
+
+        if(i == -1)
+        {
+            if (selectedPauseMenu == 0)
+            {
+                selectedPauseMenu = (PauseMenu)2;
+            }
+            else
+            {
+                selectedPauseMenu -= 1;
+            }            
+        }
+        else
+        {
+            if (selectedPauseMenu == (PauseMenu)2)
+            {
+                selectedPauseMenu = 0;
+            }
+            else
+            {
+                selectedPauseMenu += 1;
+            }
+        }
+
+        for (int k = 0; k < MenuArray.Length; k++)
+        {
+            if(k == (int)selectedPauseMenu)
+            {
+                MenuArray[k].color = SelectedColor;
+                continue;
+            }
+
+            MenuArray[k].color = UnSelectedColor;
+        }
+    }
+
+    public void PauseMenuAction()
+    {
+        if (isPauseExiting)
+        {
+            return;
+        }
+
+        switch (selectedPauseMenu)
+        {
+            case PauseMenu.Continue:
+                SetGamePause(false);
+                break;
+
+
+            case PauseMenu.Menu:
+                DOTween.KillAll();
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene(0);
+                break;
+
+
+            case PauseMenu.Exit:
+#if UNITY_EDITOR
+                Debug.Log("Exit Game");
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+                break;
+        }
+    }
 
     #endregion
 
@@ -45,7 +170,9 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if(NoticeText == null)
+        GamePauseAnim = GamePauseObject.GetComponent<Animator>();
+
+        if (NoticeText == null)
         {
             NoticeText = GameObject.Find("BottomCanvas/NoticeText").GetComponent<TextMeshProUGUI>();
         }

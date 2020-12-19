@@ -75,29 +75,81 @@ public class GameManager : MonoBehaviour
         Init();
     }
 
+    #region GamePause
 
-    #region Temp UI
-    public GameObject TempUI;
+    private bool isGamePaused = false;
+
+    public void PauseGame(bool trueIsPause)
+    {
+        isGamePaused = trueIsPause;
+
+        if (trueIsPause)
+        {
+            ChangeState(EnumGameState.Ready);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+            ChangeState(EnumGameState.Action);
+        }
+    }
+    #endregion
+
     private void Update()
     {
+        #region Game Pause
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TempUI.SetActive(!TempUI.activeSelf);
+            if (isGamePaused && NowState == EnumGameState.Ready)
+            {
+                UIManager.Instance.SetGamePause(false);
+            }
+            else if(!isGamePaused && NowState == EnumGameState.Action)
+            {
+                UIManager.Instance.SetGamePause(true);
+            }
+
+            return;
         }
 
+        if (isGamePaused)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                UIManager.Instance.UpdatePauseMenu(-1);
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                UIManager.Instance.UpdatePauseMenu(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Z)
+                || Input.GetKeyDown(KeyCode.Return)
+                || Input.GetKeyDown(KeyCode.Space))
+            {
+                UIManager.Instance.PauseMenuAction();
+            }
+        }
+
+        #endregion
+
+
+        #region Cheat Key
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             SaveManager.Instance.SaveAll();
         }
+
         if (Input.GetKeyDown(KeyCode.L))
         {
             SaveManager.Instance.LoadAll();
         }
+
+        #endregion
+
     }
-
-
-    #endregion
 
 
     public void Init()
