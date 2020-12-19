@@ -61,7 +61,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         CallState(PlayerState.Nomal);
         anim.SetTrigger("Die");
 
-        DeadEffect();
+        DeadEffect(4.3f);
     }
 
     public void DeadByWater()
@@ -69,10 +69,10 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         Debug.LogWarning("Player Dead By Water");
 
         CallState(PlayerState.Water);
-        DeadEffect();
+        DeadEffect(3.0f);
     }
 
-    public void DeadEffect()
+    public void DeadEffect(float time)
     {
         // 추적 중지
         LightManager.Instance.DeadCheck(gameObject);
@@ -80,14 +80,14 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         // 상태처리, 입력 제거
         isAlive = false;
 
-        StartCoroutine(DUSDJUtil.ActionAfterSecondCoroutine(1.0f, () =>{
+        StartCoroutine(DUSDJUtil.ActionAfterSecondCoroutine(time, () =>{
             AfterDead();
         }));
     }
 
     public void AfterDead()
     {
-        UIManager.Instance.ShowDeadUI(true);
+        GameManager.Instance.GameOver(true);
     }
 
     public void InitHP()
@@ -520,10 +520,8 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 _AnimState = AnimState.idle;
                 SetCurrentAnimation(_AnimState);
 
-
-                _AnimState = AnimState.idle;
-                SetCurrentAnimation(_AnimState);
-
+                // 메시 복구
+                GetComponentInChildren<RemoveSprite>().MakeSprite();
                 break;
         }
     }

@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class RemoveSprite : MonoBehaviour
 {
-    public GameObject GO;
+    private MeshRenderer mr;
+
+    private void Awake()
+    {
+        GameObject go = transform.root.gameObject;
+        mr = go.GetComponentInChildren<MeshRenderer>();
+    }
 
     public void RemoveSpriteasd()
     {
-        GO.GetComponent<MeshRenderer>().enabled = false;
+        mr.enabled = false;
     }
 
     public void MakeSprite()
     {
-        GO.GetComponent<MeshRenderer>().enabled = true;
+        mr.enabled = true;
     }
 }

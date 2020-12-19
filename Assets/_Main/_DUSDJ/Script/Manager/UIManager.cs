@@ -113,7 +113,7 @@ public class UIManager : MonoBehaviour
 
         for (int k = 0; k < GameOverMenuArray.Length; k++)
         {
-            if(k == (int)selectedPauseMenu)
+            if(k == (int)selectedGameOverMenu)
             {
                 GameOverMenuArray[k].color = SelectedColor;
                 continue;
