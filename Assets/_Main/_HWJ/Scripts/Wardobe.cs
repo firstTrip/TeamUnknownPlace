@@ -10,6 +10,7 @@ public class Wardobe : Item
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        UseMaterial();
     }
     public override void UseItem()
     {
@@ -24,7 +25,10 @@ public class Wardobe : Item
     {
         
     }
-
+    public override void UseMaterial()
+    {
+        base.UseMaterial();
+    }
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!isUse)

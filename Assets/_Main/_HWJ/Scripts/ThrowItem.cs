@@ -16,6 +16,7 @@ public class ThrowItem : Item
     {
         isActive = true;
         OnGround = false;
+        UseMaterial();
     }
     private void Update()
     {
@@ -59,6 +60,11 @@ public class ThrowItem : Item
         isActive = false;
         StartCoroutine(DisableMovement(0.5f));
         rb.velocity = new Vector2( x * xThrow * (-1) , yThrow);
+    }
+
+    public override void UseMaterial()
+    {
+        base.UseMaterial();
     }
 
     private void OnTriggerStay2D(Collider2D other)

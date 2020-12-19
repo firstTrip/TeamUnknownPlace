@@ -14,6 +14,7 @@ public class Item : MonoBehaviour
     public LayerMask groundLayer;
     public bool OnGround;
     public Vector2 BottomOffset;
+    public Material _material;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,8 @@ public class Item : MonoBehaviour
         isUse = false;
         rb = GetComponent<Rigidbody2D>();
         //collider2D = GetComponent<Collider2D>();
+
+       
     }
 
     // Update is called once per frame
@@ -30,6 +33,17 @@ public class Item : MonoBehaviour
 
     public virtual void UseItem()
     {
+
+    }
+
+
+    public virtual void UseMaterial()
+    {
+        GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
+        Go.transform.localScale = new Vector3(1, 1, 1);
+        Go.GetComponent<SpriteRenderer>().material = _material;
+        Go.GetComponent<Item>().enabled = false;
+        Go.transform.SetParent(this.gameObject.transform);
 
     }
 

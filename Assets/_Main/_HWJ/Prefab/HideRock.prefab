@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2058077092141236843}
   - component: {fileID: 2058077092141236840}
   - component: {fileID: 2058077092141236841}
-  - component: {fileID: 2058077092141236886}
   m_Layer: 11
   m_Name: HideRock
   m_TagString: Untagged
@@ -28,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058077092141236887}
-  m_LocalRotation: {x: -0, y: -0, z: 0.09022424, w: 0.99592155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 33.73, y: -4.89, z: 0}
-  m_LocalScale: {x: 0.87149495, y: 0.997207, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.353001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2058077092141236842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -146,16 +145,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   isGet: 0
+  isUse: 0
   rb: {fileID: 0}
---- !u!114 &2058077092141236886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058077092141236887}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  CollisionRadius: 0.15
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  OnGround: 0
+  BottomOffset: {x: 0, y: 0}
+  _material: {fileID: 2100000, guid: 608f7ff4822f8644796380713b15ae9e, type: 2}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RopeControl : MonoBehaviour
+public class RopeControl : Item
 {
 
     private GameObject Go;
@@ -15,6 +15,7 @@ public class RopeControl : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         PushForce = 3;
         x = 0;
+        UseMaterial();
     }
 
     // Update is called once per frame
@@ -25,6 +26,11 @@ public class RopeControl : MonoBehaviour
             rb.velocity = new Vector2(x * PushForce, rb.velocity.y);
         }
        
+    }
+
+    public override void UseMaterial()
+    {
+        base.UseMaterial();
     }
 
     private void OnTriggerStay2D(Collider2D collision)

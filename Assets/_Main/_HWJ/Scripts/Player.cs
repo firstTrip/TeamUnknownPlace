@@ -20,6 +20,7 @@ public class Player : MonoBehaviour, IDamagable
   
     [Space]
     public GameObject item;
+    public Animator anim;
     [Space]
 
     private bool canMove;
@@ -132,6 +133,11 @@ public class Player : MonoBehaviour, IDamagable
 
         UseItem();
     }
+    private void StartEffect()
+    {
+        anim = GetComponent<Animator>();
+
+    }
 
     #region InputManager
     private void InputManager()
@@ -171,6 +177,8 @@ public class Player : MonoBehaviour, IDamagable
 
         if (sit)
         {
+            StartEffect();
+
             LightManager.Instance.DeadCheck(gameObject);
             MoveSpeed = 0.0f;
             if (isInvincibility)

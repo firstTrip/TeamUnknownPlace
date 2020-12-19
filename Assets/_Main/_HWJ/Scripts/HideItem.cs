@@ -11,6 +11,7 @@ public class HideItem : Item
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        UseMaterial();
     }
 
     public override void UseItem()
@@ -19,6 +20,11 @@ public class HideItem : Item
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         this.gameObject.transform.position = transform.position;
         StartCoroutine(DisableUse(0.2f));
+    }
+
+    public override void UseMaterial()
+    {
+        base.UseMaterial();
     }
     IEnumerator DisableUse( float time)
     {
@@ -37,7 +43,7 @@ public class HideItem : Item
                 {
                     if (itemType == ItemType.UnCarriable)
                     {
-                        spriteRenderer.sortingLayerName = "Middleground_AP";
+                        //spriteRenderer.sortingLayerName = "Middleground_AP";
 
                         other.GetComponentInParent<Player>().isInvincibility = true;
                         Debug.Log("isUse");
@@ -62,7 +68,7 @@ public class HideItem : Item
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponentInParent<Player>().isInvincibility = false;
-            spriteRenderer.sortingLayerName = "Middleground_BP";
+            //spriteRenderer.sortingLayerName = "Middleground_BP";
             isUse = false;
 
         }

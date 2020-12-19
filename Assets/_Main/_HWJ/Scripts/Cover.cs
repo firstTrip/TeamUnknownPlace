@@ -10,6 +10,7 @@ public class Cover : Item
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        UseMaterial();
     }
     private void Update()
     {
@@ -22,6 +23,10 @@ public class Cover : Item
         GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
         this.gameObject.transform.position = transform.position;
         StartCoroutine(DisableUse(0.2f));
+    }
+    public override void UseMaterial()
+    {
+        base.UseMaterial();
     }
     IEnumerator DisableUse(float time)
     {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6165394405044732522}
   - component: {fileID: 5357295240579635428}
   - component: {fileID: 6450342963808712504}
+  - component: {fileID: 7422715517014129216}
   m_Layer: 0
   m_Name: CoverPrefab
   m_TagString: Untagged
@@ -94,3 +95,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7909e7748e7b4ed47abd71e8f5a1e427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: 0
+  isGet: 0
+  isUse: 0
+  rb: {fileID: 0}
+  CollisionRadius: 0.15
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  OnGround: 0
+  BottomOffset: {x: 0, y: 0}
+  _material: {fileID: 2100000, guid: 608f7ff4822f8644796380713b15ae9e, type: 2}
+--- !u!95 &7422715517014129216
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9001183313684224307}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 05d1388229d6602478d0d3b77358ca52, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
