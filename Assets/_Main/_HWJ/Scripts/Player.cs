@@ -35,10 +35,15 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             {
                 hp = 0;
                 Dead();
+
+                DebugManager.Instance.SetText(DebugManager.Instance.PlayerHPText, hp.ToString());
+                DebugManager.Instance.SetText(DebugManager.Instance.PlayerIsAliveText, isAlive.ToString());
+
                 return;
             }
 
             hp = value;
+            DebugManager.Instance.SetText(DebugManager.Instance.PlayerHPText, hp.ToString());
         }
     }
 
@@ -54,19 +59,21 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         Debug.LogWarning("Player Dead");
 
         CallState(PlayerState.Nomal);
+        anim.SetTrigger("Die");
+
         DeadEffect();
     }
 
     public void DeadByWater()
     {
+        Debug.LogWarning("Player Dead By Water");
+
         CallState(PlayerState.Water);
         DeadEffect();
     }
 
     public void DeadEffect()
     {
-        // Effect?
-
         // 추적 중지
         LightManager.Instance.DeadCheck(gameObject);
 
@@ -177,18 +184,19 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         SetCurrentAnimation(_AnimState);
         canMove = true;
 
+        DebugManager.Instance.SetText(DebugManager.Instance.PlayerHPText, hp.ToString());
+        DebugManager.Instance.SetText(DebugManager.Instance.PlayerIsAliveText, isAlive.ToString());
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        Debug.Log(isInvincibility);
-
         if (currentAnimation == "Hero_die01" || currentAnimation == "Hero_drown01")
         {
             rb.velocity = Vector2.zero;
             canMove = false;
+            DebugManager.Instance.SetText(DebugManager.Instance.PlayerCanMoveText, canMove.ToString());
+            return;
         }
 
 
@@ -229,12 +237,9 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             useStair = false;
 
         UseItem();
-    }
-    private void StartEffect()
-    {
-        CallState(PlayerState.Nomal);
-        anim.SetTrigger("Die");
-        
+
+
+        DebugManager.Instance.SetText(DebugManager.Instance.PlayerCanMoveText, canMove.ToString());
     }
 
     #region InputManager
@@ -254,11 +259,6 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             rb.velocity = Vector2.zero;
             return;
         }
-        /* 아래 코드가 존재할 경우 DisableMovement 관련 코드 불가능.
-         * GameState 변경시 강제로 변화시키는 코드 만들어서 적용시킬게요.
-        else
-            canMove = true;
-            */
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
@@ -277,10 +277,8 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     #region Walk
     private void Walk(Vector2 dir)
     {
-
         if (sit)
         {
-
             LightManager.Instance.DeadCheck(gameObject);
             MoveSpeed = 0.0f;
             if (isInvincibility)
@@ -292,11 +290,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 FlipAnim();
                 SetCurrentAnimation(_AnimState);
             }
-
-            //StartCoroutine(DisableMovement(0.5f));
-            _AnimState = AnimState.NomalDead;
-
-
+            _AnimState = AnimState.slowWalk;
         }
         else if (dash)
         {
@@ -368,6 +362,30 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         SetCurrentAnimation(_AnimState);
     }
 
+    #region Disable Coroutine
+
+    private IEnumerator disableCoroutine;
+    private void StartDisable(float time)
+    {
+        if (disableCoroutine != null)
+        {
+            StopCoroutine(disableCoroutine);
+        }
+        disableCoroutine = DisableMovement(time);
+        StartCoroutine(disableCoroutine);
+    }
+
+    IEnumerator DisableMovement(float time)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(time);
+        canMove = true;
+    }
+
+    #endregion
+
+
+
     private void GetItem()
     {
         if (get && coll.OnItem)
@@ -383,8 +401,8 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
-            StartCoroutine(DisableMovement(0.5f));
-
+            //StartCoroutine(DisableMovement(0.5f));
+            StartDisable(0.5f);
         }
 
 
@@ -465,8 +483,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     public void CallState(PlayerState deadState)
     {
-            
-        switch (playerState)
+        switch (deadState)
         {
             case PlayerState.Nomal:
 
@@ -491,8 +508,10 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 break;
 
             case PlayerState.Allive:
-
                 canMove = true;
+
+                _AnimState = AnimState.idle;
+                SetCurrentAnimation(_AnimState);
 
                 break;
         }
@@ -519,12 +538,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     }
     #endregion
 
-    IEnumerator DisableMovement(float time)
-    {
-        canMove = false;
-        yield return new WaitForSeconds(time);
-        canMove = true;
-    }
+    
 
     #region 사운드
     private void WalkSoundCoolDownCheck()
@@ -687,6 +701,8 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     public struct StructSaveData {
         public Vector3 SavePosition;
+        public float HP;
+        public bool isAlive;
     }    
     public StructSaveData SaveData;
 
@@ -699,14 +715,20 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     {
         Debug.Log(string.Format("ISave : {0}", gameObject.name));
         SaveData.SavePosition = transform.position;
-
+        SaveData.HP = hp;
+        SaveData.isAlive = isAlive;
     }
 
     public void ILoad()
     {
         Debug.Log(string.Format("ILoad : {0}", gameObject.name));
+        transform.position = SaveData.SavePosition;        
+        isAlive = SaveData.isAlive;
 
-        transform.position = SaveData.SavePosition;
+        if (isAlive)
+        {
+            HP = SaveData.HP;
+        }
 
         CallState(PlayerState.Allive);
     }

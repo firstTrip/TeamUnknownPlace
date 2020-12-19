@@ -118,7 +118,7 @@ public class Mob_Crow : MonoBehaviour, IDamagable, ISaveLoad
 
             // 까마귀 줌 & 플레이어 조작 정지
             EffectManager.Instance.ZoomTarget(transform, 3.0f);
-            GameManager.Instance.NowState = EnumGameState.Ready;
+            GameManager.Instance.ChangeState(EnumGameState.Ready);
         }
 
         // 까마귀 이펙트
@@ -164,7 +164,7 @@ public class Mob_Crow : MonoBehaviour, IDamagable, ISaveLoad
 
             coroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, () => {
                 // 조작 재개 & 플레이어 카메라
-                GameManager.Instance.NowState = EnumGameState.Action;
+                GameManager.Instance.ChangeState(EnumGameState.Action);
                 EffectManager.Instance.ZoomTarget(GameManager.Instance.PlayerChara.transform, 4.0f);
                 gameObject.SetActive(false);
             });

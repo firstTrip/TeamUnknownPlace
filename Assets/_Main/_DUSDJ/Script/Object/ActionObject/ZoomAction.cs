@@ -21,12 +21,12 @@ public class ZoomAction : ActionObject
 
         if (StopWhileZoom)
         {
-            GameManager.Instance.NowState = EnumGameState.Ready;
+            GameManager.Instance.ChangeState(EnumGameState.Ready);
         }
 
         IEnumerator ZoomCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(Duration, () =>
         {
-            GameManager.Instance.NowState = EnumGameState.Action;
+            GameManager.Instance.ChangeState(EnumGameState.Action);
         });
 
         StartCoroutine(ZoomCoroutine);

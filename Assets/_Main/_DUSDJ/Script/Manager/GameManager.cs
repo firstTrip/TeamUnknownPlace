@@ -126,6 +126,8 @@ public class GameManager : MonoBehaviour
     {
         NowState = state;
 
+        DebugManager.Instance.SetText(DebugManager.Instance.GameStateText, NowState.ToString());
+
         if (state.Equals(EnumGameState.Action))
         {
             PlayerChara.ForceCanMove(true);

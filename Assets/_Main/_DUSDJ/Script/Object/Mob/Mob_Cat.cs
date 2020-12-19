@@ -125,6 +125,8 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
     {
         if (isArrive)
         {
+            SetCurrentAnimation(CatAnim.Touch);
+
             if (stay >= MoveDealy)
             {
                 if (NumOfActivatedMovement >= NumOfMovement)
@@ -147,6 +149,8 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
             
             return;
         }
+
+        SetCurrentAnimation(CatAnim.Walk);
 
         float distance = Vector2.Distance((Vector2)transform.position, movePoint);
         if (distance <= MinDistance)

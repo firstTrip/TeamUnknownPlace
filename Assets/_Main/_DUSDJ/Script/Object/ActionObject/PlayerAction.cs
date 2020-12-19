@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class PlayerActoin : ActionObject
+public class PlayerAction : ActionObject
 {
     public EnumPlayerAction TargetAction;
 
