@@ -56,6 +56,7 @@ public class Player : MonoBehaviour, IDamagable
     #region Components
     private PlayerCollision coll;
     private Rigidbody2D rb { get; set; }
+    private BetterJump betterJump;
     //private Animator anim { get; set; }
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
@@ -82,7 +83,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-
+        betterJump = GetComponent<BetterJump>();
         canMove = true;
 
         _AnimState = AnimState.idle;
@@ -100,15 +101,18 @@ public class Player : MonoBehaviour, IDamagable
         WalkSoundCoolDownCheck();
         InputManager();
 
-        CallWakeUp();
-
         dir = new Vector2(x, y);
 
         if (!coll.OnRope)
             Walk(dir);
             
-        if (coll.OnGround)
+        if(coll.OnGround || coll.OnRope)
             Jump(dir);
+
+        if (coll.OnGround)
+        {
+            GetItem();
+        }
 
         if (coll.OnRightWall && yRaw !=0 )
         {
@@ -117,10 +121,6 @@ public class Player : MonoBehaviour, IDamagable
         }
         else
             useStair = false;
-
-        if (coll.OnGround)
-            GetItem();
-
 
         UseItem();
 
@@ -168,13 +168,16 @@ public class Player : MonoBehaviour, IDamagable
         {
             LightManager.Instance.DeadCheck(gameObject);
             MoveSpeed = 0.0f;
-            if (item != null && item.GetComponent<Item>().itemType.ToString() == "Carriable")
+            if (isInvincibility)
             {
                 MoveSpeed = 0.5f;
-                MovementSound(EnumMovement.Crouch);
-                //_AnimState = AnimState.walk;
+                rb.velocity = new Vector2(dir.x * MoveSpeed, rb.velocity.y);
+                _AnimState = AnimState.slowWalk;
 
+                FlipAnim();
+                SetCurrentAnimation(_AnimState);
             }
+
             StartCoroutine(DisableMovement(0.5f));
             _AnimState = AnimState.slowWalk;
 
@@ -209,7 +212,7 @@ public class Player : MonoBehaviour, IDamagable
         // MovementSound(EnumMovement.Crouch); // 앉은걸음
         // MovementSound(EnumMovement.Walk); // 걷기
         // MovementSound(EnumMovement.Run); // 달리기
-
+        betterJump.enabled = false;
         FlipAnim();
         SetCurrentAnimation(_AnimState);
     }
@@ -222,13 +225,17 @@ public class Player : MonoBehaviour, IDamagable
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(DisableMovement(1f));
+            betterJump.enabled = true;
 
+            if (coll.OnRope)
+            {
+                rb.velocity = new Vector2(JumpForce * 0.5f, JumpForce * 0.2f);
+            }
             rb.velocity = new Vector2(rb.velocity.x, 0);
 
             if(rb.velocity == Vector2.zero || dir.y == 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, JumpForce);
-
                 _AnimState = AnimState.jump;
                 SetCurrentAnimation(_AnimState);
             }

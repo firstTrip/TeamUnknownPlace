@@ -7,7 +7,7 @@ public class ThrowItem : Item
 
     private GameObject GO;
     private bool isActive;
-    private float x;
+    private Vector3 x;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,8 @@ public class ThrowItem : Item
         if (GO != null)
         {
             gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.GetChild(0).position;
-            x = GO.GetComponent<Player>().xRaw;
+            x = GO.GetComponent<Player>().transform.localScale;
+            Debug.Log(x);
 
         }
 
@@ -55,8 +56,8 @@ public class ThrowItem : Item
     {
         GO = null;
         isActive = false;
-        StartCoroutine(DisableMovement(2f));
-        rb.velocity = Vector2.right * 10f * x;
+        StartCoroutine(DisableMovement(0.5f));
+        rb.velocity = Vector2.right * x *10f * (-1);
         Debug.Log(x);
 
     }
