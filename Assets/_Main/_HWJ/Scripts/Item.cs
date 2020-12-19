@@ -16,21 +16,22 @@ public class Item : MonoBehaviour
     public bool OnGround;
     public Vector2 BottomOffset;
     public Material _material;
+
+    private SpriteRenderer spr;
+    private GameObject outLineObject;
+
+
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         isGet = false;
         isUse = false;
         StarFlag = true;
         rb = GetComponent<Rigidbody2D>();
-        //collider2D = GetComponent<Collider2D>();
+        spr = GetComponent<SpriteRenderer>();
+        //collider2D = GetComponent<Collider2D>();        
 
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        _material = Resources.Load<Material>("sprite_ingame_outlinecommon_2");
     }
 
     public virtual void UseItem()
@@ -38,20 +39,29 @@ public class Item : MonoBehaviour
 
     }
 
+    
 
     public virtual void UseMaterial()
     {
-        
-        
-            Debug.Log("into Material");
-            GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
-            Go.transform.localScale = new Vector3(1, 1, 1);
-            Go.GetComponent<SpriteRenderer>().material = _material;
-            Go.GetComponent<Item>().enabled = false;
-            Go.transform.SetParent(this.gameObject.transform);
-            StarFlag = false;
-        
+        if (outLineObject != null)
+        {
+            return;
+        }
 
+        Debug.Log("into Material");
+        outLineObject = new GameObject("OutLine");
+        outLineObject.transform.SetParent(transform, false);
+        outLineObject.transform.localPosition = Vector3.zero;
+        outLineObject.transform.localRotation = Quaternion.identity;
+        outLineObject.transform.localScale = new Vector3(1, 1, 1);
+
+        SpriteRenderer outlineSpr = outLineObject.AddComponent<SpriteRenderer>();
+        outlineSpr.sortingLayerID = spr.sortingLayerID;
+        outlineSpr.sortingOrder = spr.sortingOrder - 1;
+        outlineSpr.material = _material;
+        outlineSpr.sprite = spr.sprite;
+
+        StarFlag = false;
     }
 
     private void OnTriggerStay2D(Collider2D other)

@@ -7,8 +7,10 @@ public class Wardobe : Item
     private SpriteRenderer spriteRenderer;
     public GameObject CloseSprite;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         UseMaterial();
     }

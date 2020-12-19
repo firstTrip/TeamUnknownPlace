@@ -11,13 +11,19 @@ public class ThrowItem : Item
     private GameObject GO;
     private bool isActive;
     private float x;
-    // Start is called before the first frame update
-    void Start()
+
+
+    protected override void Start()
     {
+        base.Start();
+
         isActive = true;
         OnGround = false;
-        UseMaterial();
+
+        UseMaterial();        
     }
+
+
     private void Update()
     {
         if (GO != null)

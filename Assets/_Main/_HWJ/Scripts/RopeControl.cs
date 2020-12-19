@@ -10,7 +10,7 @@ public class RopeControl : Item
     private float x;
     public float PushForce;
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         PushForce = 3;
