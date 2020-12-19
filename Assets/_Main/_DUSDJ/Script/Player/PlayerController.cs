@@ -342,7 +342,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator GroundDash()
     {
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSecondsRealtime(.15f);
         if (coll.OnGround)
             hasDashed = false;
     }

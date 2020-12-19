@@ -378,7 +378,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     IEnumerator DisableMovement(float time)
     {
         canMove = false;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         canMove = true;
     }
 

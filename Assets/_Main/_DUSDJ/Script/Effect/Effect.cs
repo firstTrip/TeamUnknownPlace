@@ -120,7 +120,7 @@ public class Effect : MonoBehaviour
 
         while (true && ps != null)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);            
             if (!ps.IsAlive(true))
             {
                 Clean();

@@ -33,7 +33,7 @@ public class HideItem : Item
     IEnumerator DisableUse( float time)
     {
         isUse = true;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         isUse = false;
     }
 

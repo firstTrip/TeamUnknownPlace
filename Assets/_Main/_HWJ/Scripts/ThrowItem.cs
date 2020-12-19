@@ -99,7 +99,7 @@ public class ThrowItem : Item
     IEnumerator DisableMovement(float time)
     {
         isGet = true;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         isGet = false;
     }
 
