@@ -5,6 +5,9 @@ using UnityEngine;
 public class ThrowItem : Item
 {
 
+    public float xThrow;
+    public float yThrow;
+
     private GameObject GO;
     private bool isActive;
     private float x;
@@ -19,7 +22,8 @@ public class ThrowItem : Item
         if (GO != null)
         {
             gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.GetChild(0).position;
-            x = GO.GetComponent<Player>().xRaw;
+            x = GO.GetComponent<Player>().transform.localScale.x;
+            Debug.Log(x);
 
         }
 
@@ -55,10 +59,8 @@ public class ThrowItem : Item
     {
         GO = null;
         isActive = false;
-        StartCoroutine(DisableMovement(2f));
-        rb.velocity = Vector2.right * 10f * x;
-        Debug.Log(x);
-
+        StartCoroutine(DisableMovement(0.5f));
+        rb.velocity = new Vector2( x * xThrow * (-1) , yThrow);
     }
 
     private void OnTriggerStay2D(Collider2D other)
