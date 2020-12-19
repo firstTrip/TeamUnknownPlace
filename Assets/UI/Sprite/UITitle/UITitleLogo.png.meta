@@ -1,0 +1,812 @@
+fileFormatVersion: 2
+guid: ee1bf5411de4dac4b84c311a5537cb4a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2375809643796843271
+    second: UITitleLogo_0
+  - first:
+      213: 5633977966982109246
+    second: UITitleLogo_1
+  - first:
+      213: 7679520713677618424
+    second: UITitleLogo_2
+  - first:
+      213: -3997792763331679439
+    second: UITitleLogo_3
+  - first:
+      213: 2704472245775999472
+    second: UITitleLogo_4
+  - first:
+      213: -6222128781814008642
+    second: UITitleLogo_5
+  - first:
+      213: 821291271829549843
+    second: UITitleLogo_6
+  - first:
+      213: 3553498532224609040
+    second: UITitleLogo_7
+  - first:
+      213: -1191637808490277064
+    second: UITitleLogo_8
+  - first:
+      213: -4567531725936434648
+    second: UITitleLogo_9
+  - first:
+      213: 1375488147969086437
+    second: UITitleLogo_10
+  - first:
+      213: 2917622541338503294
+    second: UITitleLogo_11
+  - first:
+      213: -5586945012346441449
+    second: UITitleLogo_12
+  - first:
+      213: 857286036714671275
+    second: UITitleLogo_13
+  - first:
+      213: 5622491387520648564
+    second: UITitleLogo_14
+  - first:
+      213: -3336561867952326929
+    second: UITitleLogo_15
+  - first:
+      213: 8379157643665041980
+    second: UITitleLogo_16
+  - first:
+      213: -1378676166826057052
+    second: UITitleLogo_17
+  - first:
+      213: 4418626960581521986
+    second: UITitleLogo_18
+  - first:
+      213: -2691425683686858570
+    second: UITitleLogo_19
+  - first:
+      213: -2519601116727828043
+    second: UITitleLogo_20
+  - first:
+      213: -7310484487684654312
+    second: UITitleLogo_21
+  - first:
+      213: 6608510565360448718
+    second: UITitleLogo_22
+  - first:
+      213: -3750751524366373375
+    second: UITitleLogo_23
+  - first:
+      213: -4416524819978541871
+    second: UITitleLogo_24
+  - first:
+      213: -1051302018354690263
+    second: UITitleLogo_25
+  - first:
+      213: 3339059333562686839
+    second: UITitleLogo_26
+  - first:
+      213: -2999246268249676112
+    second: UITitleLogo_27
+  - first:
+      213: -7384844428970593893
+    second: UITitleLogo_28
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UITitleLogo_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1890
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70b4570984298f020800000000000000
+      internalID: 2375809643796843271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_1
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1890
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3898526c19ef2e40800000000000000
+      internalID: 5633977966982109246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1755
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fc3208b663239a60800000000000000
+      internalID: 7679520713677618424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_3
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1755
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13becf7b9acf488c0800000000000000
+      internalID: -3997792763331679439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1620
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f1a16abd27388520800000000000000
+      internalID: 2704472245775999472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_5
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1620
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb4fd35d6de86a9a0800000000000000
+      internalID: -6222128781814008642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1485
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31377827f00d56b00800000000000000
+      internalID: 821291271829549843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_7
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1485
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01bae1b7610905130800000000000000
+      internalID: 3553498532224609040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1350
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837130c0ab3767fe0800000000000000
+      internalID: -1191637808490277064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_9
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1350
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8226b37581edc90c0800000000000000
+      internalID: -4567531725936434648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1215
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e31574de27b61310800000000000000
+      internalID: 1375488147969086437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_11
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1215
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e78672d3e3a7d7820800000000000000
+      internalID: 2917622541338503294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7113377bc1f2772b0800000000000000
+      internalID: -5586945012346441449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_13
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1080
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bacc749bb11b5eb00800000000000000
+      internalID: 857286036714671275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 945
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4758cd1b02a170e40800000000000000
+      internalID: 5622491387520648564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_15
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 945
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe67691b8a622b1d0800000000000000
+      internalID: -3336561867952326929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 810
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a67a37b7fb84470800000000000000
+      internalID: 8379157643665041980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_17
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 810
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a22900b455fddce0800000000000000
+      internalID: -1378676166826057052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 675
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 242fc6c4fcd125d30800000000000000
+      internalID: 4418626960581521986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_19
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 675
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b06b78b99226aad0800000000000000
+      internalID: -2691425683686858570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1a2cd3224980dd0800000000000000
+      internalID: -2519601116727828043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_21
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 540
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81b7d8f4711fb8a90800000000000000
+      internalID: -7310484487684654312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 405
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec4b9b6885526bb50800000000000000
+      internalID: 6608510565360448718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_23
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 405
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10e23656c57a2fbc0800000000000000
+      internalID: -3750751524366373375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d4ab73731a55b2c0800000000000000
+      internalID: -4416524819978541871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_25
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 270
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 927415462660961f0800000000000000
+      internalID: -1051302018354690263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 135
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77dd4f4d5c8b65e20800000000000000
+      internalID: 3339059333562686839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_27
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 135
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b6ef03e8698066d0800000000000000
+      internalID: -2999246268249676112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UITitleLogo_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1023
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b917fa15e13c38990800000000000000
+      internalID: -7384844428970593893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
