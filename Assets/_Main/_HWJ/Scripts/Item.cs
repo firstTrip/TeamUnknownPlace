@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
     public ItemType itemType;
     public bool isGet;
     public bool isUse;
+    public bool StarFlag;
     public Rigidbody2D rb;
     //public Collider2D collider2D;
     public float CollisionRadius = 0.15f;
@@ -20,6 +21,7 @@ public class Item : MonoBehaviour
     {
         isGet = false;
         isUse = false;
+        StarFlag = true;
         rb = GetComponent<Rigidbody2D>();
         //collider2D = GetComponent<Collider2D>();
 
@@ -39,11 +41,16 @@ public class Item : MonoBehaviour
 
     public virtual void UseMaterial()
     {
-        GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
-        Go.transform.localScale = new Vector3(1, 1, 1);
-        Go.GetComponent<SpriteRenderer>().material = _material;
-        Go.GetComponent<Item>().enabled = false;
-        Go.transform.SetParent(this.gameObject.transform);
+        
+        
+            Debug.Log("into Material");
+            GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
+            Go.transform.localScale = new Vector3(1, 1, 1);
+            Go.GetComponent<SpriteRenderer>().material = _material;
+            Go.GetComponent<Item>().enabled = false;
+            Go.transform.SetParent(this.gameObject.transform);
+            StarFlag = false;
+        
 
     }
 

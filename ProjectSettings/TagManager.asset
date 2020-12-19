@@ -9,6 +9,7 @@ TagManager:
   - Water
   - MainLight
   - Item
+  - Rose
   layers:
   - Default
   - TransparentFX

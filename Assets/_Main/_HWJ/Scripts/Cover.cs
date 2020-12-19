@@ -6,27 +6,44 @@ public class Cover : Item
 {
     private SpriteRenderer spriteRenderer;
     private GameObject GO;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        StarFlag = true;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        UseMaterial();
+        anim = GetComponent<Animator>();
+            //UseMaterial();
     }
     private void Update()
     {
-   
     }
 
     public override void UseItem()
     {
-        this.gameObject.SetActive(true);
-        GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-        this.gameObject.transform.position = transform.position;
-        StartCoroutine(DisableUse(0.2f));
+        /*
+        if (StarFlag)
+        {
+            this.gameObject.SetActive(true);
+            GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            this.gameObject.transform.position = transform.position;
+            StartCoroutine(DisableUse(0.2f));
+        }
+        */
+      
     }
     public override void UseMaterial()
     {
-        base.UseMaterial();
+        if (StarFlag)
+        {
+            GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
+            Go.transform.localScale = new Vector3(0.25f, 0.25f, 1);
+            Go.GetComponent<SpriteRenderer>().material = _material;
+            Go.GetComponent<Item>().enabled = false;
+            Go.transform.SetParent(this.gameObject.transform);
+            StarFlag = false;
+        }
+     
     }
     IEnumerator DisableUse(float time)
     {
@@ -35,16 +52,22 @@ public class Cover : Item
         isUse = false;
     }
 
+
+    IEnumerator TakeOffTime(float time)
+    {
+        
+        yield return new WaitForSeconds(time);
+        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+        this.gameObject.transform.position = transform.position;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Rose"))
         {
-
             Debug.Log("Rose");
-            GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-            this.gameObject.SetActive(true);
-            this.gameObject.transform.position = transform.position;
-            StartCoroutine(DisableUse(0.2f));
+            anim.SetTrigger("TakeOff");
+            //GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            StartCoroutine(TakeOffTime(2f));
         }
     }
 
@@ -75,7 +98,7 @@ public class Cover : Item
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponentInParent<Player>().isInvincibility = false;
-            spriteRenderer.sortingLayerName = "Middleground_BP";
+            //spriteRenderer.sortingLayerName = "Middleground_BP";
             isUse = false;
         }
 

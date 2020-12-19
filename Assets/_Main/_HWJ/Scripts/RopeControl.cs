@@ -6,7 +6,7 @@ public class RopeControl : Item
 {
 
     private GameObject Go;
-    public Rigidbody2D rb;
+    //public Rigidbody2D rb;
     private float x;
     public float PushForce;
     // Start is called before the first frame update
