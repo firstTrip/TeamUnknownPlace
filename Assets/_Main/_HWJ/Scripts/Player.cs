@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
-public class Player : MonoBehaviour, IDamagable
+public class Player : MonoBehaviour, IDamagable, ISaveLoad
 {
 
     #region Values
@@ -13,6 +13,87 @@ public class Player : MonoBehaviour, IDamagable
     [Tooltip("점프력")] public float JumpForce;
     [Tooltip("덮어씌울 중력배율")] public float GravityScale;
     [Tooltip("로프 이동 속도")] public float RopeUpForce;
+
+    #region HP Property & Dead()
+    [Header("최대체력")]public float MaxHP = 10f;
+    [SerializeField][Header("현재체력")]
+    private float hp;
+    public float HP
+    {
+        get
+        {
+            return hp;
+        }
+        set
+        {
+            if(value > MaxHP)
+            {
+                value = MaxHP;
+            }
+
+            if(value <= 0)
+            {
+                hp = 0;
+                Dead();
+                return;
+            }
+
+            hp = value;
+        }
+    }
+
+    private bool isAlive = true;
+
+    public void Dead()
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+
+        Debug.LogWarning("Player Dead");
+
+        CallState(PlayerState.Nomal);
+        DeadEffect();
+    }
+
+    public void DeadByWater()
+    {
+        CallState(PlayerState.Water);
+        DeadEffect();
+    }
+
+    public void DeadEffect()
+    {
+        // Effect?
+
+        // 추적 중지
+        LightManager.Instance.DeadCheck(gameObject);
+
+        // 상태처리, 입력 제거
+        isAlive = false;
+
+        StartCoroutine(DUSDJUtil.ActionAfterSecondCoroutine(1.0f, () =>{
+            AfterDead();
+        }));
+    }
+
+    public void AfterDead()
+    {
+        UIManager.Instance.ShowDeadUI(true);
+    }
+
+    public void InitHP()
+    {
+        hp = MaxHP;
+    }
+
+    public void Heal(float value)
+    {
+        HP += value;
+    }
+
+    #endregion
 
     [Space]
 
@@ -82,6 +163,12 @@ public class Player : MonoBehaviour, IDamagable
     // Start is called before the first frame update
     void Start()
     {
+        //ISaveLoad
+        ISaveLoadInit();
+        // Hp
+        InitHP();
+
+
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -140,6 +227,11 @@ public class Player : MonoBehaviour, IDamagable
     }
 
     #region InputManager
+    public void ForceCanMove(bool value)
+    {
+        canMove = value;
+    }
+
     private void InputManager()
     {
 
@@ -151,9 +243,11 @@ public class Player : MonoBehaviour, IDamagable
             rb.velocity = Vector2.zero;
             return;
         }
+        /* 아래 코드가 존재할 경우 DisableMovement 관련 코드 불가능.
+         * GameState 변경시 강제로 변화시키는 코드 만들어서 적용시킬게요.
         else
             canMove = true;
-
+            */
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
@@ -353,7 +447,7 @@ public class Player : MonoBehaviour, IDamagable
         SetCurrentAnimation(_AnimState);
     }
 
-    public void CallState(PlayerState deadState )
+    public void CallState(PlayerState deadState)
     {
             
         switch (playerState)
@@ -542,11 +636,11 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.wakeUp:
-                AsncAnimation(AnimClip[(int)AnimState.wakeUp], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.wakeUp], false, 1f);
                 break;
 
             case AnimState.NomalDead:
-                AsncAnimation(AnimClip[(int)AnimState.NomalDead], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.NomalDead], false, 1f);
                 break;
 
             case AnimState.WaterDead:
@@ -564,6 +658,7 @@ public class Player : MonoBehaviour, IDamagable
     #region IDamagable
     public void Damage(float value)
     {
+        HP -= value;
         return;
     }
 
@@ -571,6 +666,41 @@ public class Player : MonoBehaviour, IDamagable
     {
         return gameObject;
     }
+    #endregion
+
+    #region ISaveLoad
+
+    public struct StructSaveData {
+        public Vector3 SavePosition;
+    }    
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        Debug.Log(string.Format("ISave : {0}", gameObject.name));
+        SaveData.SavePosition = transform.position;
+
+    }
+
+    public void ILoad()
+    {
+        Debug.Log(string.Format("ILoad : {0}", gameObject.name));
+
+        transform.position = SaveData.SavePosition;
+
+        CallState(PlayerState.Allive);
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
     #endregion
 
 }

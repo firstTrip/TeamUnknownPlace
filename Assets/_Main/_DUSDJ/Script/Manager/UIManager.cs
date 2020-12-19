@@ -80,4 +80,9 @@ public class UIManager : MonoBehaviour
         NoticeText.DOFade(0, 0.3f);
     }
 
+
+    public void ShowDeadUI(bool trueOrFalse)
+    {
+
+    }
 }
