@@ -173,6 +173,21 @@ public class EffectManager : MonoBehaviour
 
     #endregion
 
+    #region Clean
+
+    public void Clean()
+    {
+        foreach (var list in List)
+        {
+            foreach (var effect in list.Value)
+            {
+                effect.Clean();
+            }
+        }
+    }
+
+    #endregion
+
 
     #region Camera Effect
 

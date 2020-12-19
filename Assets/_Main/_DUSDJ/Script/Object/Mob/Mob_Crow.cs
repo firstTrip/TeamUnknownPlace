@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
+public class Mob_Crow : MonoBehaviour, IDamagable, ISaveLoad
 {
     [Header("튜토리얼")] public bool Tutorial = true;
 
@@ -18,7 +18,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 
 
     [Space]
-
+    
     [SerializeField]
     private float hp;
     public float HP
@@ -46,12 +46,45 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
     private bool IsAlive = false;
     private Animator anim;
 
-
-    #region ICallback
-
-    public void CallbackAction()
+    #region ISaveLoad
+    public struct StructSaveData
     {
-        ObjectAction();
+        public Vector3 Position;
+        public bool IsAlive;
+        public float HP;
+    }
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        Debug.Log(string.Format("ISave : {0}", gameObject.name));
+        SaveData.Position = transform.position;
+        SaveData.IsAlive = IsAlive;
+        SaveData.HP = HP;
+    }
+
+    public void ILoad()
+    {
+        StopAllCoroutines();
+        
+        transform.position = SaveData.Position;
+        IsAlive = SaveData.IsAlive;
+        hp = SaveData.HP;
+
+        if (IsAlive)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
     }
 
     public GameObject GetGameObject()
@@ -68,6 +101,8 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
 
     public void Init()
     {
+        ISaveLoadInit();
+
         anim = GetComponent<Animator>();
 
         IsAlive = true;
@@ -89,15 +124,18 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
         // 까마귀 이펙트
         EffectManager.Instance.SetPool(EffectKey, transform.position, EffectScale);
 
-        // 애니메이션 & 이동 & 사운드 코루틴
+        // 사운드 코루틴
+        StartCoroutine(SoundCoroutine());
+
+        // 콜백 : 애니메이션 & 이동 
         Action act = () => {
             anim.SetBool("Action", true);
 
-            transform.DOMoveX(-12f, 6f);
-            StartCoroutine(SoundCoroutine());            
+            // 까마귀 속도
+            transform.DOMoveX(-6f, 12f);
         };
 
-        IEnumerator delayCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.25f, act);
+        IEnumerator delayCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(0.5f, act);
         StartCoroutine(delayCoroutine);   
     }
 
@@ -138,6 +176,7 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
                 gameObject.SetActive(false);
             });
         }
+
         StartCoroutine(coroutine);
 
     }
@@ -180,4 +219,6 @@ public class Mob_Crow : MonoBehaviour, ICallback, IDamagable
             yield return null;
         }
     }
+
+    
 }

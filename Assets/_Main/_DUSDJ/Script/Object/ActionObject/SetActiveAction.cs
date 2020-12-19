@@ -6,22 +6,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class SetActiveAction : MonoBehaviour
+public class SetActiveAction : ActionObject
 {
     public bool TrueOrFalse = true;
     public GameObject[] Targets;
 
-
-    private bool isUsed = false;
-
-    public void ObjectAction()
+    protected override void AfterCheckAction()
     {
-        if (isUsed)
-        {
-            return;
-        }
-        isUsed = true;
-
+        
         for (int i = 0; i < Targets.Length; i++)
         {
             Targets[i].SetActive(TrueOrFalse);

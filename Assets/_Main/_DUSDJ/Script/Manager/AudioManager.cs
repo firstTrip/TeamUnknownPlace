@@ -168,4 +168,11 @@ public class AudioManager : MonoBehaviour
     {
         soundEffectAudioSource.volume = soundEffectVolume;
     }
+
+
+
+    public void Clean()
+    {
+
+    }
 }

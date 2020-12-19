@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class EffectAction : MonoBehaviour
+public class EffectAction : ActionObject
 {
     [Header("Effect Data")] public string EffectKey;
     [Header("이펙트 크기")] public Vector3 EffectScale = Vector3.one;
@@ -13,22 +13,8 @@ public class EffectAction : MonoBehaviour
     private Vector3 TargetPosition;
     private bool SetTarget = false;
 
-    private bool isUsed = false;
-
-
-    private void Awake()
+    protected override void AfterCheckAction()
     {
-        isUsed = false;
-    }
-
-    private void ObjectAction()
-    {
-        if (isUsed)
-        {
-            return;
-        }
-        isUsed = true;
-
         if (SetTarget)
         {
             EffectManager.Instance.SetPool(EffectKey, TargetPosition, EffectScale);

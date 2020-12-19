@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 809613336665505950}
   - component: {fileID: -6940173940833482563}
   m_Layer: 0
-  m_Name: Dead
+  m_Name: WaterSplash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -269,7 +269,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0, a: 1}
+      maxColor: {r: 0, g: 0.19833922, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4756,7 +4756,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e8ed577212fb02d4e979c771e715fc54, type: 2}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4791,7 +4791,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0.5, y: 0, z: 0}
-  m_UseCustomVertexStreams: 1
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1

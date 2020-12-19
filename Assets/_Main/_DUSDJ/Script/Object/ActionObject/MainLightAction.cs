@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MainLightAction : MonoBehaviour
+public class MainLightAction : ActionObject
 {
 
     public EnumMainLightAction TargetAction;
 
-    public void ObjectAction()
+    protected override void AfterCheckAction()
     {
         switch (TargetAction)
         {
@@ -31,4 +31,5 @@ public class MainLightAction : MonoBehaviour
                 break;
         }
     }
+
 }

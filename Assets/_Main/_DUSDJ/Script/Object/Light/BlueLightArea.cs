@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlueLightArea : MonoBehaviour
+public class BlueLightArea : MonoBehaviour, ISaveLoad
 {
     [Header("이 빛에 닿으면 붉은빛 없어짐")]public bool IsSpecial = false;
 
@@ -16,6 +16,8 @@ public class BlueLightArea : MonoBehaviour
 
     private void Awake()
     {
+        ISaveLoadInit();
+
         col = GetComponent<Collider2D>();
 
         BlueLightTrigger = transform.Find("BlueLightPoint").GetComponent<CollisionTrigger>();
@@ -31,7 +33,7 @@ public class BlueLightArea : MonoBehaviour
         }
 
         LightManager.Instance.SetBlueLight(BlueLightPoint.position);
-        col.enabled = true;
+        col.enabled = true;        
     }
 
     public void ChildTriggerExit()
@@ -56,6 +58,49 @@ public class BlueLightArea : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             IsActivated = true;
+
+
+            SaveManager.Instance.SaveAll();
         }
     }
+
+
+    #region ISaveLoad
+
+    public struct StructSaveData
+    {
+        public bool IsActivated;
+        public bool IsPassed;
+    }
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        SaveData.IsActivated = IsActivated;
+        SaveData.IsPassed = IsPassed;
+    }
+
+    public void ILoad()
+    {
+        IsActivated = SaveData.IsActivated;
+        IsPassed = SaveData.IsPassed;
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    #endregion
+
 }
