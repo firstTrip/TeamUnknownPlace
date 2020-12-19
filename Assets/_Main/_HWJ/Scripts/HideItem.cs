@@ -11,7 +11,7 @@ public class HideItem : Item
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        UseMaterial();
+        //UseMaterial();
     }
 
     public override void UseItem()

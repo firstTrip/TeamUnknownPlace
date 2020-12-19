@@ -84,7 +84,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-
+        anim = GetComponentInChildren<Animator>();
         _AnimState = AnimState.idle;
         SetCurrentAnimation(_AnimState);
         canMove = true;
@@ -94,6 +94,12 @@ public class Player : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(currentAnimation);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            StartEffect();
+
+        }
 
         WalkSoundCoolDownCheck();
         InputManager();
@@ -135,7 +141,11 @@ public class Player : MonoBehaviour, IDamagable
     }
     private void StartEffect()
     {
-        anim = GetComponent<Animator>();
+        anim.SetTrigger("Die");
+
+        _AnimState = AnimState.NomalDead;
+        SetCurrentAnimation(_AnimState);
+
 
     }
 
@@ -177,7 +187,6 @@ public class Player : MonoBehaviour, IDamagable
 
         if (sit)
         {
-            StartEffect();
 
             LightManager.Instance.DeadCheck(gameObject);
             MoveSpeed = 0.0f;
@@ -546,7 +555,7 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.NomalDead:
-                AsncAnimation(AnimClip[(int)AnimState.NomalDead], true, 1f);
+                AsncAnimation(AnimClip[(int)AnimState.NomalDead], false, 2f);
                 break;
 
             case AnimState.WaterDead:

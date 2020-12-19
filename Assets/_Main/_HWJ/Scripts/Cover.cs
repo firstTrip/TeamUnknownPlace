@@ -6,23 +6,32 @@ public class Cover : Item
 {
     private SpriteRenderer spriteRenderer;
     private GameObject GO;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        UseMaterial();
+        anim = GetComponent<Animator>();
+            //UseMaterial();
     }
     private void Update()
     {
-   
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            anim.SetTrigger("TakeOff");
+        }
     }
 
     public override void UseItem()
     {
-        this.gameObject.SetActive(true);
-        GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-        this.gameObject.transform.position = transform.position;
-        StartCoroutine(DisableUse(0.2f));
+        if (StarFlag)
+        {
+            this.gameObject.SetActive(true);
+            GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            this.gameObject.transform.position = transform.position;
+            StartCoroutine(DisableUse(0.2f));
+        }
+      
     }
     public override void UseMaterial()
     {

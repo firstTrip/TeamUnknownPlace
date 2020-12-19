@@ -5085,6 +5085,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3922674846452048022, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: AnimClip.Array.size
@@ -5096,15 +5101,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cfa4c78c3c946f74c86c100227e5d569,
         type: 2}
+    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1235694639}
     - target: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.85
+      value: 6.27
       objectReference: {fileID: 0}
     - target: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.28
+      value: -4.22
       objectReference: {fileID: 0}
     - target: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
@@ -5156,14 +5166,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8227953999626485723, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 46ca5c055d60dd444b6ae2a155acc5fa, type: 2}
     - target: {fileID: 8227953999626485727, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 7581298190785877406, guid: a6256fb77b6323d46ba8f6ee78efa16c, type: 3}
     - {fileID: 8227953999626485723, guid: a6256fb77b6323d46ba8f6ee78efa16c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a6256fb77b6323d46ba8f6ee78efa16c, type: 3}
+--- !u!95 &1235694639 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5089918421423022727, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1235694638}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1261310088
 GameObject:
   m_ObjectHideFlags: 0
@@ -14404,9 +14426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba69dd05fb0cf374e941dbdf328c42a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemType: 1
   isGet: 0
   isUse: 0
+  StarFlag: 0
   rb: {fileID: 0}
   CollisionRadius: 0.15
   groundLayer:
@@ -14889,7 +14912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1682190023896072414
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23210,7 +23233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1682190025858537276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23226,6 +23249,7 @@ MonoBehaviour:
   itemType: 0
   isGet: 0
   isUse: 0
+  StarFlag: 0
   rb: {fileID: 1682190025858537278}
   CollisionRadius: 0.15
   groundLayer:
@@ -30519,6 +30543,7 @@ MonoBehaviour:
   itemType: 2
   isGet: 0
   isUse: 0
+  StarFlag: 0
   rb: {fileID: 0}
   CollisionRadius: 0.15
   groundLayer:
