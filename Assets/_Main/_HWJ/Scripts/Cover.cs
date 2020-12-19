@@ -2,29 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideItem : Item
+public class Cover : Item
 {
-
-
     private SpriteRenderer spriteRenderer;
+    private GameObject GO;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    private void Update()
+    {
+   
+    }
 
     public override void UseItem()
     {
-        spriteRenderer.sortingLayerName = "Middleground_AP";
-        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
+        this.gameObject.SetActive(true);
+        GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
         this.gameObject.transform.position = transform.position;
         StartCoroutine(DisableUse(0.2f));
     }
-    IEnumerator DisableUse( float time)
+    IEnumerator DisableUse(float time)
     {
         isUse = true;
         yield return new WaitForSeconds(time);
         isUse = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Rose"))
+        {
+
+            Debug.Log("Rose");
+            GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            this.gameObject.SetActive(true);
+            this.gameObject.transform.position = transform.position;
+            StartCoroutine(DisableUse(0.2f));
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -35,22 +51,14 @@ public class HideItem : Item
             {
                 if (other.GetComponentInParent<Player>().GetItemUse())
                 {
-                    if (itemType == ItemType.UnCarriable)
+                    if (itemType == ItemType.Carriable)
                     {
-                        spriteRenderer.sortingLayerName = "Middleground_AP";
-
+                        this.gameObject.SetActive(false);
+                        GO = other.gameObject;
                         other.GetComponentInParent<Player>().isInvincibility = true;
-                        Debug.Log("isUse");
-                        this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-                        isUse = true;
+                        other.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
                     }
 
-                    if(itemType == ItemType.Carriable)
-                    {
-                        other.GetComponentInParent<Player>().isInvincibility = true;
-                        gameObject.transform.SetParent(other.transform.GetChild(0).GetChild(0));
-                    }
-           
                 }
             }
         }
@@ -64,7 +72,10 @@ public class HideItem : Item
             other.GetComponentInParent<Player>().isInvincibility = false;
             spriteRenderer.sortingLayerName = "Middleground_BP";
             isUse = false;
-
         }
+
+       
     }
+
+
 }

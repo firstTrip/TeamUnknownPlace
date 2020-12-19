@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideItem : Item
+public class Wardobe : Item
 {
-
-
     private SpriteRenderer spriteRenderer;
+    public GameObject CloseSprite;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
     public override void UseItem()
     {
         spriteRenderer.sortingLayerName = "Middleground_AP";
@@ -20,11 +18,11 @@ public class HideItem : Item
         this.gameObject.transform.position = transform.position;
         StartCoroutine(DisableUse(0.2f));
     }
-    IEnumerator DisableUse( float time)
+
+    // Update is called once per frame
+    void Update()
     {
-        isUse = true;
-        yield return new WaitForSeconds(time);
-        isUse = false;
+        
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -37,20 +35,20 @@ public class HideItem : Item
                 {
                     if (itemType == ItemType.UnCarriable)
                     {
-                        spriteRenderer.sortingLayerName = "Middleground_AP";
-
+                        //spriteRenderer.sortingLayerName = "Middleground_AP";
+                        CloseSprite.SetActive(false);
                         other.GetComponentInParent<Player>().isInvincibility = true;
                         Debug.Log("isUse");
                         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
                         isUse = true;
                     }
 
-                    if(itemType == ItemType.Carriable)
+                    if (itemType == ItemType.Carriable)
                     {
                         other.GetComponentInParent<Player>().isInvincibility = true;
                         gameObject.transform.SetParent(other.transform.GetChild(0).GetChild(0));
                     }
-           
+
                 }
             }
         }
@@ -66,5 +64,12 @@ public class HideItem : Item
             isUse = false;
 
         }
+    }
+
+    IEnumerator DisableUse(float time)
+    {
+        isUse = true;
+        yield return new WaitForSeconds(time);
+        isUse = false;
     }
 }

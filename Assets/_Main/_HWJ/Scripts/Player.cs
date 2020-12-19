@@ -44,12 +44,12 @@ public class Player : MonoBehaviour, IDamagable
         idle, walk, run, slowWalk, jump, get, Throw, clime ,stairUP ,wakeUp ,NomalDead ,WaterDead , Down
     }
 
-    public enum DeadState
+    public enum PlayerState
     {
-        Nomal , Water
+        Nomal , Water ,Allive
     }
 
-    public DeadState deadState;
+    public PlayerState playerState;
 
     #endregion
 
@@ -267,9 +267,11 @@ public class Player : MonoBehaviour, IDamagable
             if (handsPos.transform.childCount != 0)
                 item = handsPos.transform.GetChild(0).gameObject;
 
-            StartCoroutine(DisableMovement(0.5f));
+
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
+            StartCoroutine(DisableMovement(0.5f));
+
         }
 
 
@@ -287,7 +289,6 @@ public class Player : MonoBehaviour, IDamagable
                     StartCoroutine(DisableMovement(0.5f));
                     _AnimState = AnimState.Throw;
                     SetCurrentAnimation(_AnimState);
-
                     item = null;
                 }
             }
@@ -344,27 +345,37 @@ public class Player : MonoBehaviour, IDamagable
         SetCurrentAnimation(_AnimState);
     }
 
-    public void CallDead(DeadState deadState )
+    public void CallState(PlayerState deadState )
     {
             
-        switch (deadState)
+        switch (playerState)
         {
-            case DeadState.Nomal:
+            case PlayerState.Nomal:
 
                 rb.velocity = Vector2.zero;
                 x = 0;
                 y = 0;
+                canMove = false;
                 _AnimState = AnimState.NomalDead;
                 SetCurrentAnimation(_AnimState);
 
                 break;
 
-            case DeadState.Water:
+            case PlayerState.Water:
 
                 rb.velocity = Vector2.zero;
                 x = 0;
                 y = 0;
+                canMove = false;
                 _AnimState = AnimState.WaterDead;
+                SetCurrentAnimation(_AnimState);
+
+                break;
+
+            case PlayerState.Allive:
+
+                canMove = true;
+                _AnimState = AnimState.idle;
                 SetCurrentAnimation(_AnimState);
 
                 break;
@@ -511,7 +522,7 @@ public class Player : MonoBehaviour, IDamagable
                 break;
 
             case AnimState.Throw:
-                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 2f);
+                AsncAnimation(AnimClip[(int)AnimState.Throw], false, 2.5f);
                 break;
 
             case AnimState.clime:

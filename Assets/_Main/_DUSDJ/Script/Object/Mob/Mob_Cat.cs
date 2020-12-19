@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class Mob_Cat : MonoBehaviour
 {
@@ -23,6 +24,23 @@ public class Mob_Cat : MonoBehaviour
     private bool isArrive = false;
     private bool isActivated = false;
 
+
+
+
+    private enum CatAnim { Walk , Touch }
+    private CatAnim _catAnim;
+
+    private string currentAnimation;
+
+    // skeletonAnimation  에다가 HWJ//Prefab//CatAnim//CatAnimbation 넣으시면 됩니다
+    // AnimClip 클립 사이즈 2 로 해주시고 첫번째에 walk 두번째에 touch 넣으시면됩니다
+    // 클립위치는 Assets/_Main/_HWJ/Spine/Cat_2acts/ReferenceAssets 여기입니다.
+    // 사용법 원하는 위치에
+
+    // _catAnim = CatAnim. 원하는 애니메이션
+    // SetCurrentAnimation(catAnim);
+    [SerializeField] private SkeletonAnimation skeletonAnimation = null;
+    [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
 
     private void Awake()
     {
@@ -122,4 +140,39 @@ public class Mob_Cat : MonoBehaviour
         Debug.Log("고양이 Out");
         gameObject.SetActive(false);
     }
+
+
+    #region 
+
+    private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
+    {
+
+        if (animClip.name.Equals(currentAnimation))
+            return;
+
+        //해당 애님으로 변경
+        skeletonAnimation.state.SetAnimation(0, animClip, loop).TimeScale = timeScale;
+        currentAnimation = animClip.name;
+
+    }
+    #endregion
+
+    private void SetCurrentAnimation(CatAnim _catAnim)
+    {
+
+        switch (_catAnim)
+        {
+            // ( 애님 이름  , 루프 여부 , 재생시간)
+            case CatAnim.Walk:
+                AsncAnimation(AnimClip[(int)CatAnim.Walk], true, 1f);
+                break;
+
+            case CatAnim.Touch:
+                AsncAnimation(AnimClip[(int)CatAnim.Touch], true, 0.5f);
+                break;
+
+        }
+
+    }
+
 }
