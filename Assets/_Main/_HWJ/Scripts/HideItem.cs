@@ -10,23 +10,31 @@ public class HideItem : Item
     // Start is called before the first frame update
     void Start()
     {
+        StarFlag = true;
         spriteRenderer = GetComponent<SpriteRenderer>();
         UseMaterial();
     }
 
     public override void UseItem()
     {
-        spriteRenderer.sortingLayerName = "Middleground_AP";
+        //spriteRenderer.sortingLayerName = "Middleground_AP";
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         this.gameObject.transform.position = transform.position;
-        this.gameObject.transform.GetChild(0).SetParent(this.transform);
-        this.gameObject.transform.GetChild(0).position = transform.position;
+        //this.gameObject.transform.GetChild(0).SetParent(this.transform);
+        //this.gameObject.transform.GetChild(0).position = transform.position;
         StartCoroutine(DisableUse(0.2f));
     }
 
     public override void UseMaterial()
     {
-        base.UseMaterial();
+
+            Debug.Log(StarFlag);
+            GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
+            Go.transform.localScale = new Vector3(1, 1, 1);
+            Go.GetComponent<SpriteRenderer>().material = _material;
+            Go.GetComponent<Item>().enabled = false;
+            Go.transform.SetParent(this.gameObject.transform);
+
     }
     IEnumerator DisableUse( float time)
     {
