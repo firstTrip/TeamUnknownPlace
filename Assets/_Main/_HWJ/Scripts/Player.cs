@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IDamagable
     [Tooltip("점프력")] public float JumpForce;
     [Tooltip("덮어씌울 중력배율")] public float GravityScale;
     [Tooltip("로프 이동 속도")] public float RopeUpForce;
+
     [Space]
 
     public Transform handsPos = null;
@@ -24,18 +25,17 @@ public class Player : MonoBehaviour, IDamagable
     private bool canMove;
     private bool sit;
     private bool dash;
-    public bool get; // Z 누른 경우
     private bool use;
+    public bool get; // Z 누른 경우
     private bool useStair;
-    private bool isWall;
-    public bool callWakeUpFlag;
+
     public bool isInvincibility; //  true 일시 대미지 x 
 
 
-    float x;
-    float y;
+    private float x;
+    private float y;
+    private float yRaw;
     public float xRaw;
-    float yRaw;
 
     private string currentAnimation;
     private AnimState _AnimState;
@@ -56,11 +56,11 @@ public class Player : MonoBehaviour, IDamagable
     #region Components
     private PlayerCollision coll;
     private Rigidbody2D rb { get; set; }
-    private BetterJump betterJump;
-    //private Animator anim { get; set; }
+
     [SerializeField] private SkeletonAnimation skeletonAnimation = null;
     [SerializeField] private AnimationReferenceAsset[] AnimClip = null;
-    Vector2 dir;
+
+    private Vector2 dir;
 
     #endregion
 
@@ -83,31 +83,40 @@ public class Player : MonoBehaviour, IDamagable
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-        betterJump = GetComponent<BetterJump>();
-        canMove = true;
 
         _AnimState = AnimState.idle;
         SetCurrentAnimation(_AnimState);
+        canMove = true;
 
     }
-
-   
 
     // Update is called once per frame
     void Update()
     {
 
-        Debug.Log(isInvincibility);
         WalkSoundCoolDownCheck();
         InputManager();
 
         dir = new Vector2(x, y);
 
+
+
         if (!coll.OnRope)
             Walk(dir);
-            
-        if(coll.OnGround || coll.OnRope)
+
+        if (coll.OnGround || coll.OnRope)
             Jump(dir);
+
+        if (!canMove)
+            return;
+
+        #region 로프 사용시 중력값 조정
+        if (coll.OnRope)
+            RopeAction();
+
+        else
+            rb.gravityScale = GravityScale;
+        #endregion
 
         if (coll.OnGround)
         {
@@ -116,21 +125,12 @@ public class Player : MonoBehaviour, IDamagable
 
         if (coll.OnRightWall && yRaw !=0 )
         {
-            Debug.Log("qweasdzxc");
             StairUp();
         }
         else
             useStair = false;
 
         UseItem();
-
-        #region 로프 사용시 중력값 조정
-        if (coll.OnRope && !coll.OnGround)
-            RopeAction();
-
-        else
-            rb.gravityScale = GravityScale;
-        #endregion
     }
 
     #region InputManager
@@ -141,20 +141,25 @@ public class Player : MonoBehaviour, IDamagable
         {
             x = 0;
             y = 0;
+            canMove = false;
             rb.velocity = Vector2.zero;
             return;
         }
+        else
+            canMove = true;
+
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
         get = Input.GetKeyUp(KeyCode.Z);
-        use = Input.GetKeyDown(KeyCode.X); // 숨기 
+        use = Input.GetKeyDown(KeyCode.X); // 숨기
 
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
 
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
+
     }
     #endregion
 
@@ -212,7 +217,6 @@ public class Player : MonoBehaviour, IDamagable
         // MovementSound(EnumMovement.Crouch); // 앉은걸음
         // MovementSound(EnumMovement.Walk); // 걷기
         // MovementSound(EnumMovement.Run); // 달리기
-        betterJump.enabled = false;
         FlipAnim();
         SetCurrentAnimation(_AnimState);
     }
@@ -225,7 +229,6 @@ public class Player : MonoBehaviour, IDamagable
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(DisableMovement(1f));
-            betterJump.enabled = true;
 
             if (coll.OnRope)
             {
@@ -241,6 +244,7 @@ public class Player : MonoBehaviour, IDamagable
             }
 
         }
+     
     }
     #endregion
 
@@ -253,12 +257,10 @@ public class Player : MonoBehaviour, IDamagable
 
     private void GetItem()
     {
-        if (get && coll.OnItem || get && coll.OnHideItem)
+        if (get && coll.OnItem)
         {
-            Debug.Log("in GetItem");
             if(item != null)
             {
-                Debug.Log("HasItem");
                 return;
             }
 
@@ -280,7 +282,6 @@ public class Player : MonoBehaviour, IDamagable
             { 
                 if (item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
                 {
-                    Debug.Log("asdqwezxc");
                     item.GetComponent<Item>().UseItem();
 
                     StartCoroutine(DisableMovement(0.5f));
@@ -293,6 +294,7 @@ public class Player : MonoBehaviour, IDamagable
 
          
         }
+
         if (use)
         {
             if (handsPos.transform.childCount != 0)
@@ -330,18 +332,14 @@ public class Player : MonoBehaviour, IDamagable
 
     public void CallWakeUp()
     {
-        if (callWakeUpFlag)
-        {
-            StartCoroutine(DisableMovement(1f));
-            _AnimState = AnimState.wakeUp;
-            SetCurrentAnimation(_AnimState);
-            
-        }
+        StartCoroutine(DisableMovement(8.5f));
+        _AnimState = AnimState.wakeUp;
+        SetCurrentAnimation(_AnimState);
+
     }
-    
+
     public void CallDown()
     {
-        StartCoroutine(DisableMovement(1f));
         _AnimState = AnimState.Down;
         SetCurrentAnimation(_AnimState);
     }
@@ -377,10 +375,10 @@ public class Player : MonoBehaviour, IDamagable
     private void RopeAction()
     {
 
-        rb.AddForce(Vector2.up * yRaw * 0.1f, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * yRaw * 0.25f, ForceMode2D.Impulse);
 
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * RopeUpForce);
+        //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * RopeUpForce);
         _AnimState = AnimState.clime;
 
         if(yRaw == 0)

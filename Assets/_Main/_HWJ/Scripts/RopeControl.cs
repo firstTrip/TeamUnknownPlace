@@ -22,7 +22,6 @@ public class RopeControl : MonoBehaviour
     {
         if (x != 0)
         {
-            Debug.Log("asdqwezxc");
             rb.velocity = new Vector2(x * PushForce, rb.velocity.y);
         }
        
