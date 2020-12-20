@@ -20,14 +20,16 @@ public class WJ_cat : MonoBehaviour
 
     public GameObject Phon;
     public GameObject DropPlace;
-
+    public SpriteRenderer spr;
     // Start is called before the first frame update
 
 
     private void Awake()
     {
+        //spr = get
         _catAnim = CatAnim.Walk;
         SetCurrentAnimation(CatAnim.Walk);
+
     }
 
     public void ObjectAction()
