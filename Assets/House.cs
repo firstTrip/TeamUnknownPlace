@@ -7,10 +7,13 @@ public class House : MonoBehaviour
 
     public GameObject player;
     public Transform wayPoint;
+    public Transform LightWayPoint;
 
 
     public void ObjectAction()
     {
+        LightManager.Instance.MainLight.transform.position = LightWayPoint.position;
+        LightManager.Instance.Banish();
         player.transform.position = wayPoint.position;
     }
 

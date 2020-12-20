@@ -13,6 +13,10 @@ public class Bell : MonoBehaviour
     public GameObject NextTaget;
     public float BellDuration;
 
+    [Header("Effect Data")] public string EffectKey;
+    [Header("이펙트 끝나는 시간")] public float EffectDuration;
+    [Header("이펙트 크기")] public Vector3 EffectScale = Vector3.one;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +48,7 @@ public class Bell : MonoBehaviour
     IEnumerator RingBell(float time)
     {
         AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
+        EffectManager.Instance.SetPool(EffectKey, transform.position, EffectScale);
         yield return new WaitForSecondsRealtime(time);
 
         if(NextTaget != null)

@@ -42,7 +42,6 @@ public class DissolveController : MonoBehaviour
 
         mat.SetFloat("_DissolveAmount", dissolveAmount);
 
-
     }
 
 
