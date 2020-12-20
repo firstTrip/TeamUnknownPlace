@@ -23,23 +23,14 @@ public class WJ_cat : MonoBehaviour
     public SpriteRenderer spr;
 
     // Start is called before the first frame update
-    public float dissolveAmount;
-    public float dissolveSpeed;
-    public bool isDissolving;
-    [ColorUsageAttribute(true, true)]
-    public Color outColor;
-    [ColorUsageAttribute(true, true)]
-    public Color inColor;
-
-    private Material mat;
-
-
+    
     private void Start()
     {
         //spr = GetComponent<SpriteRenderer>();
         //_catAnim = CatAnim.Walk;
-       //SetCurrentAnimation(CatAnim.Walk);
+        //SetCurrentAnimation(CatAnim.Walk);
 
+        mat = GetComponentInChildren<MeshRenderer>().material;
     }
 
     public void ObjectAction()
@@ -87,17 +78,36 @@ public class WJ_cat : MonoBehaviour
 
     }
 
-    public void DissolveOut(float speed, Color color)
+    private void Update()
     {
-        mat.SetColor("_DissolveColor", color);
-        if (dissolveAmount > -0.1)
-            dissolveAmount -= Time.deltaTime * speed;
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            StartCoroutine(DissolveOut(1.0f));
+        }
     }
 
-    public void DissolveIn(float speed, Color color)
+    #region Dissolve
+
+    private Material mat;    
+
+    IEnumerator DissolveOut(float time)
     {
-        mat.SetColor("_DissolveColor", color);
-        if (dissolveAmount < 1)
-            dissolveAmount += Time.deltaTime * dissolveSpeed;
+        float t = 0;
+        float originDissolve = mat.GetFloat("_DissolveAmount");
+
+        while (t < time)
+        {
+            t += Time.deltaTime;
+
+            float dissolveAmount = Mathf.Lerp(originDissolve, 0, t / time);
+            mat.SetFloat("_DissolveAmount", dissolveAmount);
+            yield return null;
+        }
+
+        mat.SetFloat("_DissolveAmount", 0);
     }
+
+    #endregion
+
+
 }

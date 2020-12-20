@@ -10295,7 +10295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.3100004, y: -3.42, z: -10}
+  m_LocalPosition: {x: -9.29, y: 0.9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1234038271}
@@ -16045,7 +16045,7 @@ PrefabInstance:
     - target: {fileID: 6872527509380956889, guid: ab6f4704784c9b846b23bcdb81a0d1d2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7441016817461080123, guid: ab6f4704784c9b846b23bcdb81a0d1d2,
         type: 3}
@@ -16140,11 +16140,6 @@ MonoBehaviour:
   Phon: {fileID: 1354843682}
   DropPlace: {fileID: 147341424}
   spr: {fileID: 0}
-  dissolveAmount: 0
-  dissolveSpeed: 0
-  isDissolving: 0
-  outColor: {r: 0, g: 0, b: 0, a: 0}
-  inColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &894405169
 GameObject:
   m_ObjectHideFlags: 0
@@ -21407,6 +21402,11 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 953065693727118147, guid: a434de526e3548a40ae9377f3cfbced5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 47dca2858e2f91c47b51d76a96492259, type: 2}
     - target: {fileID: 4966346908369283989, guid: a434de526e3548a40ae9377f3cfbced5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22769,7 +22769,7 @@ PrefabInstance:
     - target: {fileID: 698939554040929397, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 858498154200576312, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}

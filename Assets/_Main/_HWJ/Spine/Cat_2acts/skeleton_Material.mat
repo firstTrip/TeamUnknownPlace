@@ -37,5 +37,5 @@ Material:
     - _ThresholdEnd: 0.25
     - _Use8Neighbourhood: 1
     m_Colors:
-    - _DissolveColor: {r: 2.321569, g: 0, b: 8, a: 1}
+    - _DissolveColor: {r: 1.9455304, g: 0.20294724, b: 6.1463985, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 0, a: 1}
