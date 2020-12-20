@@ -140,7 +140,7 @@ MonoBehaviour:
   MaxHP: 10
   hp: 0
   handsPos: {fileID: 858498154200576312}
-  item: {fileID: 0}
+  ItemInHand: {fileID: 0}
   anim: {fileID: 5089918421423022727}
   canMove: 0
   get: 0
@@ -440,12 +440,12 @@ PrefabInstance:
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.206
+      value: 0.176
       objectReference: {fileID: 0}
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5609999
+      value: 0.62
       objectReference: {fileID: 0}
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
@@ -495,12 +495,12 @@ PrefabInstance:
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.203125
       objectReference: {fileID: 0}
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4222073533961683817, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
@@ -510,7 +510,7 @@ PrefabInstance:
     - target: {fileID: 4222073533961683817, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b92daf7f8f0c9064dbacf7a2b890b4ed, type: 3}

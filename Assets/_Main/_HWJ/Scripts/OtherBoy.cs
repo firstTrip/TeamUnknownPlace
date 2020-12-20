@@ -74,11 +74,7 @@ public class OtherBoy : MonoBehaviour
             case State.idle:
                 AsncAnimation(AnimClip[(int)State.idle], false, 1f);
                 break;
-            /*
-                       case AnimState.idle2:
-                           AsncAnimation(AnimClip[(int)AnimState.idle2], true, 1f);
-                           break;
-                       */
+         
             case State.roll:
                 AsncAnimation(AnimClip[(int)State.roll], false, 1f);
                 break;

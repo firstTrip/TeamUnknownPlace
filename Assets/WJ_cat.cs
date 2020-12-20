@@ -21,21 +21,34 @@ public class WJ_cat : MonoBehaviour
     public GameObject Phon;
     public GameObject DropPlace;
     public SpriteRenderer spr;
+
     // Start is called before the first frame update
+    public float dissolveAmount;
+    public float dissolveSpeed;
+    public bool isDissolving;
+    [ColorUsageAttribute(true, true)]
+    public Color outColor;
+    [ColorUsageAttribute(true, true)]
+    public Color inColor;
+
+    private Material mat;
 
 
-    private void Awake()
+    private void Start()
     {
-        //spr = get
-        _catAnim = CatAnim.Walk;
-        SetCurrentAnimation(CatAnim.Walk);
+        //spr = GetComponent<SpriteRenderer>();
+        //_catAnim = CatAnim.Walk;
+       //SetCurrentAnimation(CatAnim.Walk);
 
     }
 
     public void ObjectAction()
     {
+
+        //this.gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, DropPlace.transform.position, 1f);
+
         LightManager.Instance.Reveal();
-        _catAnim = CatAnim.Touch;
+       _catAnim = CatAnim.Touch;
         SetCurrentAnimation(CatAnim.Touch);
         Phon.transform.position = Vector3.MoveTowards(Phon.transform.position, DropPlace.transform.position, 1f);
         AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
@@ -72,5 +85,19 @@ public class WJ_cat : MonoBehaviour
 
         }
 
+    }
+
+    public void DissolveOut(float speed, Color color)
+    {
+        mat.SetColor("_DissolveColor", color);
+        if (dissolveAmount > -0.1)
+            dissolveAmount -= Time.deltaTime * speed;
+    }
+
+    public void DissolveIn(float speed, Color color)
+    {
+        mat.SetColor("_DissolveColor", color);
+        if (dissolveAmount < 1)
+            dissolveAmount += Time.deltaTime * dissolveSpeed;
     }
 }

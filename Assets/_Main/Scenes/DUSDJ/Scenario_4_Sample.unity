@@ -2793,7 +2793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147341424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 110.64, y: -6.84, z: 0}
+  m_LocalPosition: {x: 112.34, y: -6.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1237845303}
@@ -15043,6 +15043,11 @@ MonoBehaviour:
   Phon: {fileID: 1354843682}
   DropPlace: {fileID: 147341424}
   spr: {fileID: 0}
+  dissolveAmount: 0
+  dissolveSpeed: 0
+  isDissolving: 0
+  outColor: {r: 0, g: 0, b: 0, a: 0}
+  inColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &894405169
 GameObject:
   m_ObjectHideFlags: 0
@@ -20308,7 +20313,7 @@ PrefabInstance:
     - target: {fileID: 4966346908369283989, guid: a434de526e3548a40ae9377f3cfbced5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.36
+      value: 11.29
       objectReference: {fileID: 0}
     - target: {fileID: 4966346908369283989, guid: a434de526e3548a40ae9377f3cfbced5,
         type: 3}
@@ -21664,6 +21669,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 698939554040929397, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 858498154200576312, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -31590,7 +31600,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785449140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 117.83, y: -3.47, z: 0}
+  m_LocalPosition: {x: 116.01, y: -3.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1622776952}
@@ -53857,12 +53867,12 @@ PrefabInstance:
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1437370116182399024, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4222073533961683817, guid: b92daf7f8f0c9064dbacf7a2b890b4ed,
         type: 3}
