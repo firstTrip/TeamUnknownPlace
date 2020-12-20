@@ -45,6 +45,8 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI NoticeText;
 
+    public Image FadeImage;
+
     #endregion
 
     #region Game Over
@@ -318,5 +320,11 @@ public class UIManager : MonoBehaviour
     public void ShowDeadUI(bool trueOrFalse)
     {
 
+    }
+
+
+    public void FadeOut(float time)
+    {
+        FadeImage.DOFade(1.0f, time);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -178,20 +179,6 @@ public class GameManager : MonoBehaviour
         #endregion
 
 
-        #region Cheat Key
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SaveManager.Instance.SaveAll();
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SaveManager.Instance.LoadAll();
-        }
-
-        #endregion
-
     }
 
 
@@ -225,5 +212,19 @@ public class GameManager : MonoBehaviour
         {
             PlayerChara.ForceCanMove(true);
         }
+    }
+
+
+    public void Ending()
+    {
+        ChangeState(EnumGameState.Ready);
+        UIManager.Instance.FadeOut(1.0f);
+
+        IEnumerator callback = DUSDJUtil.ActionAfterSecondCoroutine(1.0f, () =>
+        {
+            SceneManager.LoadScene(3);
+        });
+
+        StartCoroutine(callback);
     }
 }

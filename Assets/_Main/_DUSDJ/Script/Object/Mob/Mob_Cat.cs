@@ -73,6 +73,8 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
 
     public void Init()
     {
+        ISaveLoadInit();
+
         startingPoint = transform.position;
         endingPoint = ArrivalPoint.transform.position;
         movePoint = transform.position;
@@ -172,7 +174,7 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
     }
 
 
-    #region 
+    #region  Animation
 
     private void AsncAnimation(AnimationReferenceAsset animClip, bool loop, float timeScale)
     {
@@ -185,7 +187,6 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
         currentAnimation = animClip.name;
 
     }
-    #endregion
 
     private void SetCurrentAnimation(CatAnim _catAnim)
     {
@@ -204,6 +205,10 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
         }
 
     }
+
+    #endregion
+
+
     #region IDamagable
 
     public void Damage(float value)
@@ -232,6 +237,9 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
         public int NumOfActivatedMovement;
         public bool isArrive;
         public bool isActivated;
+
+        public Vector3 movePoint;
+        public float stay;
     }
     public StructSaveData SaveData;
 
@@ -249,6 +257,10 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
         SaveData.NumOfActivatedMovement = NumOfActivatedMovement;
         SaveData.isArrive = isArrive;
         SaveData.isActivated = isActivated;
+
+        SaveData.movePoint = movePoint;
+        SaveData.stay = stay;
+
     }
 
     public void ILoad()
@@ -259,6 +271,9 @@ public class Mob_Cat : MonoBehaviour, IDamagable, ISaveLoad
         NumOfActivatedMovement = SaveData.NumOfActivatedMovement;
         isArrive = SaveData.isArrive;
         isActivated = SaveData.isActivated;
+
+        movePoint = SaveData.movePoint;
+        stay = SaveData.stay;
 
         if (isAlive)
         {
