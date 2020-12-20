@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowItem : Item
+public class ThrowItem : Item, ISaveLoad
 {
 
     public float xThrow;
     public float yThrow;
 
-    private GameObject GO;
     private bool isActive;
     private float x;
+
+    Transform parent;
+    Transform middleGround;
 
 
     protected override void Start()
@@ -20,52 +22,54 @@ public class ThrowItem : Item
         isActive = true;
         OnGround = false;
 
-        UseMaterial();        
+        UseMaterial();
+
+        ISaveLoadInit();
+        middleGround = GameObject.Find("Middleground_AP").transform;
+        parent = middleGround;
     }
 
 
     private void Update()
     {
-        if (GO != null)
-        {
-            gameObject.transform.position = GO.transform.GetChild(0).gameObject.transform.GetChild(0).position;
-            x = GO.GetComponent<Player>().transform.localScale.x;
-
-        }
-
         OnGround = Physics2D.OverlapCircle((Vector2)transform.position + BottomOffset, CollisionRadius, groundLayer);
-
 
         if (OnGround)
         {
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
-            gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
-
-            /*
-            if (!isActive)
-            {
-                GameObject Go = Instantiate(this.gameObject, gameObject.transform.position, Quaternion.identity);
-                Destroy(this.gameObject);
-            }
-            */
-        }else
-        {
-            if (!isActive)
-            {
-                rb.gravityScale = 1;
-
-            }
-          
         }
     }
 
-    public override void UseItem()
+    public void GetItemByPlayer(Player p, Transform hand)
     {
-        GO = null;
+        if (isGet)
+        {
+            return;
+        }
+
+        p.ItemInHand = this;
+
+        parent = hand;
+        transform.SetParent(parent, true);
+        transform.localPosition = Vector3.zero;        
+
+        isGet = true;
+        isActive = true;
+    }
+
+    public override void UseItem()
+    {        
+        x = parent.GetComponentInParent<Player>().transform.localScale.x;
+
+        gameObject.transform.SetParent(middleGround, true);
+
+        parent = null;
         isActive = false;
-        StartCoroutine(DisableMovement(0.5f));
-        rb.velocity = new Vector2( x * xThrow * (-1) , yThrow);
+        StartCoroutine(DisableToGet(0.5f));
+
+        rb.velocity = new Vector2(x * xThrow * (-1) , yThrow);
+        rb.gravityScale = 1;
     }
 
     public override void UseMaterial()
@@ -73,34 +77,54 @@ public class ThrowItem : Item
         base.UseMaterial();
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (!isGet)
-        { 
-            if (other.gameObject.CompareTag("Player"))
-            {
-                if (other.GetComponentInParent<Player>().GetItemStatus())
-                {
-                    GO = other.gameObject;
-                    isGet = true;
-                    gameObject.transform.SetParent(other.transform.GetChild(0).transform.GetChild(0).transform);
-                    Debug.Log(other.transform.GetChild(0).transform.GetChild(0).transform);
-                    
-                    isActive = true;
-                }
-                
-            }
-            
-        }
-        else return;
 
-    }
-
-    IEnumerator DisableMovement(float time)
+    IEnumerator DisableToGet(float time)
     {
         isGet = true;
         yield return new WaitForSecondsRealtime(time);
         isGet = false;
     }
+
+    #region ISaveLoad
+
+    public struct StructSaveData
+    {
+        public Transform parent;
+        public Vector3 Position;
+        public bool isGet;
+        public bool isActive;
+    }
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        SaveData.Position = transform.position;
+        SaveData.isGet = isGet;
+        SaveData.isActive = isActive;
+    }
+
+    public void ILoad()
+    {
+        transform.position = SaveData.Position;
+        isGet = SaveData.isGet;
+        isActive = SaveData.isActive;
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    #endregion
 
 }

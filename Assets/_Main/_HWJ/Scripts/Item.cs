@@ -72,7 +72,7 @@ public class Item : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                if (other.GetComponentInParent<PlayerTest>().GetItemStatus())
+                if (other.GetComponentInParent<Player>().GetItemStatus())
                 {
                     isGet = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));

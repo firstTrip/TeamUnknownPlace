@@ -107,7 +107,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     public Transform handsPos = null;
   
     [Space]
-    public GameObject item;
+    public ThrowItem ItemInHand;
     public Animator anim;
     [Space]
 
@@ -262,7 +262,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
         sit = Input.GetKey(KeyCode.LeftControl);
         dash = Input.GetKey(KeyCode.LeftShift);
-        get = Input.GetKeyUp(KeyCode.Z);
+        get = Input.GetKeyDown(KeyCode.Z);
         use = Input.GetKeyDown(KeyCode.X); // 숨기
 
         x = Input.GetAxis("Horizontal");
@@ -388,15 +388,22 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     private void GetItem()
     {
+        // Z 키 입력
         if (get && coll.OnItem)
         {
-            if(item != null)
+            // 손에 든 ThrowItem 없고
+            if (ItemInHand != null)
             {
                 return;
             }
 
-            if (handsPos.transform.childCount != 0)
-                item = handsPos.transform.GetChild(0).gameObject;
+            // 바닥의 ThrowItem이 범위 내에 있다.
+            // = GetItem
+            ThrowItem checkItem = coll.ItemCollider.GetComponent<ThrowItem>();
+            if (checkItem != null)
+            {
+                checkItem.GetItemByPlayer(this, handsPos);
+            }
 
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
@@ -407,26 +414,25 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     }
     private void UseItem()
     {
-        if (item != null)
+        // 손에 ThrowItem이 있다.
+        if (ItemInHand != null)
         {
+            // Z 키 입력
             if (get)
-            { 
-                if (item.GetComponent<Item>().itemType.ToString() == "ThrowItem")
-                {
-                    item.GetComponent<Item>().UseItem();
+            {
+                ItemInHand.UseItem();
+                ItemInHand = null;
 
-                    StartDisable(0.5f);
-                    _AnimState = AnimState.Throw;
-                    SetCurrentAnimation(_AnimState);
-                    item = null;
-                }
+                StartDisable(0.5f);
+                _AnimState = AnimState.Throw;
+                SetCurrentAnimation(_AnimState);                
             }
-
-         
         }
 
+        // X 키 입력
         if (use)
         {
+            /*
             if (handsPos.transform.childCount != 0)
                 item = handsPos.transform.GetChild(0).gameObject;
 
@@ -440,6 +446,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 }
 
             }
+            */
 
         }
     }
@@ -698,6 +705,11 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     #region IDamagable
     public void Damage(float value)
     {
+        if (isInvincibility)
+        {
+            return;
+        }
+
         HP -= value;
         return;
     }

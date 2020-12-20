@@ -88,6 +88,11 @@ public class UIManager : MonoBehaviour
 
     public void UpdateGameOverMenu(int i)
     {
+        if (isGameOverAnimating)
+        {
+            return;
+        }
+
         if(i == -1)
         {
             if(selectedGameOverMenu == 0)
@@ -125,6 +130,11 @@ public class UIManager : MonoBehaviour
 
     public void GameOverMenuAction()
     {
+        if (isGameOverAnimating)
+        {
+            return;
+        }
+
         switch (selectedGameOverMenu)
         {
             case GameOverMenu.Restart:

@@ -18,6 +18,8 @@ public class PlayerCollision : MonoBehaviour
     public bool OnWall;
     public bool OnRope;
     public bool OnItem;
+    [HideInInspector]public Collider2D ItemCollider { get; set; }
+
     public bool OnHideItem;
     public bool OnRightWall;
     public bool OnLeftWall;
@@ -39,7 +41,16 @@ public class PlayerCollision : MonoBehaviour
             || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, groundLayer);
         OnRope = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, ropeLayer);
 
-        OnItem = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, itemLayer);
+        ItemCollider = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, itemLayer);
+        if(ItemCollider != null)
+        {
+            OnItem = true;
+        }
+        else
+        {
+            OnItem = false;
+        }
+
         OnHideItem = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, hideItemLayer);
         OnRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, stairLayer);
 

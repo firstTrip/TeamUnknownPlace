@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideItem : Item
+public class HideItem : Item, ISaveLoad
 {
     private SpriteRenderer spriteRenderer;
 
+
+    private IEnumerator disableCoroutine;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -14,6 +16,8 @@ public class HideItem : Item
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         UseMaterial();
+
+        ISaveLoadInit();
     }
 
     public override void UseItem()
@@ -23,14 +27,21 @@ public class HideItem : Item
         this.gameObject.transform.position = transform.position;
         this.gameObject.transform.GetChild(0).SetParent(this.transform);
         this.gameObject.transform.GetChild(0).position = transform.position;
-        StartCoroutine(DisableUse(0.2f));
+        
+        if(disableCoroutine != null)
+        {
+            StopCoroutine(disableCoroutine);           
+        }
+        disableCoroutine = DisableUse(0.2f);
+        StartCoroutine(disableCoroutine);
     }
 
     public override void UseMaterial()
     {
         base.UseMaterial();
     }
-    IEnumerator DisableUse( float time)
+
+    IEnumerator DisableUse(float time)
     {
         isUse = true;
         yield return new WaitForSecondsRealtime(time);
@@ -41,7 +52,7 @@ public class HideItem : Item
     {
         if (!isUse)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.CompareTag("Player"))
             {
                 if (other.GetComponentInParent<Player>().GetItemUse())
                 {
@@ -69,7 +80,7 @@ public class HideItem : Item
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             other.GetComponentInParent<Player>().isInvincibility = false;
             //spriteRenderer.sortingLayerName = "Middleground_BP";
@@ -77,4 +88,44 @@ public class HideItem : Item
 
         }
     }
+
+    #region ISaveLoad
+
+    public struct StructSaveData
+    {
+        public Vector3 Position;
+        public bool isUse;
+    }
+    public StructSaveData SaveData;
+
+    public void ISaveLoadInit()
+    {
+        SaveManager.Instance.AddSaveObject(this);
+    }
+
+    public void ISave()
+    {
+        SaveData.Position = transform.position;
+        SaveData.isUse = isUse;
+    }
+
+    public void ILoad()
+    {
+        transform.position = SaveData.Position;
+        isUse = SaveData.isUse;
+    }
+
+    public void ISaveDelete()
+    {
+        SaveManager.Instance.DeleteSaveObject(this);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    #endregion
+
+
 }
