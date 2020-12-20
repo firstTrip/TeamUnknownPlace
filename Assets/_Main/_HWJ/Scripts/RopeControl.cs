@@ -12,6 +12,8 @@ public class RopeControl : Item
     // Start is called before the first frame update
     protected override void Start()
     {
+        base.Start();
+
         rb = gameObject.GetComponent<Rigidbody2D>();
         PushForce = 3;
         x = 0;

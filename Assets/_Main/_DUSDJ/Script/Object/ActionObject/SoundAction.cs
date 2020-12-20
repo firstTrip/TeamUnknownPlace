@@ -13,9 +13,6 @@ public class SoundAction : ActionObject
     private Vector3 TargetPosition;
     private bool SetTarget = false;
 
-    private bool isUsed = false;
-
-
     protected override void AfterCheckAction()
     {
         if (SetTarget)
