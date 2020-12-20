@@ -6,6 +6,10 @@ using Spine.Unity;
 public class Player : MonoBehaviour, IDamagable, ISaveLoad
 {
 
+    [Header("Sound Data")] public StructSoundData SoundData;
+    [Header("루프여부")] public bool SoundLoop = false;
+
+
     #region Values
 
     [Header("Stats")]
@@ -520,12 +524,17 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     public void RollAnimPlayer()
     {
-        StartDisable(8.5f);
+        StartDisable(10f);
         _AnimState = AnimState.Roll;
         SetCurrentAnimation(_AnimState);
-
     }
 
+
+    public void SoundOn()
+    {
+        AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
+
+    }
     public void CallState(PlayerState deadState)
     {
         switch (deadState)

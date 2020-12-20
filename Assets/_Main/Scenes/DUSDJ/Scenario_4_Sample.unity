@@ -6096,6 +6096,7 @@ Transform:
   m_Children:
   - {fileID: 1032571033}
   - {fileID: 1574883954}
+  - {fileID: 576533762}
   m_Father: {fileID: 7677201842811529873}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10815,6 +10816,81 @@ Transform:
   m_Father: {fileID: 245095078}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &576533761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 576533762}
+  - component: {fileID: 576533764}
+  - component: {fileID: 576533763}
+  m_Layer: 0
+  m_Name: TriggerPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &576533762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576533761}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 85.16, y: -5.11, z: 0}
+  m_LocalScale: {x: 0.693, y: 1.1428126, z: 1}
+  m_Children: []
+  m_Father: {fileID: 327016056}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &576533763
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576533761}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &576533764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576533761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39fada6dad16a241ab6109519623066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tag: Player
+  FunctionEnter: SoundOn
+  FunctionExit: 
+  SendMessageTarget:
+  - {fileID: 1404975145}
 --- !u!1 &579908866
 GameObject:
   m_ObjectHideFlags: 0
@@ -22604,6 +22680,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: SoundData.SoundKey
+      value: SFX_Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: SoundData.SoundValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
+        type: 3}
+      propertyPath: SoundLoop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8227953999411299616, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26652,9 +26743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3114c9f1fdcaf87499424213f4d83868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrueOrFalse: 0
+  TrueOrFalse: 1
   Targets:
   - {fileID: 1574883953}
+  - {fileID: 576533761}
 --- !u!1 &1444792353
 GameObject:
   m_ObjectHideFlags: 0
