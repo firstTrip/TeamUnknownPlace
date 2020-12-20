@@ -10843,7 +10843,7 @@ Transform:
   m_GameObject: {fileID: 576533761}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 85.16, y: -5.11, z: 0}
-  m_LocalScale: {x: 3.6, y: 1.1428126, z: 1}
+  m_LocalScale: {x: 0.693, y: 1.1428126, z: 1}
   m_Children: []
   m_Father: {fileID: 327016056}
   m_RootOrder: 2
@@ -22688,7 +22688,7 @@ PrefabInstance:
     - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
       propertyPath: SoundData.SoundValue
-      value: 70
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7154329490631138289, guid: a6256fb77b6323d46ba8f6ee78efa16c,
         type: 3}
