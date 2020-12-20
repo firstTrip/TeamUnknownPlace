@@ -32,6 +32,7 @@ public class Item : MonoBehaviour
         //collider2D = GetComponent<Collider2D>();        
 
         _material = Resources.Load<Material>("sprite_ingame_outlinecommon_2");
+        UseMaterial();
     }
 
     public virtual void UseItem()

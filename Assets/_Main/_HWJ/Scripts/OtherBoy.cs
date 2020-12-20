@@ -13,35 +13,43 @@ public class OtherBoy : MonoBehaviour
 
   
     private string currentAnimation;
-    private AnimState _AnimeState;
 
-    private enum AnimState
+    private enum State
     {
         idle, roll
     }
+    private State state;
 
     private Rigidbody2D BoyRb;
 
     [Header("Sound Data")] public StructSoundData SoundData;
     [Header("루프여부")] public bool SoundLoop = false;
 
+    [Header("Effect Data")] public string EffectKey;
+    [Header("이펙트 끝나는 시간")] public float EffectDuration;
+    [Header("이펙트 크기")] public Vector3 EffectScale = Vector3.one;
 
     public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
+        init();
+
+    }
+
+    private void init()
+    {
         rb = GetComponent<Rigidbody2D>();
-
-        //_AnimeState = AnimState.idle;
+        //_AnimeState = AnimState.idle2;
         //SetCurrentAnimation(_AnimeState);
-
     }
 
     public void rollAnim()
     {
-        _AnimeState = AnimState.roll;
-        SetCurrentAnimation(_AnimeState);
+        state = State.roll;
+        SetCurrentAnimation(state);
         AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, gameObject);
+        //EffectManager.Instance.SetPool(EffectKey, transform.position, EffectScale);
     }
 
 
@@ -57,13 +65,22 @@ public class OtherBoy : MonoBehaviour
 
     }
 
-    private void SetCurrentAnimation(AnimState _state)
+    private void SetCurrentAnimation(State _state)
     {
 
         switch (_state)
         {
-            case AnimState.roll:
-                AsncAnimation(AnimClip[(int)AnimState.roll], false, 1f);
+           
+            case State.idle:
+                AsncAnimation(AnimClip[(int)State.idle], false, 1f);
+                break;
+            /*
+                       case AnimState.idle2:
+                           AsncAnimation(AnimClip[(int)AnimState.idle2], true, 1f);
+                           break;
+                       */
+            case State.roll:
+                AsncAnimation(AnimClip[(int)State.roll], false, 1f);
                 break;
         }
 

@@ -42,7 +42,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c781076e2b190419111c62c342741a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GO: {fileID: 8227953999626485721}
 --- !u!1 &8227953999411299617
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,6 +608,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CoverPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 9001183313684224307, guid: c2024950492f93e46b7b9438e409df9e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2024950492f93e46b7b9438e409df9e, type: 3}

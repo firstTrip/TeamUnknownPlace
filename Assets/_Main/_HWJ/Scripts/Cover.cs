@@ -8,12 +8,14 @@ public class Cover : Item
     private GameObject GO;
     private Animator anim;
     // Start is called before the first frame update
-    void Start()
+
+
+    protected override void Start()
     {
-        StarFlag = true;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Start();
         anim = GetComponent<Animator>();
-            //UseMaterial();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        UseMaterial();
     }
     private void Update()
     {
@@ -34,16 +36,7 @@ public class Cover : Item
     }
     public override void UseMaterial()
     {
-        if (StarFlag)
-        {
-            GameObject Go = Instantiate(this.gameObject, transform.position, Quaternion.identity);
-            Go.transform.localScale = new Vector3(0.25f, 0.25f, 1);
-            Go.GetComponent<SpriteRenderer>().material = _material;
-            Go.GetComponent<Item>().enabled = false;
-            Go.transform.SetParent(this.gameObject.transform);
-            StarFlag = false;
-        }
-     
+        base.UseMaterial();
     }
     IEnumerator DisableUse(float time)
     {

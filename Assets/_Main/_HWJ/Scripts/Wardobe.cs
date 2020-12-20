@@ -22,11 +22,6 @@ public class Wardobe : Item
         StartCoroutine(DisableUse(0.2f));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public override void UseMaterial()
     {
         base.UseMaterial();
@@ -59,17 +54,6 @@ public class Wardobe : Item
             }
         }
 
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            other.GetComponentInParent<Player>().isInvincibility = false;
-            spriteRenderer.sortingLayerName = "Middleground_BP";
-            isUse = false;
-
-        }
     }
 
     IEnumerator DisableUse(float time)

@@ -398,10 +398,8 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             if (handsPos.transform.childCount != 0)
                 item = handsPos.transform.GetChild(0).gameObject;
 
-
             _AnimState = AnimState.get;
             SetCurrentAnimation(_AnimState);
-            //StartCoroutine(DisableMovement(0.5f));
             StartDisable(0.5f);
         }
 
@@ -658,7 +656,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 break;
 
             case AnimState.get:
-                AsncAnimation(AnimClip[(int)AnimState.get], false, 1.5f);
+                AsncAnimation(AnimClip[(int)AnimState.get], false, 3f);
                 break;
 
             case AnimState.Throw:
