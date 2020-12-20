@@ -36,14 +36,10 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
                 hp = 0;
                 Dead();
 
-                DebugManager.Instance.SetText(DebugManager.Instance.PlayerHPText, hp.ToString());
-                DebugManager.Instance.SetText(DebugManager.Instance.PlayerIsAliveText, isAlive.ToString());
-
                 return;
             }
 
-            hp = value;
-            DebugManager.Instance.SetText(DebugManager.Instance.PlayerHPText, hp.ToString());
+            hp = value;            
         }
     }
 
@@ -183,9 +179,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         _AnimState = AnimState.NomalDead;
         SetCurrentAnimation(_AnimState);
         canMove = true;
-
-        DebugManager.Instance.SetText(DebugManager.Instance.PlayerHPText, hp.ToString());
-        DebugManager.Instance.SetText(DebugManager.Instance.PlayerIsAliveText, isAlive.ToString());
+        
     }
 
     // Update is called once per frame
@@ -195,7 +189,6 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         {
             rb.velocity = Vector2.zero;
             canMove = false;
-            DebugManager.Instance.SetText(DebugManager.Instance.PlayerCanMoveText, canMove.ToString());
             return;
         }
 
@@ -241,11 +234,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         if (!getItem)
         {
             UseItem();
-        }
-        
-
-
-        DebugManager.Instance.SetText(DebugManager.Instance.PlayerCanMoveText, canMove.ToString());
+        }               
     }
 
     #region InputManager

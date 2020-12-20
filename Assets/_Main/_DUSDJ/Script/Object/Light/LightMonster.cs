@@ -123,36 +123,6 @@ public class LightMonster : MonoBehaviour, ISaveLoad
         }
         axcelSpeed = MoveSpeed * nowSound.Value;
 
-        // 소리 지속시간 집중 -> 도착제로 변경
-        /*
-        if (DurationCoroutine != null)
-        {
-            StopCoroutine(DurationCoroutine);
-        }
-        DurationCoroutine = DUSDJUtil.ActionAfterSecondCoroutine(nowSound.Duration, () => {
-            nowSound = null;
-        });
-        StartCoroutine(DurationCoroutine);
-        */
-        // Debug
-        if (previousTarget != null)
-        {
-            DebugManager.Instance.SetText(DebugManager.Instance.PrevTargetText, previousTarget.name);
-        }
-        else
-        {
-            DebugManager.Instance.SetText(DebugManager.Instance.PrevTargetText, "Null");
-        }
-
-        if(nowSound.SoundFrom != null)
-        {
-            DebugManager.Instance.SetText(DebugManager.Instance.SoundFromText, nowSound.SoundFrom.name);
-        }
-        else
-        {
-            DebugManager.Instance.SetText(DebugManager.Instance.SoundFromText, "Null");
-        }
-        
     }
 
     public void CleanSound()
@@ -214,21 +184,11 @@ public class LightMonster : MonoBehaviour, ISaveLoad
 
     private void Update()
     {
-        if(nowSound == null)
-        {
-            DebugManager.Instance.SetText(DebugManager.Instance.NowSoundNullText, "Null");
-        }
-        else
-        {
-            DebugManager.Instance.SetText(DebugManager.Instance.NowSoundNullText, "Not Null");
-        }
-
+        
         if (!IsActive)
         {
             return;
         }
-
-        DebugManager.Instance.SetText(DebugManager.Instance.IsHuntingBox, IsHunting.ToString());
 
         // Damage
         DamageAll();
@@ -241,11 +201,7 @@ public class LightMonster : MonoBehaviour, ISaveLoad
         {
             Gaze();
         }
-
-        // Debug
-        DebugManager.Instance.SetText(DebugManager.Instance.IsArriveText, isArrive.ToString());
-        DebugManager.Instance.SetText(DebugManager.Instance.TracingTimeText, tracingTime.ToString());
-        DebugManager.Instance.SetText(DebugManager.Instance.StayTimeText, string.Format("{0:f1}/{1:f1}",stayTime,StayLimit));
+       
     }
 
 
@@ -351,20 +307,16 @@ public class LightMonster : MonoBehaviour, ISaveLoad
         Vector2 direction = player.transform.position - transform.position;
         float distance = direction.magnitude;
 
-        DebugManager.Instance.SetText(DebugManager.Instance.DistanceBox, distance.ToString());
-
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, layerMask);
         Debug.DrawRay(transform.position, direction, Color.red, 0.1f);
 
         if (hit.collider != null)
         {
-            DebugManager.Instance.SetText(DebugManager.Instance.IsHitBlueLightBox, hit.collider.gameObject.name);
-
+           
         }
         else
         {
-            DebugManager.Instance.SetText(DebugManager.Instance.IsHitBlueLightBox, "False");
-            IsHunting = true;
+             IsHunting = true;
         }
     }
 
