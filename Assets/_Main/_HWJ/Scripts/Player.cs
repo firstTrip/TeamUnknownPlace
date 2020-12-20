@@ -524,7 +524,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     public void RollAnimPlayer()
     {
-        StartDisable(10f);
+        StartDisable(30f);
         _AnimState = AnimState.Roll;
         SetCurrentAnimation(_AnimState);
     }
