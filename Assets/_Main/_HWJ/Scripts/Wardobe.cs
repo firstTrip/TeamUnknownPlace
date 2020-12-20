@@ -5,7 +5,9 @@ using UnityEngine;
 public class Wardobe : Item
 {
     private SpriteRenderer spriteRenderer;
-    public GameObject CloseSprite;
+    public GameObject DoorSprite1;
+    public GameObject DoorSprite2;
+    public Sprite sprite;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -37,7 +39,9 @@ public class Wardobe : Item
                     if (itemType == ItemType.UnCarriable)
                     {
                         //spriteRenderer.sortingLayerName = "Middleground_AP";
-                        CloseSprite.SetActive(false);
+                        DoorSprite1.SetActive(false);
+                        DoorSprite2.SetActive(false);
+                        spriteRenderer.sprite = sprite;
                         other.GetComponentInParent<Player>().isInvincibility = true;
                         Debug.Log("isUse");
                         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);

@@ -48,7 +48,8 @@ public class Cover : Item
 
     IEnumerator TakeOffTime(float time)
     {
-        
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+
         yield return new WaitForSecondsRealtime(time);
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         this.gameObject.transform.position = transform.position;
@@ -77,7 +78,7 @@ public class Cover : Item
                         this.gameObject.SetActive(false);
                         GO = other.gameObject;
                         other.GetComponentInParent<Player>().isInvincibility = true;
-                        other.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                        other.transform.GetChild(1).gameObject.SetActive(true);
                     }
 
                 }
@@ -91,7 +92,6 @@ public class Cover : Item
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponentInParent<Player>().isInvincibility = false;
-            //spriteRenderer.sortingLayerName = "Middleground_BP";
             isUse = false;
         }
 

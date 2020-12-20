@@ -72,8 +72,15 @@ public class Item : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
+
+                if (this.gameObject.CompareTag("Rose"))
+                {
+                    return;
+                }
+
                 if (other.GetComponentInParent<PlayerTest>().GetItemStatus())
                 {
+                    
                     isGet = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));
 
