@@ -34,13 +34,14 @@ public class PlayerCollision : MonoBehaviour
     public float ItemCollisionRadius = 0.5f;
     public float BoxSize = 0.5f;
     public Vector2 BottomOffset, rightOffset, leftOffset , itemOffset;
-
+   
     // Update is called once per frame
     void Update()
     {
         OnGround = Physics2D.OverlapCircle((Vector2)transform.position + BottomOffset, CollisionRadius, groundLayer);
         OnWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, CollisionRadius, groundLayer)
             || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, CollisionRadius, groundLayer);
+        
         OnRope = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, ropeLayer);
 
         ItemCollider = Physics2D.OverlapCircle((Vector2)transform.position + itemOffset, ItemCollisionRadius, itemLayer);
@@ -77,7 +78,9 @@ public class PlayerCollision : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + BottomOffset, CollisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, CollisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, CollisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + itemOffset, ItemCollisionRadius);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere((Vector2)transform.position + itemOffset, ItemCollisionRadius);               
     }
 
 }
