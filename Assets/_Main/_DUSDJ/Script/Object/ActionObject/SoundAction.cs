@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class SoundAction : MonoBehaviour
+public class SoundAction : ActionObject
 {
     [Header("사운드 데이터")] public StructSoundData SoundData;
 
@@ -16,20 +16,8 @@ public class SoundAction : MonoBehaviour
     private bool isUsed = false;
 
 
-    private void Awake()
+    protected override void AfterCheckAction()
     {
-        isUsed = false;
-    }
-
-    private void ObjectAction()
-    {
-        if (isUsed)
-        {
-            return;
-        }
-
-        isUsed = true;
-
         if (SetTarget)
         {
             AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, TargetPosition, transform.root.gameObject);
@@ -38,8 +26,6 @@ public class SoundAction : MonoBehaviour
         {
             AudioManager.Instance.PlaySound(SoundData.SoundKey, SoundData.SoundValue, transform.position, transform.root.gameObject);
         }
-
-        
     }
 
     public void SetTargetPosition(Vector3 pos)

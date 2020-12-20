@@ -224,9 +224,11 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             rb.gravityScale = GravityScale;
         #endregion
 
+        bool getItem = false;
+
         if (coll.OnGround)
         {
-            GetItem();
+            getItem = GetItem();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -236,7 +238,11 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         else
             useStair = false;
 
-        UseItem();
+        if (!getItem)
+        {
+            UseItem();
+        }
+        
 
 
         DebugManager.Instance.SetText(DebugManager.Instance.PlayerCanMoveText, canMove.ToString());
@@ -279,7 +285,6 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     {
         if (sit)
         {
-            LightManager.Instance.DeadCheck(gameObject);
             MoveSpeed = 0.0f;
             if (isInvincibility)
             {
@@ -308,7 +313,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
         if (rb.velocity.x == 0 && !sit)
         {
-             if (!canMove)
+            if (!canMove)
             return;
             _AnimState = AnimState.idle;
             FlipAnim();
@@ -316,14 +321,10 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             return;
         }
 
-       if(!dash &&!sit )
+
+        if(!dash &&!sit)
         MovementSound(EnumMovement.Walk);
 
-        /* 아래 3줄을 각각
-         * 앉은걸음, 걷기, 달리기 소리가 날 위치에 놔주세요. */
-        // MovementSound(EnumMovement.Crouch); // 앉은걸음
-        // MovementSound(EnumMovement.Walk); // 걷기
-        // MovementSound(EnumMovement.Run); // 달리기
         FlipAnim();
         SetCurrentAnimation(_AnimState);
     }
@@ -386,7 +387,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
 
 
-    private void GetItem()
+    private bool GetItem()
     {
         // Z 키 입력
         if (get && coll.OnItem)
@@ -394,7 +395,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             // 손에 든 ThrowItem 없고
             if (ItemInHand != null)
             {
-                return;
+                return false;
             }
 
             // 바닥의 ThrowItem이 범위 내에 있다.
@@ -403,14 +404,16 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
             if (checkItem != null)
             {
                 checkItem.GetItemByPlayer(this, handsPos);
-            }
 
-            _AnimState = AnimState.get;
-            SetCurrentAnimation(_AnimState);
-            StartDisable(0.5f);
+                _AnimState = AnimState.get;
+                SetCurrentAnimation(_AnimState);
+                StartDisable(0.5f);
+
+                return true;
+            }
         }
 
-
+        return false;
     }
     private void UseItem()
     {
@@ -432,24 +435,64 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
         // X 키 입력
         if (use)
         {
-            /*
-            if (handsPos.transform.childCount != 0)
-                item = handsPos.transform.GetChild(0).gameObject;
+            /* Hide */
 
-            if (item != null)
+            // 사용중인 HI가 있음
+            if (myHideItem != null)
             {
-                if (item.GetComponent<Item>().itemType.ToString() == "Carriable")
-                {
-
-                    item.GetComponent<Item>().UseItem();
-                    item = null;
-                }
-
+                HideExit();
+                return;
             }
-            */
+
+            // 새 HI 찾기
+            if (coll.HideItemCollider != null)
+            {
+                HideItem hi = coll.HideItemCollider.GetComponent<HideItem>();
+                HideEnter(hi);
+            }
 
         }
     }
+
+    #region Hide By HideItem
+
+    private HideItem myHideItem;
+
+    public void HideEnter(HideItem hi)
+    {
+        if (hi.isUse)
+        {
+            return;
+        }
+
+        myHideItem = hi;
+        myHideItem.isUse = true;
+        myHideItem.spr.sortingLayerName = "Middleground_AP";
+
+        isInvincibility = true;
+
+        LightManager.Instance.DeadCheck(gameObject);
+    }
+
+    public void HideExit()
+    {
+        if(myHideItem == null)
+        {
+            return;
+        }
+
+        myHideItem.isUse = false;
+        myHideItem.spr.sortingLayerName = "Middleground_BP";
+
+        isInvincibility = false;
+
+        myHideItem = null;
+    }
+
+    #endregion
+
+
+
 
     public void RemoveSprite()
     {
@@ -575,6 +618,12 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
 
     private void MovementSound(EnumMovement m)
     {
+        // 숨어있는 상태면 소리나지 않는다.
+        if(myHideItem != null)
+        {
+            return;
+        }
+
         switch (m)
         {
             case EnumMovement.Crouch:

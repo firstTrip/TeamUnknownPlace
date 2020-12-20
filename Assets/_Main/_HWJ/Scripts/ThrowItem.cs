@@ -8,7 +8,7 @@ public class ThrowItem : Item, ISaveLoad
     public float xThrow;
     public float yThrow;
 
-    private bool isActive;
+    private bool isInHand;
     private float x;
 
     Transform parent;
@@ -19,19 +19,25 @@ public class ThrowItem : Item, ISaveLoad
     {
         base.Start();
 
-        isActive = true;
+        isInHand = false;
         OnGround = false;
 
         UseMaterial();
 
         ISaveLoadInit();
-        middleGround = GameObject.Find("Middleground_AP").transform;
+        middleGround = transform.parent;
         parent = middleGround;
     }
 
 
     private void Update()
     {
+        if (isInHand)
+        {
+            transform.localPosition = Vector3.zero;
+            return;
+        }
+
         OnGround = Physics2D.OverlapCircle((Vector2)transform.position + BottomOffset, CollisionRadius, groundLayer);
 
         if (OnGround)
@@ -48,14 +54,17 @@ public class ThrowItem : Item, ISaveLoad
             return;
         }
 
+        rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+
         p.ItemInHand = this;
 
         parent = hand;
         transform.SetParent(parent, true);
-        transform.localPosition = Vector3.zero;        
+        transform.localPosition = Vector3.zero;
 
         isGet = true;
-        isActive = true;
+        isInHand = true;
     }
 
     public override void UseItem()
@@ -64,8 +73,8 @@ public class ThrowItem : Item, ISaveLoad
 
         gameObject.transform.SetParent(middleGround, true);
 
-        parent = null;
-        isActive = false;
+        parent = middleGround;
+        isInHand = false;
         StartCoroutine(DisableToGet(0.5f));
 
         rb.velocity = new Vector2(x * xThrow * (-1) , yThrow);
@@ -83,6 +92,12 @@ public class ThrowItem : Item, ISaveLoad
         isGet = true;
         yield return new WaitForSecondsRealtime(time);
         isGet = false;
+    }
+
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+
     }
 
     #region ISaveLoad
@@ -103,16 +118,19 @@ public class ThrowItem : Item, ISaveLoad
 
     public void ISave()
     {
+        SaveData.parent = parent;
         SaveData.Position = transform.position;
         SaveData.isGet = isGet;
-        SaveData.isActive = isActive;
+        SaveData.isActive = isInHand;
     }
 
     public void ILoad()
     {
+        parent = SaveData.parent;
+        transform.SetParent(parent, true);        
         transform.position = SaveData.Position;
         isGet = SaveData.isGet;
-        isActive = SaveData.isActive;
+        isInHand = SaveData.isActive;
     }
 
     public void ISaveDelete()

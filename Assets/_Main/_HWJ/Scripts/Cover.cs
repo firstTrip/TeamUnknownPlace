@@ -17,32 +17,16 @@ public class Cover : Item
         spriteRenderer = GetComponent<SpriteRenderer>();
         UseMaterial();
     }
-    private void Update()
-    {
-    }
+
 
     public override void UseItem()
     {
-        /*
-        if (StarFlag)
-        {
-            this.gameObject.SetActive(true);
-            GO.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-            this.gameObject.transform.position = transform.position;
-            StartCoroutine(DisableUse(0.2f));
-        }
-        */
-      
+
     }
+
     public override void UseMaterial()
     {
         base.UseMaterial();
-    }
-    IEnumerator DisableUse(float time)
-    {
-        isUse = true;
-        yield return new WaitForSecondsRealtime(time);
-        isUse = false;
     }
 
 
@@ -54,6 +38,7 @@ public class Cover : Item
         this.gameObject.transform.SetParent(GameObject.Find("Middleground_AP").transform);
         this.gameObject.transform.position = transform.position;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Rose"))

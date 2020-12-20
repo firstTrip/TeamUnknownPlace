@@ -17,7 +17,7 @@ public class Item : MonoBehaviour
     public Vector2 BottomOffset;
     public Material _material;
 
-    private SpriteRenderer spr;
+    public SpriteRenderer spr;
     private GameObject outLineObject;
 
 
@@ -67,7 +67,6 @@ public class Item : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(isGet);
         if (!isGet)
         {
             if (other.gameObject.CompareTag("Player"))
@@ -78,12 +77,10 @@ public class Item : MonoBehaviour
                     return;
                 }
 
-                if (other.GetComponentInParent<PlayerTest>().GetItemStatus())
+                if (other.GetComponentInParent<Player>().GetItemStatus())
                 {
-                    
                     isGet = true;
                     gameObject.transform.SetParent(other.transform.GetChild(0));
-
                 }
             }
 
