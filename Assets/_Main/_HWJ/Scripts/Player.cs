@@ -336,7 +336,7 @@ public class Player : MonoBehaviour, IDamagable, ISaveLoad
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartDisable(1f);
+            StartDisable(0.25f);
 
             if (coll.OnRope)
             {
